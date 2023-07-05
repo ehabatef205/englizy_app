@@ -70,7 +70,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       TextFormFieldWidget(
                         controller: cubit.quadrupleNameController,
-                        type: TextInputType.phone,
+                        type: TextInputType.name,
                         context: context,
                         labelText: "Quadruple name",
                         validate: (value) {
@@ -207,6 +207,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           onPressed: () {
                             if (cubit.formKey.currentState!.validate()) {
                               cubit.formKey.currentState!.save();
+                              cubit.userRegister();
                             }
                           },
                           color: Colors.indigo,

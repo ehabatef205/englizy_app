@@ -5,6 +5,7 @@ import 'package:englizy_app/shared/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -149,6 +150,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               onPressed: () {
                                 if (cubit.formKey.currentState!.validate()) {
                                   cubit.formKey.currentState!.save();
+                                  cubit.userLogin(
+                                    studentPhoneNumber: cubit.studentNumberController,
+                                    password: cubit.passwordController,
+                                  );
                                 }
                               },
                               color: Colors.indigo,
