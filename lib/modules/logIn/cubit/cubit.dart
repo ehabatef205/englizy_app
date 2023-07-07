@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:englizy_app/layout/app_layout.dart';
 import 'package:englizy_app/models/user_model.dart';
 import 'package:englizy_app/modules/logIn/cubit/states.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,6 +18,8 @@ class LoginCubit extends Cubit<LoginStates> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   bool isLogin = true;
+  bool isLoading = false;
+
   void passwordChange() {
     isPassword = !isPassword;
     emit(ChangeState());
@@ -28,6 +31,7 @@ class LoginCubit extends Cubit<LoginStates> {
   }
 
   void userLogin() {
+    isLoading = true;
     emit(LoginLoadingState());
     FirebaseAuth.instance
         .signInWithEmailAndPassword(
@@ -38,10 +42,10 @@ class LoginCubit extends Cubit<LoginStates> {
       print(value.user?.uid);
       emit(LoginSuccessState());
     }).catchError((error) {
+      isLoading = false;
       emit(LoginErrorState());
     });
   }
-
 
   // Registration
 
@@ -53,7 +57,41 @@ class LoginCubit extends Cubit<LoginStates> {
   TextEditingController emailController = TextEditingController();
   bool isPassword2 = true;
   bool isConfirmPassword = true;
-  GlobalKey<FormState> formKey2 = GlobalKey<FormState>();
+  String dropdownValue = 'academic year';
+  String? text1;
+  String? text2;
+  String dropdownValue2 = 'center';
+
+  //GlobalKey<FormState> formKey2 = GlobalKey<FormState>();
+
+  List<String> academicYearList = [
+    'First year of high school',
+    'Second year of high school',
+    'Third year of high school',
+  ];
+  List<String> centerList = [
+    'Safa1',
+    'Safa2',
+    'Safa3',
+    'Safa4',
+    'Safa5',
+    'Safa6',
+    'Safa7',
+    'Safa8',
+    'Safa9',
+  ];
+
+  void changeItem(newValue) {
+    dropdownValue = newValue;
+    text1 = dropdownValue;
+    emit(RegisterChangeState());
+  }
+
+  void changeItem2(newValue) {
+    dropdownValue2 = newValue;
+    text2 = dropdownValue2;
+    emit(RegisterChangeState());
+  }
 
   void passwordChange2() {
     isPassword2 = !isPassword2;
@@ -81,6 +119,8 @@ class LoginCubit extends Cubit<LoginStates> {
         parentPhone: parentsPhoneNumberController.text,
         studentName: quadrupleNameController.text,
         studentPhone: studentPhoneNumberController.text,
+        center: text2,
+        academicYear: text1,
       );
       emit(RegisterSuccessState());
     }).catchError((error) {
@@ -95,6 +135,8 @@ class LoginCubit extends Cubit<LoginStates> {
     required studentPhone,
     required email,
     required uid,
+    required academicYear,
+    required center,
   }) {
     UserModel model = UserModel(
       uid: uid,
@@ -102,6 +144,8 @@ class LoginCubit extends Cubit<LoginStates> {
       studentName: studentName,
       parentPhone: parentPhone,
       studentPhone: studentPhone,
+      academicYear: text1!,
+      center: text2!,
     );
     FirebaseFirestore.instance
         .collection("users")

@@ -1,6 +1,6 @@
+import 'package:englizy_app/layout/app_layout.dart';
 import 'package:englizy_app/modules/logIn/cubit/cubit.dart';
 import 'package:englizy_app/modules/logIn/cubit/states.dart';
-import 'package:englizy_app/modules/register/register_screen.dart';
 import 'package:englizy_app/shared/components.dart';
 import 'package:englizy_app/shared/constant.dart';
 import 'package:flutter/material.dart';
@@ -68,236 +68,321 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SizedBox(height: size.height * 0.25,),
-                                cubit.isLogin? Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Hello dear student",
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 18.0,
-                                        fontWeight: FontWeight.w900,
-                                      ),
-                                    ),
-                                    Text(
-                                      "We'd love you to join us",
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 18.0,
-                                        fontWeight: FontWeight.w900,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 20,
-                                    ),
-                                    TextFormFieldWidget(
-                                      controller: cubit.studentNumberController,
-                                      type: TextInputType.phone,
-                                      context: context,
-                                      labelText: "Student phone number",
-                                      validate: (value) {
-                                        if (value!.isEmpty) {
-                                          return "Student phone number is required";
-                                        }
-                                        return null;
-                                      },
-                                    ),
-                                    const SizedBox(
-                                      height: 20.0,
-                                    ),
-                                    TextFormFieldWidget(
-                                      controller: cubit.passwordController,
-                                      type: TextInputType.visiblePassword,
-                                      context: context,
-                                      suffixIcon: IconButton(
-                                        icon: Icon(
-                                          cubit.isPassword
-                                              ? Icons.visibility
-                                              : Icons.visibility_off,
-                                        ),
-                                        onPressed: () {
-                                          cubit.passwordChange();
-                                        },
-                                        color: Colors.black,
-                                      ),
-                                      labelText: "Password",
-                                      obscureText: cubit.isPassword,
-                                      validate: (value) {
-                                        if (value!.isEmpty) {
-                                          return "password is required";
-                                        }
-                                        return null;
-                                      },
-                                    ),
-                                    const SizedBox(
-                                      height: 10.0,
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        /*Navigator.push(
+                                SizedBox(
+                                  height: size.height * 0.25,
+                                ),
+                                cubit.isLogin
+                                    ? Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "Hello dear student",
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 18.0,
+                                              fontWeight: FontWeight.w900,
+                                            ),
+                                          ),
+                                          Text(
+                                            "We'd love you to join us",
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 18.0,
+                                              fontWeight: FontWeight.w900,
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 20,
+                                          ),
+                                          TextFormFieldWidget(
+                                            controller:
+                                                cubit.studentNumberController,
+                                            type: TextInputType.phone,
+                                            context: context,
+                                            labelText: "Student phone number",
+                                            validate: (value) {
+                                              if (value!.isEmpty) {
+                                                return "Student phone number is required";
+                                              }
+                                              return null;
+                                            },
+                                          ),
+                                          const SizedBox(
+                                            height: 20.0,
+                                          ),
+                                          TextFormFieldWidget(
+                                            controller:
+                                                cubit.passwordController,
+                                            type: TextInputType.visiblePassword,
+                                            context: context,
+                                            suffixIcon: IconButton(
+                                              icon: Icon(
+                                                cubit.isPassword
+                                                    ? Icons.visibility
+                                                    : Icons.visibility_off,
+                                              ),
+                                              onPressed: () {
+                                                cubit.passwordChange();
+                                              },
+                                              color: Colors.black,
+                                            ),
+                                            labelText: "Password",
+                                            obscureText: cubit.isPassword,
+                                            validate: (value) {
+                                              if (value!.isEmpty) {
+                                                return "password is required";
+                                              }
+                                              return null;
+                                            },
+                                          ),
+                                          const SizedBox(
+                                            height: 10.0,
+                                          ),
+                                          InkWell(
+                                            onTap: () {
+                                              /*Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   GetIdScreen()));*/
-                                      },
-                                      child: Text(
-                                        "Forgot your password?",
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                        ),
+                                            },
+                                            child: Text(
+                                              "Forgot your password?",
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 30.0,
+                                          ),
+                                        ],
+                                      )
+                                    : Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "Hello dear student",
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 18.0,
+                                              fontWeight: FontWeight.w900,
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          TextFormFieldWidget(
+                                            controller:
+                                                cubit.quadrupleNameController,
+                                            type: TextInputType.name,
+                                            context: context,
+                                            labelText: "Quadruple name",
+                                            validate: (value) {
+                                              if (value!.isEmpty) {
+                                                return "Quadruple name is required";
+                                              }
+                                              return null;
+                                            },
+                                          ),
+                                          const SizedBox(
+                                            height: 8.0,
+                                          ),
+                                          DropdownButtonFormField(
+                                            decoration: InputDecoration(
+                                              enabledBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.circular(25),
+                                                borderSide: BorderSide(
+                                                    color: Colors.black38,
+                                                    width: 2),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.circular(25),
+                                                borderSide: BorderSide(
+                                                    color: Colors.black38,
+                                                    width: 2),
+                                              ),
+                                              filled: true,
+                                            ),
+                                            hint: Text(cubit.dropdownValue),
+                                            onChanged: (String? newValue) {
+                                              cubit.changeItem(newValue);
+                                            },
+                                            items: cubit.academicYearList.map<DropdownMenuItem<String>>(
+                                                (String value) {
+                                              return DropdownMenuItem<String>(
+                                                value: value,
+                                                child: Text(
+                                                  value,
+                                                  style:
+                                                      TextStyle(fontSize: 20),
+                                                ),
+                                              );
+                                            }).toList(),
+                                          ),
+                                          const SizedBox(
+                                            height: 8.0,
+                                          ),
+                                          DropdownButtonFormField(
+                                            decoration: InputDecoration(
+                                              enabledBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.circular(25),
+                                                borderSide: BorderSide(
+                                                    color: Colors.black38,
+                                                    width: 2),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.circular(25),
+                                                borderSide: BorderSide(
+                                                    color: Colors.black38,
+                                                    width: 2),
+                                              ),
+                                              filled: true,
+                                            ),
+                                            hint: Text(cubit.dropdownValue2),
+                                            onChanged: (String? newValue) {
+                                              cubit.changeItem2(newValue);
+                                            },
+                                            items: cubit.centerList.map<DropdownMenuItem<String>>(
+                                                (String value) {
+                                              return DropdownMenuItem<String>(
+                                                value: value,
+                                                child: Text(
+                                                  value,
+                                                  style:
+                                                      TextStyle(fontSize: 20),
+                                                ),
+                                              );
+                                            }).toList(),
+                                          ),
+                                          const SizedBox(
+                                            height: 8.0,
+                                          ),
+                                          TextFormFieldWidget(
+                                            controller: cubit
+                                                .parentsPhoneNumberController,
+                                            type: TextInputType.phone,
+                                            context: context,
+                                            labelText: "Parent's phone number",
+                                            validate: (value) {
+                                              if (value!.isEmpty) {
+                                                return "Parent's phone number is required";
+                                              }
+                                              return null;
+                                            },
+                                          ),
+                                          const SizedBox(
+                                            height: 8.0,
+                                          ),
+                                          TextFormFieldWidget(
+                                            controller: cubit
+                                                .studentPhoneNumberController,
+                                            type: TextInputType.phone,
+                                            context: context,
+                                            labelText: "Student Phone Number",
+                                            validate: (value) {
+                                              if (value!.isEmpty) {
+                                                return "Student Phone Number is required";
+                                              }
+                                              return null;
+                                            },
+                                          ),
+                                          const SizedBox(
+                                            height: 8.0,
+                                          ),
+                                          TextFormFieldWidget(
+                                            controller:
+                                                cubit.passwordController2,
+                                            type: TextInputType.visiblePassword,
+                                            context: context,
+                                            suffixIcon: IconButton(
+                                              icon: Icon(
+                                                cubit.isPassword
+                                                    ? Icons.visibility
+                                                    : Icons.visibility_off,
+                                              ),
+                                              onPressed: () {
+                                                cubit.passwordChange();
+                                              },
+                                              color: Colors.black,
+                                            ),
+                                            labelText: "Password",
+                                            obscureText: cubit.isPassword,
+                                            validate: (value) {
+                                              if (value!.isEmpty) {
+                                                return "password is required";
+                                              }
+                                              return null;
+                                            },
+                                          ),
+                                          const SizedBox(
+                                            height: 8.0,
+                                          ),
+                                          TextFormFieldWidget(
+                                            controller:
+                                                cubit.confirmPasswordController,
+                                            type: TextInputType.visiblePassword,
+                                            context: context,
+                                            suffixIcon: IconButton(
+                                              icon: Icon(
+                                                cubit.isConfirmPassword
+                                                    ? Icons.visibility
+                                                    : Icons.visibility_off,
+                                              ),
+                                              onPressed: () {
+                                                cubit.confirmPasswordChange();
+                                              },
+                                              color: Colors.black,
+                                            ),
+                                            labelText: "Confirm Password",
+                                            obscureText: cubit.isPassword,
+                                            validate: (value) {
+                                              if (value!.isEmpty) {
+                                                return "Confirm Password is required";
+                                              }
+                                              return null;
+                                            },
+                                          ),
+                                          const SizedBox(
+                                            height: 8.0,
+                                          ),
+                                          Text(
+                                            "The email used to reset the password",
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 18.0,
+                                              fontWeight: FontWeight.w900,
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 10.0,
+                                          ),
+                                          TextFormFieldWidget(
+                                            controller: cubit.emailController,
+                                            type: TextInputType.emailAddress,
+                                            context: context,
+                                            labelText: "Email",
+                                            validate: (value) {
+                                              if (value!.isEmpty) {
+                                                return "Email is required";
+                                              }
+                                              return null;
+                                            },
+                                          ),
+                                          const SizedBox(
+                                            height: 10.0,
+                                          ),
+                                          const SizedBox(
+                                            height: 10.0,
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                    const SizedBox(
-                                      height: 30.0,
-                                    ),
-                                  ],
-                                ) : Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Hello dear student",
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 18.0,
-                                        fontWeight: FontWeight.w900,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    TextFormFieldWidget(
-                                      controller: cubit.quadrupleNameController,
-                                      type: TextInputType.name,
-                                      context: context,
-                                      labelText: "Quadruple name",
-                                      validate: (value) {
-                                        if (value!.isEmpty) {
-                                          return "Quadruple name is required";
-                                        }
-                                        return null;
-                                      },
-                                    ),
-                                    const SizedBox(
-                                      height: 5.0,
-                                    ),
-                                    TextFormFieldWidget(
-                                      controller: cubit.parentsPhoneNumberController,
-                                      type: TextInputType.phone,
-                                      context: context,
-                                      labelText: "Parent's phone number",
-                                      validate: (value) {
-                                        if (value!.isEmpty) {
-                                          return "Parent's phone number is required";
-                                        }
-                                        return null;
-                                      },
-                                    ),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
-                                    TextFormFieldWidget(
-                                      controller: cubit.studentPhoneNumberController,
-                                      type: TextInputType.phone,
-                                      context: context,
-                                      labelText: "Student Phone Number",
-                                      validate: (value) {
-                                        if (value!.isEmpty) {
-                                          return "Student Phone Number is required";
-                                        }
-                                        return null;
-                                      },
-                                    ),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
-                                    TextFormFieldWidget(
-                                      controller: cubit.passwordController2,
-                                      type: TextInputType.visiblePassword,
-                                      context: context,
-                                      suffixIcon: IconButton(
-                                        icon: Icon(
-                                          cubit.isPassword
-                                              ? Icons.visibility
-                                              : Icons.visibility_off,
-                                        ),
-                                        onPressed: () {
-                                          cubit.passwordChange();
-                                        },
-                                        color: Colors.black,
-                                      ),
-                                      labelText: "Password",
-                                      obscureText: cubit.isPassword,
-                                      validate: (value) {
-                                        if (value!.isEmpty) {
-                                          return "password is required";
-                                        }
-                                        return null;
-                                      },
-                                    ),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
-                                    TextFormFieldWidget(
-                                      controller: cubit.confirmPasswordController,
-                                      type: TextInputType.visiblePassword,
-                                      context: context,
-                                      suffixIcon: IconButton(
-                                        icon: Icon(
-                                          cubit.isConfirmPassword
-                                              ? Icons.visibility
-                                              : Icons.visibility_off,
-                                        ),
-                                        onPressed: () {
-                                          cubit.confirmPasswordChange();
-                                        },
-                                        color: Colors.black,
-                                      ),
-                                      labelText: "Confirm Password",
-                                      obscureText: cubit.isPassword,
-                                      validate: (value) {
-                                        if (value!.isEmpty) {
-                                          return "Confirm Password is required";
-                                        }
-                                        return null;
-                                      },
-                                    ),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(
-                                      "The email used to reset the password",
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 18.0,
-                                        fontWeight: FontWeight.w900,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 10.0,
-                                    ),
-                                    TextFormFieldWidget(
-                                      controller: cubit.emailController,
-                                      type: TextInputType.emailAddress,
-                                      context: context,
-                                      labelText: "Email",
-                                      validate: (value) {
-                                        if (value!.isEmpty) {
-                                          return "Email is required";
-                                        }
-                                        return null;
-                                      },
-                                    ),
-                                    const SizedBox(
-                                      height: 10.0,
-                                    ),
-                                    const SizedBox(
-                                      height: 10.0,
-                                    ),
-                                  ],
-                                ),
                                 //LogIn
-                                Container(
+                                cubit.isLoading ? Center(
+                                  child: CircularProgressIndicator(),
+                                ) : Container(
                                   width: double.infinity,
                                   clipBehavior: Clip.antiAliasWithSaveLayer,
                                   decoration: BoxDecoration(
@@ -305,14 +390,20 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                   child: MaterialButton(
                                     onPressed: () {
-                                      if(cubit.isLogin){
-                                        if (cubit.formKey.currentState!.validate()) {
+                                      if (cubit.isLogin) {
+                                        if (cubit.formKey.currentState!
+                                            .validate()) {
                                           cubit.formKey.currentState!.save();
                                           cubit.userLogin();
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(builder: (context) => AppScreen()),
+                                          );
                                         }
-                                      }else{
-                                        if (cubit.formKey2.currentState!.validate()) {
-                                          cubit.formKey2.currentState!.save();
+                                      } else {
+                                        if (cubit.formKey.currentState!
+                                            .validate()) {
+                                          cubit.formKey.currentState!.save();
                                           cubit.userRegister();
                                         }
                                       }
@@ -320,7 +411,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     color: Colors.indigo,
                                     height: 50.0,
                                     child: Text(
-                                      cubit.isLogin? 'Login' : 'Register',
+                                      cubit.isLogin ? 'Login' : 'Register',
                                       style: const TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,
@@ -357,12 +448,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                         MaterialPageRoute(
                                             builder: (context) => RegisterScreen()),
                                       );*/
-                                        cubit.loginChange();
+                                      cubit.loginChange();
                                     },
                                     color: Colors.indigoAccent,
                                     height: 50.0,
                                     child: Text(
-                                      cubit.isLogin? 'Register' : 'Login',
+                                      cubit.isLogin ? 'Register' : 'Login',
                                       style: const TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,
@@ -409,7 +500,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                cubit.isLogin? "Login" : "Registration",
+                                cubit.isLogin ? "Login" : "Registration",
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 25.0,
@@ -418,7 +509,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                               TextButton(
                                 onPressed: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => LoginScreen()));
                                 },
                                 child: Text(
                                   "Support",
@@ -449,8 +543,9 @@ class ClippingClass extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     var path = Path();
-    path.lineTo(0, size.height/2);
-    path.cubicTo(size.width * 0.3, size.height,size.width / 2, size.height, size.width, size.height * 0.7);
+    path.lineTo(0, size.height / 2);
+    path.cubicTo(size.width * 0.3, size.height, size.width / 2, size.height,
+        size.width, size.height * 0.7);
     path.lineTo(size.width, 0);
     return path;
   }
@@ -463,8 +558,9 @@ class ClippingClass2 extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     var path = Path();
-    path.lineTo(0, size.height/2);
-    path.cubicTo(size.width * 0.1, size.height, size.width * 0.9, size.height * 0.5, size.width, size.height * 0.7);
+    path.lineTo(0, size.height / 2);
+    path.cubicTo(size.width * 0.1, size.height, size.width * 0.9,
+        size.height * 0.5, size.width, size.height * 0.7);
     path.lineTo(size.width, 0);
     return path;
   }
@@ -478,7 +574,8 @@ class ClippingClass3 extends CustomClipper<Path> {
   Path getClip(Size size) {
     var path = Path();
     path.lineTo(0, size.height * 0.51);
-    path.cubicTo(size.width * 0.1, size.height, size.width * 0.9, size.height * 0.5, size.width, size.height * 0.7);
+    path.cubicTo(size.width * 0.1, size.height, size.width * 0.9,
+        size.height * 0.5, size.width, size.height * 0.7);
     path.lineTo(size.width, 0);
     return path;
   }
