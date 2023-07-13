@@ -1,6 +1,10 @@
 import 'package:bloc/bloc.dart';
+import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:englizy_app/layout/cubit/states.dart';
 import 'package:englizy_app/modules/admin/settings_admin/settings_admin_screen.dart';
+import 'package:englizy_app/modules/student/home/home_screen.dart';
+import 'package:englizy_app/modules/student/posts/posts_screen.dart';
+import 'package:englizy_app/modules/student/settings_student/settings_student_screen.dart';
 import 'package:fluid_bottom_nav_bar/fluid_bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -12,23 +16,10 @@ class AppCubit extends Cubit<AppStates> {
 
   static AppCubit get(context) => BlocProvider.of(context);
 
-  int bottomNavIndex = 0;
+  int bottomNavIndex = 2;
 
-
-  List<BottomNavigationBarItem> adminScreens = [
-    BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: "Home"),
-    BottomNavigationBarItem(icon: Icon(Icons.date_range_sharp), label: "Lectures"),
-    BottomNavigationBarItem(icon: Icon(Icons.data_exploration), label: "data"),
-    BottomNavigationBarItem(icon: Icon(Icons.ac_unit), label: "data"),
-    BottomNavigationBarItem(icon: Icon(Icons.settings), label: "data"),
-  ];
-
-  List<Widget> widgetOptions = <Widget>[
-    Center(
-      child: Text(
-        'HOME PAGE',
-      ),
-    ),
+  List<Widget> widgetAdmin = <Widget>[
+    SettingsAdminScreen(),
     Center(
       child: Text(
         'Lectures',
@@ -36,7 +27,7 @@ class AppCubit extends Cubit<AppStates> {
     ),
     Center(
       child: Text(
-        'CONTACT',
+        'HOME PAGE',
       ),
     ),
     Center(
@@ -46,12 +37,53 @@ class AppCubit extends Cubit<AppStates> {
     ),
     Center(
       child: Text(
-        'Settings',
+        'CONTACT',
       ),
     ),
   ];
 
-  List<MoltenTab> icons() {
+  List<Widget> widgetStudent = <Widget>[
+    SettingsStudentScreen(),
+    Center(
+      child: Text(
+        'Lectures',
+      ),
+    ),
+    HomeScreen(),
+    PostsScreen(),
+    Center(
+      child: Text(
+        'CONTACT',
+      ),
+    ),
+  ];
+
+  List<TabItem> icons() {
+    return [
+      TabItem(
+        icon: Icon(Icons.settings),
+        title: 'Settings',
+      ),
+      TabItem(
+        icon: Icon(Icons.date_range_sharp),
+        title: 'community',
+      ),
+      TabItem(
+        icon: Icon(Icons.home_outlined),
+        title: 'HOME PAGE',
+      ),
+      TabItem(
+        icon: Icon(Icons.data_exploration),
+        title: 'Posts',
+      ),
+      TabItem(
+        icon: Icon(Icons.ac_unit),
+        title: 'CONTACT',
+      ),
+    ];
+  }
+
+  /*List<MoltenTab> icons() {
     return [
       MoltenTab(
         icon: Icon(Icons.home_outlined),
@@ -99,7 +131,7 @@ class AppCubit extends Cubit<AppStates> {
         ),
       ),
     ];
-  }
+  }*/
 
   void changeIndex(int newIndex) {
     bottomNavIndex = newIndex;

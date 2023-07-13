@@ -1,7 +1,10 @@
 import 'package:englizy_app/MyBlocObserver.dart';
+import 'package:englizy_app/layout/app_layout.dart';
+import 'package:englizy_app/shared/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'layout/cubit/cubit.dart';
 import 'layout/cubit/states.dart';
@@ -15,7 +18,10 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  return runApp(const MyApp());
+  return runApp(ChangeNotifierProvider<ThemeNotifier>(
+    create: (_) => ThemeNotifier(),
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -32,9 +38,13 @@ class MyApp extends StatelessWidget {
       child: BlocConsumer<AppCubit, AppStates>(
           listener: (context, state) {},
           builder: (context, state) {
-            return MaterialApp(
-              debugShowCheckedModeBanner: false,
-              home: AdminHomeScreen(),
+            return Consumer<ThemeNotifier>(
+              builder: (context, ThemeNotifier theme, _) => MaterialApp(
+                title: 'Englizy',
+                theme: theme.getTheme(),
+                debugShowCheckedModeBanner: false,
+                home: const AppScreen(),
+              ),
             );
           }),
     );
