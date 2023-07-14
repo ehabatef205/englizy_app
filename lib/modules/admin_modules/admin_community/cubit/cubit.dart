@@ -1,14 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:englizy_app/models/post_model.dart';
-import 'package:englizy_app/modules/student/posts/cubit/states.dart';
-import 'package:englizy_app/shared/constant.dart';
+import 'package:englizy_app/modules/admin_modules/admin_community/cubit/states.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class PostsCubit extends Cubit<PostsStates> {
-  PostsCubit() : super(PostsInitialState());
+class AdminCommunityCubit extends Cubit<AdminCommunityStates> {
+  AdminCommunityCubit() : super(AdminCommunityInitialState());
 
-  static PostsCubit get(context) => BlocProvider.of(context);
+  static AdminCommunityCubit get(context) => BlocProvider.of(context);
 
   TextEditingController commentController = TextEditingController();
 
@@ -30,8 +28,7 @@ class PostsCubit extends Cubit<PostsStates> {
   Stream<QuerySnapshot> getPosts() {
     return FirebaseFirestore.instance
         .collection("posts")
-        .where("view", isEqualTo: true)
-        .where("level", isEqualTo: levelId?? userModel!.level)
+        .where("level", isEqualTo: levelId)
         .orderBy("time")
         .snapshots();
   }

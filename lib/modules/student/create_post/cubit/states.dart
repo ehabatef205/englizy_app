@@ -3,6 +3,7 @@ abstract class CreatePostsStates {}
 class CreatePostsInitialState extends CreatePostsStates {}
 
 class CreatePostsCreatePostLoadingState extends CreatePostsStates {}
+class ChangeState extends CreatePostsStates {}
 
 class CreatePostsCreatePostSuccessState extends CreatePostsStates {}
 

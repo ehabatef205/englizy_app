@@ -73,10 +73,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 cubit.emailLoginController,
                                             type: TextInputType.emailAddress,
                                             context: context,
-                                            labelText: "Student phone number",
+                                            labelText: "Email",
                                             validate: (value) {
                                               if (value!.isEmpty) {
-                                                return "Student phone number is required";
+                                                return "Email is required";
                                               }
                                               return null;
                                             },

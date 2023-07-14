@@ -1,80 +1,57 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:englizy_app/models/post_model.dart';
+import 'package:englizy_app/modules/admin_modules/admin_community/cubit/cubit.dart';
+import 'package:englizy_app/modules/admin_modules/admin_community/cubit/states.dart';
 import 'package:englizy_app/modules/student/comment_of_post/comment_of_post_screen.dart';
 import 'package:englizy_app/modules/student/create_post/create_post_screen.dart';
-import 'package:englizy_app/modules/student/posts/cubit/cubit.dart';
-import 'package:englizy_app/modules/student/posts/cubit/states.dart';
-import 'package:englizy_app/shared/components.dart';
 import 'package:englizy_app/shared/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
-class PostsScreen extends StatelessWidget {
-  const PostsScreen({super.key});
+class AdminCommunityScreen extends StatelessWidget {
+  const AdminCommunityScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery
+        .of(context)
+        .size;
     return BlocProvider(
-      create: (BuildContext context) => PostsCubit(),
-      child: BlocConsumer<PostsCubit, PostsStates>(
+      create: (BuildContext context) => AdminCommunityCubit(),
+      child: BlocConsumer<AdminCommunityCubit, AdminCommunityStates>(
         listener: (context, state) {},
         builder: (context, state) {
-          PostsCubit cubit = PostsCubit.get(context);
+          AdminCommunityCubit cubit = AdminCommunityCubit.get(context);
           return Scaffold(
             appBar: AppBar(
               title: Text(
-                'Posts',
+                'Community',
                 style: TextStyle(
-                  color: Theme.of(context).textTheme.bodyText1!.color,
+                  color: Theme
+                      .of(context)
+                      .textTheme
+                      .bodyText1!
+                      .color,
                 ),
               ),
               centerTitle: true,
               actions: [
-                StreamBuilder<DocumentSnapshot>(
-                    stream: FirebaseFirestore.instance
-                        .collection("users")
-                        .doc(userModel!.uid)
-                        .snapshots(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        var data = snapshot.data;
-                        return IconButton(
-                          onPressed: () {
-                            if (data!["accepted"]) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => CreatePostsScreen()),
-                              );
-                            } else {
-                              Fluttertoast.showToast(
-                                msg: "Wait for accept by admin",
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.BOTTOM,
-                                timeInSecForIosWeb: 1,
-                                backgroundColor: Colors.red,
-                                textColor: Colors.white,
-                                fontSize: 16.0,
-                              );
-                            }
-                          },
-                          icon: Icon(
-                            Icons.add,
-                            color: Theme.of(context).textTheme.bodyText1!.color,
-                          ),
-                        );
-                      } else {
-                        return IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.add,
-                            color: Theme.of(context).textTheme.bodyText1!.color,
-                          ),
-                        );
-                      }
-                    }),
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CreatePostsScreen()),
+                    );
+                  },
+                  icon: Icon(
+                    Icons.add,
+                    color: Theme
+                        .of(context)
+                        .textTheme
+                        .bodyText1!
+                        .color,
+                  ),
+                ),
               ],
             ),
             body: Column(
@@ -90,9 +67,13 @@ class PostsScreen extends StatelessWidget {
                           return DropdownButtonHideUnderline(
                             child: DropdownButton(
                               dropdownColor:
-                                  Theme.of(context).scaffoldBackgroundColor,
-                              iconEnabledColor:
-                                  Theme.of(context).iconTheme.color,
+                              Theme
+                                  .of(context)
+                                  .scaffoldBackgroundColor,
+                              iconEnabledColor: Theme
+                                  .of(context)
+                                  .iconTheme
+                                  .color,
                               hint: const Text(
                                 "Choose level",
                                 style: TextStyle(color: Colors.grey),
@@ -106,7 +87,8 @@ class PostsScreen extends StatelessWidget {
                                   child: Text(
                                     item["name"],
                                     style: TextStyle(
-                                        color: Theme.of(context)
+                                        color: Theme
+                                            .of(context)
                                             .textTheme
                                             .bodyText1!
                                             .color),
@@ -128,7 +110,8 @@ class PostsScreen extends StatelessWidget {
                         }
                       }),
                 ),
-                StreamBuilder<QuerySnapshot>(
+                cubit.levelId == null ? const SizedBox(): StreamBuilder<
+                    QuerySnapshot>(
                     stream: cubit.getPosts(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
@@ -138,8 +121,9 @@ class PostsScreen extends StatelessWidget {
                             itemCount: data.length,
                             itemBuilder: (context, index) {
                               return Card(
-                                color:
-                                    Theme.of(context).scaffoldBackgroundColor,
+                                color: Theme
+                                    .of(context)
+                                    .scaffoldBackgroundColor,
                                 clipBehavior: Clip.antiAliasWithSaveLayer,
                                 elevation: 5.0,
                                 margin: const EdgeInsets.symmetric(
@@ -147,8 +131,8 @@ class PostsScreen extends StatelessWidget {
                                 child: Padding(
                                   padding: const EdgeInsets.all(10.0),
                                   child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment
+                                        .start,
                                     children: [
                                       StreamBuilder<DocumentSnapshot>(
                                           stream: FirebaseFirestore.instance
@@ -162,8 +146,7 @@ class PostsScreen extends StatelessWidget {
                                                 children: [
                                                   CircleAvatar(
                                                     radius: 25.0,
-                                                    backgroundImage:
-                                                        NetworkImage(
+                                                    backgroundImage: NetworkImage(
                                                       dataOfUser["image"],
                                                     ),
                                                   ),
@@ -173,93 +156,57 @@ class PostsScreen extends StatelessWidget {
                                                   Expanded(
                                                     child: Column(
                                                       crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
+                                                      CrossAxisAlignment.start,
                                                       children: [
                                                         Row(
                                                           children: [
                                                             Text(
                                                               dataOfUser[
-                                                                  "studentName"],
+                                                              "studentName"],
                                                               style: TextStyle(
-                                                                color: Theme.of(
-                                                                        context)
+                                                                color: Theme
+                                                                    .of(
+                                                                    context)
                                                                     .textTheme
                                                                     .bodyText1!
                                                                     .color,
                                                                 height: 1.4,
                                                               ),
                                                             ),
+                                                            const SizedBox(
+                                                              width: 5,
+                                                            ),
+                                                            Icon(
+                                                              data[index]["view"]
+                                                                  ? Icons
+                                                                  .visibility_outlined
+                                                                  : Icons
+                                                                  .visibility_off_outlined,
+                                                              color:
+                                                              Theme
+                                                                  .of(context)
+                                                                  .iconTheme
+                                                                  .color,
+                                                            )
                                                           ],
                                                         ),
-                                                        Text(DateTime.fromMillisecondsSinceEpoch(
-                                                                int.parse(data[index]
-                                                                            [
-                                                                            "time"]
-                                                                        .seconds
-                                                                        .toString()) *
-                                                                    1000)
+                                                        Text(DateTime
+                                                            .fromMillisecondsSinceEpoch(
+                                                            int.parse(
+                                                                data[index]
+                                                                ["time"]
+                                                                    .seconds
+                                                                    .toString()) *
+                                                                1000)
                                                             .toString())
                                                       ],
                                                     ),
                                                   ),
-                                                  const SizedBox(
-                                                    width: 15.0,
-                                                  ),
-                                                  PopupMenuButton<int>(
-                                                      color: Theme.of(context)
-                                                          .scaffoldBackgroundColor,
-                                                      icon: Icon(
-                                                        Icons
-                                                            .more_vert_outlined,
-                                                        color: Theme.of(context)
-                                                            .iconTheme
-                                                            .color,
-                                                      ),
-                                                      onSelected: (value) {
-                                                        if (value == 1) {
-                                                          FirebaseFirestore
-                                                              .instance
-                                                              .collection(
-                                                                  "posts")
-                                                              .doc(data[index]
-                                                                  .id)
-                                                              .update({
-                                                            "view": false
-                                                          });
-                                                        }
-                                                      },
-                                                      itemBuilder: (context) =>
-                                                          [
-                                                            PopupMenuItem(
-                                                              value: 1,
-                                                              child: Row(
-                                                                children: [
-                                                                  Icon(
-                                                                    Icons
-                                                                        .delete_outline,
-                                                                  ),
-                                                                  const SizedBox(
-                                                                    width: 10,
-                                                                  ),
-                                                                  Text(
-                                                                    "Delete post",
-                                                                    style: TextStyle(
-                                                                        color: Theme.of(context)
-                                                                            .textTheme
-                                                                            .bodyText1!
-                                                                            .color),
-                                                                  )
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          ]),
                                                 ],
                                               );
                                             } else {
                                               return Center(
-                                                child:
-                                                    CircularProgressIndicator(
+                                                child: CircularProgressIndicator(
                                                   color: color2,
                                                 ),
                                               );
@@ -271,7 +218,8 @@ class PostsScreen extends StatelessWidget {
                                       Text(
                                         data[index]["text"],
                                         style: TextStyle(
-                                            color: Theme.of(context)
+                                            color: Theme
+                                                .of(context)
                                                 .textTheme
                                                 .bodyText1!
                                                 .color,
@@ -285,13 +233,13 @@ class PostsScreen extends StatelessWidget {
                                         child: Row(
                                           children: [
                                             Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
+                                              padding: const EdgeInsets
+                                                  .symmetric(
                                                 vertical: 5.0,
                                               ),
                                               child: Row(
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment.end,
+                                                MainAxisAlignment.end,
                                                 children: [
                                                   Icon(
                                                     Icons
@@ -306,19 +254,21 @@ class PostsScreen extends StatelessWidget {
                                                           .collection("posts")
                                                           .doc(data[index].id)
                                                           .collection(
-                                                              "comments")
+                                                          "comments")
                                                           .snapshots(),
                                                       builder:
                                                           (context, snapshot3) {
                                                         if (snapshot3.hasData) {
                                                           var comments =
-                                                              snapshot3
-                                                                  .data!.docs;
+                                                              snapshot3.data!
+                                                                  .docs;
                                                           return Text(
-                                                            '${comments.length} comment',
+                                                            '${comments
+                                                                .length} comment',
                                                             style: TextStyle(
-                                                              color: Theme.of(
-                                                                      context)
+                                                              color:
+                                                              Theme
+                                                                  .of(context)
                                                                   .textTheme
                                                                   .bodyText1!
                                                                   .color,
@@ -328,8 +278,9 @@ class PostsScreen extends StatelessWidget {
                                                           return Text(
                                                             '0 comment',
                                                             style: TextStyle(
-                                                              color: Theme.of(
-                                                                      context)
+                                                              color:
+                                                              Theme
+                                                                  .of(context)
                                                                   .textTheme
                                                                   .bodyText1!
                                                                   .color,
@@ -372,8 +323,11 @@ class PostsScreen extends StatelessWidget {
     );
   }
 
-  Widget buildPostItem(context, index) => Card(
-        color: Theme.of(context).scaffoldBackgroundColor,
+  Widget buildPostItem(context, index) =>
+      Card(
+        color: Theme
+            .of(context)
+            .scaffoldBackgroundColor,
         clipBehavior: Clip.antiAliasWithSaveLayer,
         elevation: 5.0,
         margin: EdgeInsets.symmetric(
@@ -404,7 +358,8 @@ class PostsScreen extends StatelessWidget {
                             Text(
                               'Abdallah Salama',
                               style: TextStyle(
-                                color: Theme.of(context)
+                                color: Theme
+                                    .of(context)
                                     .textTheme
                                     .bodyText1!
                                     .color,
@@ -417,7 +372,11 @@ class PostsScreen extends StatelessWidget {
                             Icon(
                               Icons.check_circle,
                               color:
-                                  Theme.of(context).textTheme.bodyText1!.color,
+                              Theme
+                                  .of(context)
+                                  .textTheme
+                                  .bodyText1!
+                                  .color,
                               size: 16.0,
                             ),
                           ],
@@ -425,7 +384,11 @@ class PostsScreen extends StatelessWidget {
                         Text('${DateTime.now()}',
                             style: TextStyle(
                               color:
-                                  Theme.of(context).textTheme.bodyText1!.color,
+                              Theme
+                                  .of(context)
+                                  .textTheme
+                                  .bodyText1!
+                                  .color,
                             )),
                       ],
                     ),
@@ -455,7 +418,11 @@ class PostsScreen extends StatelessWidget {
               Text(
                 'ahdkajshfkjasfhaksfnlaksfnaklsfjlak',
                 style: TextStyle(
-                  color: Theme.of(context).textTheme.bodyText1!.color,
+                  color: Theme
+                      .of(context)
+                      .textTheme
+                      .bodyText1!
+                      .color,
                 ),
               ),
               Padding(
@@ -502,7 +469,8 @@ class PostsScreen extends StatelessWidget {
                               Text(
                                 '0 comment',
                                 style: TextStyle(
-                                  color: Theme.of(context)
+                                  color: Theme
+                                      .of(context)
                                       .textTheme
                                       .bodyText1!
                                       .color,
@@ -546,7 +514,11 @@ class PostsScreen extends StatelessWidget {
                             'write a comment ...',
                             style: TextStyle(
                               color:
-                                  Theme.of(context).textTheme.bodyText1!.color,
+                              Theme
+                                  .of(context)
+                                  .textTheme
+                                  .bodyText1!
+                                  .color,
                             ),
                           ),
                         ],

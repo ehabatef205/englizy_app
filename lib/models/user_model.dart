@@ -6,6 +6,7 @@ class UserModel {
   late String academicYear;
   late String center;
   late String uid;
+  late String level;
   late String email;
   late bool accepted;
 
@@ -17,6 +18,7 @@ class UserModel {
     required this.parentPhone,
     required this.studentPhone,
     required this.academicYear,
+    required this.level,
     required this.center,
     required this.accepted,
   });
@@ -31,6 +33,7 @@ class UserModel {
     academicYear = json['academicYear'];
     center = json['center'];
     accepted = json['accepted'];
+    level = json['level'];
   }
 
   Map<String, dynamic> toMap() {
@@ -43,6 +46,7 @@ class UserModel {
       'studentPhone': studentPhone,
       'academicYear': academicYear,
       'center': center,
+      'level': level,
       'accepted': accepted,
     };
   }

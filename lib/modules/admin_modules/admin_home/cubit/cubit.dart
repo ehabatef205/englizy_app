@@ -8,11 +8,28 @@ class AdminHomeCubit extends Cubit<AdminHomeStates> {
 
   static AdminHomeCubit get(context) => BlocProvider.of(context);
 
+  String? levelId;
+  String? level;
+
+  void changeLevelId(String? newLevel) {
+    levelId = newLevel;
+    emit(ChangeState());
+  }
+
+  void changeLevel(String? newLevel) {
+    level = newLevel;
+    emit(ChangeState());
+  }
+
   Stream<QuerySnapshot> getDemo() {
     return FirebaseFirestore.instance.collection("demo").snapshots();
   }
 
   Stream<QuerySnapshot> getUnits() {
-    return FirebaseFirestore.instance.collection("units").orderBy("time").snapshots();
+    return FirebaseFirestore.instance
+        .collection("units")
+        .where("level", isEqualTo: levelId)
+        .orderBy("time")
+        .snapshots();
   }
 }

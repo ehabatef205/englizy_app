@@ -98,73 +98,105 @@ class AdminViewPostsScreen extends StatelessWidget {
                                         ],
                                       ),
                                       PopupMenuButton<int>(
-                                          icon: Icon(Icons.more_vert_outlined),
+                                          color: Theme.of(context)
+                                              .scaffoldBackgroundColor,
+                                          icon: Icon(
+                                            Icons.more_vert_outlined,
+                                            color: Theme.of(context)
+                                                .iconTheme
+                                                .color,
+                                          ),
                                           onSelected: (value) {
                                             if (value == 1) {
-                                              Navigator.push(context, MaterialPageRoute(builder: (context) => AdminUpdatePostScreen(data: data[index])));
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          AdminUpdatePostScreen(
+                                                              data: data[
+                                                                  index])));
                                             }
                                             if (value == 2) {
-                                              cubit.deletePost(id: data[index].id);
+                                              cubit.deletePost(
+                                                  id: data[index].id);
                                             }
                                           },
                                           itemBuilder: (context) => [
-                                            PopupMenuItem(
-                                              value: 1,
-                                              child: Row(
-                                                children: [
-                                                  Icon(
-                                                    Icons.update,
+                                                PopupMenuItem(
+                                                  value: 1,
+                                                  child: Row(
+                                                    children: [
+                                                      Icon(
+                                                        Icons.update,
+                                                      ),
+                                                      const SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      Text(
+                                                        "Update post",
+                                                        style: TextStyle(
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .bodyText1!
+                                                                .color),
+                                                      )
+                                                    ],
                                                   ),
-                                                  const SizedBox(
-                                                    width: 10,
+                                                ),
+                                                PopupMenuItem(
+                                                  value: 2,
+                                                  child: Row(
+                                                    children: [
+                                                      Icon(
+                                                        Icons.delete_outline,
+                                                      ),
+                                                      const SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      Text(
+                                                        "Delete post",
+                                                        style: TextStyle(
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .bodyText1!
+                                                                .color),
+                                                      )
+                                                    ],
                                                   ),
-                                                  Text(
-                                                    "Update post",
-                                                    style: TextStyle(
-                                                        color:
-                                                        Theme.of(context)
-                                                            .textTheme
-                                                            .bodyText1!
-                                                            .color),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                            PopupMenuItem(
-                                              value: 2,
-                                              child: Row(
-                                                children: [
-                                                  Icon(
-                                                    Icons.delete_outline,
-                                                  ),
-                                                  const SizedBox(
-                                                    width: 10,
-                                                  ),
-                                                  Text(
-                                                    "Delete post",
-                                                    style: TextStyle(
-                                                        color:
-                                                        Theme.of(context)
-                                                            .textTheme
-                                                            .bodyText1!
-                                                            .color),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          ])
+                                                ),
+                                              ])
                                     ],
                                   ),
-                                  const SizedBox(height: 20,),
-                                  data[index]["text"] == ""? const SizedBox() : Text(data[index]["text"], style: TextStyle(fontSize: 25),),
-                                  const SizedBox(height: 10,),
-                                  data[index]["link"] == ""? const SizedBox() : InkWell(
-                                      onTap: () async{
-                                        if (!await launchUrl(Uri.parse("${data[index]["link"]}"))) {
-                                          throw Exception('Could not launch ${data[index]["link"]}');
-                                        }
-                                      },
-                                      child: Text(data[index]["link"], style: TextStyle(color: Colors.blue, fontSize: 25),)),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  data[index]["text"] == ""
+                                      ? const SizedBox()
+                                      : Text(
+                                          data[index]["text"],
+                                          style: TextStyle(fontSize: 25),
+                                        ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  data[index]["link"] == ""
+                                      ? const SizedBox()
+                                      : InkWell(
+                                          onTap: () async {
+                                            if (!await launchUrl(Uri.parse(
+                                                "${data[index]["link"]}"))) {
+                                              throw Exception(
+                                                  'Could not launch ${data[index]["link"]}');
+                                            }
+                                          },
+                                          child: Text(
+                                            data[index]["link"],
+                                            style: TextStyle(
+                                                color: Colors.blue,
+                                                fontSize: 25),
+                                          )),
                                 ],
                               ),
                             ),

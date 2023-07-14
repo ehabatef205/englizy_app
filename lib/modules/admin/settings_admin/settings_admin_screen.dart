@@ -1,5 +1,7 @@
 import 'package:englizy_app/modules/admin/settings_admin/cubit/cubit.dart';
 import 'package:englizy_app/modules/admin/settings_admin/cubit/states.dart';
+import 'package:englizy_app/modules/admin_modules/admin_level/admin_level_screen.dart';
+import 'package:englizy_app/modules/admin_modules/admin_view_students/admin_view_students_screen.dart';
 import 'package:englizy_app/modules/logIn/logIn_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -22,14 +24,52 @@ class SettingsAdminScreen extends StatelessWidget {
                 children: [
                   ListTile(
                     leading: Icon(
+                      Icons.person_outline,
+                      color: Theme.of(context).iconTheme.color,
+                    ),
+                    title: Text(
+                      'Students',
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Theme.of(context).textTheme.bodyText1!.color,
+                      ),
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AdminViewStudentsScreen()));
+                    },
+                  ),
+                  ListTile(
+                    leading: Icon(
+                      Icons.layers_outlined,
+                      color: Theme.of(context).iconTheme.color,
+                    ),
+                    title: Text(
+                      'Levels',
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Theme.of(context).textTheme.bodyText1!.color,
+                      ),
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AdminLevelScreen()));
+                    },
+                  ),
+                  ListTile(
+                    leading: Icon(
                       Icons.logout_outlined,
-                      color: Colors.black,
+                      color: Theme.of(context).iconTheme.color,
                     ),
                     title: Text(
                       'Logout',
                       style: TextStyle(
                         fontSize: 18,
-                        color: Colors.black,
+                        color: Theme.of(context).textTheme.bodyText1!.color,
                       ),
                     ),
                     onTap: () {

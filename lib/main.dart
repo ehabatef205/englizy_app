@@ -37,6 +37,7 @@ class MyApp extends StatelessWidget {
     if(FirebaseAuth.instance.currentUser != null){
       FirebaseFirestore.instance.collection("users").doc(FirebaseAuth.instance.currentUser!.uid).get().then((value){
         userModel = UserModel.fromjson(value.data()!);
+        print(userModel!.level);
       });
     }
     return MultiBlocProvider(

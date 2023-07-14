@@ -53,6 +53,7 @@ dependencies:
   file_picker: ^5.3.1
   provider: ^6.0.5
   chewie: ^1.4.0
+  pdfx: ^2.4.0
   bloc: ^8.1.1
 
 dev_dependencies:

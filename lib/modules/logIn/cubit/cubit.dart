@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:englizy_app/layout/app_layout.dart';
 import 'package:englizy_app/models/user_model.dart';
 import 'package:englizy_app/modules/logIn/cubit/states.dart';
+import 'package:englizy_app/shared/constant.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -39,10 +40,13 @@ class LoginCubit extends Cubit<LoginStates> {
       password: passwordLoginController.text,
     )
         .then((value) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => AppScreen()),
-      );
+          FirebaseFirestore.instance.collection("users").doc(value.user!.uid).get().then((value2) {
+            userModel = UserModel.fromjson(value2.data()!);
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AppScreen()),
+            );
+          });
       emit(LoginSuccessState());
     }).catchError((error) {
       isLoading = false;
@@ -142,6 +146,7 @@ class LoginCubit extends Cubit<LoginStates> {
     required center,
   }) {
     UserModel model = UserModel(
+        level: "pR0JQa615ADCz6yJxh3f",
         uid: uid,
         email: email,
         studentName: studentName,
