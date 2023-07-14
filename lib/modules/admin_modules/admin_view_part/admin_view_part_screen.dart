@@ -45,12 +45,8 @@ class AdminViewPartScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.all(10),
-                        child: SizedBox(
-                          width: size.width,
-                          height: size.height * 0.25,
-                          child: VideoScreen(
-                            video: data["videos"][index],
-                          ),
+                        child: VideoScreen(
+                          video: data["videos"][index],
                         ),
                       );
                     },

@@ -26,33 +26,6 @@ class _LoginScreenState extends State<LoginScreen> {
         builder: (context, state) {
           LoginCubit cubit = LoginCubit.get(context);
           return Scaffold(
-            /*appBar: AppBar(
-              backgroundColor: Colors.white,
-              title: Text(
-                "Login",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 25.0,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              elevation: 1,
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
-                  },
-                  child: Text(
-                    "Support",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              ],
-            ),*/
             body: Stack(
               //alignment: Alignment.bottomCenter,
               children: [
@@ -79,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           Text(
                                             "Hello dear student",
                                             style: TextStyle(
-                                              color: Colors.black,
+                                              color: Theme.of(context).textTheme.bodyText1!.color,
                                               fontSize: 18.0,
                                               fontWeight: FontWeight.w900,
                                             ),
@@ -87,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           Text(
                                             "We'd love you to join us",
                                             style: TextStyle(
-                                              color: Colors.black,
+                                              color: Theme.of(context).textTheme.bodyText1!.color,
                                               fontSize: 18.0,
                                               fontWeight: FontWeight.w900,
                                             ),
@@ -97,8 +70,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                           ),
                                           TextFormFieldWidget(
                                             controller:
-                                                cubit.studentNumberController,
-                                            type: TextInputType.phone,
+                                                cubit.emailLoginController,
+                                            type: TextInputType.emailAddress,
                                             context: context,
                                             labelText: "Student phone number",
                                             validate: (value) {
@@ -113,7 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           ),
                                           TextFormFieldWidget(
                                             controller:
-                                                cubit.passwordController,
+                                                cubit.passwordLoginController,
                                             type: TextInputType.visiblePassword,
                                             context: context,
                                             suffixIcon: IconButton(
@@ -121,6 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 cubit.isPassword
                                                     ? Icons.visibility
                                                     : Icons.visibility_off,
+                                                color: Theme.of(context).iconTheme.color,
                                               ),
                                               onPressed: () {
                                                 cubit.passwordChange();
@@ -139,20 +113,20 @@ class _LoginScreenState extends State<LoginScreen> {
                                           const SizedBox(
                                             height: 10.0,
                                           ),
-                                          InkWell(
-                                            onTap: () {
-                                              /*Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  GetIdScreen()));*/
-                                            },
-                                            child: Text(
-                                              "Forgot your password?",
-                                              style: TextStyle(
-                                                color: Colors.black,
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.end,
+                                            children: [
+                                              InkWell(
+                                                onTap: () {
+                                                },
+                                                child: Text(
+                                                  "Forgot your password?",
+                                                  style: TextStyle(
+                                                    color: Theme.of(context).textTheme.bodyText1!.color,
+                                                  ),
+                                                ),
                                               ),
-                                            ),
+                                            ],
                                           ),
                                           const SizedBox(
                                             height: 30.0,
@@ -166,7 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           Text(
                                             "Hello dear student",
                                             style: TextStyle(
-                                              color: Colors.black,
+                                              color: Theme.of(context).textTheme.bodyText1!.color,
                                               fontSize: 18.0,
                                               fontWeight: FontWeight.w900,
                                             ),
@@ -195,14 +169,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                               enabledBorder: OutlineInputBorder(
                                                 borderRadius: BorderRadius.circular(25),
                                                 borderSide: BorderSide(
-                                                    color: Colors.black38,
-                                                    width: 2),
+                                                    color: Theme.of(context).textTheme.bodyText1!.color!,
+                                                    width: 1),
                                               ),
                                               focusedBorder: OutlineInputBorder(
                                                 borderRadius: BorderRadius.circular(25),
                                                 borderSide: BorderSide(
-                                                    color: Colors.black38,
-                                                    width: 2),
+                                                    color: Theme.of(context).textTheme.bodyText1!.color!,
+                                                    width: 1),
                                               ),
                                               filled: true,
                                             ),
@@ -210,6 +184,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             onChanged: (String? newValue) {
                                               cubit.changeItem(newValue);
                                             },
+                                            style: TextStyle(color: Theme.of(context).textTheme.bodyText1!.color!),
                                             items: cubit.academicYearList.map<DropdownMenuItem<String>>(
                                                 (String value) {
                                               return DropdownMenuItem<String>(
@@ -230,18 +205,18 @@ class _LoginScreenState extends State<LoginScreen> {
                                               enabledBorder: OutlineInputBorder(
                                                 borderRadius: BorderRadius.circular(25),
                                                 borderSide: BorderSide(
-                                                    color: Colors.black38,
-                                                    width: 2),
+                                                    color: Theme.of(context).textTheme.bodyText1!.color!,
+                                                    width: 1),
                                               ),
                                               focusedBorder: OutlineInputBorder(
                                                 borderRadius: BorderRadius.circular(25),
                                                 borderSide: BorderSide(
-                                                    color: Colors.black38,
-                                                    width: 2),
+                                                    color: Theme.of(context).textTheme.bodyText1!.color!,
+                                                    width: 1),
                                               ),
                                               filled: true,
                                             ),
-                                            hint: Text(cubit.dropdownValue2),
+                                            hint: Text(cubit.dropdownValue2!, style: TextStyle(color: Colors.grey, fontSize: 20),),
                                             onChanged: (String? newValue) {
                                               cubit.changeItem2(newValue);
                                             },
@@ -302,6 +277,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 cubit.isPassword
                                                     ? Icons.visibility
                                                     : Icons.visibility_off,
+                                                color: Theme.of(context).iconTheme.color,
                                               ),
                                               onPressed: () {
                                                 cubit.passwordChange();
@@ -330,6 +306,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 cubit.isConfirmPassword
                                                     ? Icons.visibility
                                                     : Icons.visibility_off,
+                                                color: Theme.of(context).iconTheme.color,
                                               ),
                                               onPressed: () {
                                                 cubit.confirmPasswordChange();
@@ -348,12 +325,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                           const SizedBox(
                                             height: 8.0,
                                           ),
-                                          Text(
-                                            "The email used to reset the password",
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 18.0,
-                                              fontWeight: FontWeight.w900,
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                                            child: Text(
+                                              "The email used to reset the password",
+                                              style: TextStyle(
+                                                color: Theme.of(context).textTheme.bodyText1!.color!,
+                                                fontSize: 18.0,
+                                                fontWeight: FontWeight.w900,
+                                              ),
                                             ),
                                           ),
                                           const SizedBox(
@@ -394,17 +374,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                         if (cubit.formKey.currentState!
                                             .validate()) {
                                           cubit.formKey.currentState!.save();
-                                          cubit.userLogin();
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(builder: (context) => AppScreen()),
-                                          );
+                                          cubit.userLogin(context: context);
                                         }
                                       } else {
                                         if (cubit.formKey.currentState!
                                             .validate()) {
                                           cubit.formKey.currentState!.save();
-                                          cubit.userRegister();
+                                          cubit.userRegister(context: context);
                                         }
                                       }
                                     },
@@ -427,7 +403,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   child: Text(
                                     "OR",
                                     style: TextStyle(
-                                      color: Colors.black54,
+                                      color: Theme.of(context).textTheme.bodyText1!.color!,
                                       fontSize: 18.0,
                                     ),
                                   ),
@@ -495,35 +471,38 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: size.height * 0.25,
                         width: size.width,
                         child: SafeArea(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                cubit.isLogin ? "Login" : "Registration",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 25.0,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => LoginScreen()));
-                                },
-                                child: Text(
-                                  "Support",
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  cubit.isLogin ? "Login" : "Registration",
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 16.0,
+                                    fontSize: 25.0,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
-                              ),
-                            ],
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => LoginScreen()));
+                                  },
+                                  child: Text(
+                                    "Support",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),

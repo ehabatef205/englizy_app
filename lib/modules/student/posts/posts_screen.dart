@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:englizy_app/models/post_model.dart';
 import 'package:englizy_app/modules/student/create_post/create_post_screen.dart';
 import 'package:englizy_app/modules/student/posts/cubit/cubit.dart';
 import 'package:englizy_app/modules/student/posts/cubit/states.dart';
+import 'package:englizy_app/shared/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -41,22 +43,220 @@ class PostsScreen extends StatelessWidget {
                 ),
               ],
             ),
-            body: SingleChildScrollView(
-              child: Column(
-                children: [
-                  ListView.separated(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) =>
-                        buildPostItem(context, index),
-                    separatorBuilder: (context, index) => SizedBox(
-                      height: 8.0,
-                    ),
-                    itemCount: 10,
-                  ),
-                ],
-              ),
-            ),
+            body: StreamBuilder<QuerySnapshot>(
+                stream: cubit.getPosts(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    var data = snapshot.data!.docs;
+                    return ListView.builder(
+                        itemCount: data.length,
+                        itemBuilder: (context, index) {
+                          return Card(
+                            color: Theme.of(context).scaffoldBackgroundColor,
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            elevation: 5.0,
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 10),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  StreamBuilder<DocumentSnapshot>(
+                                      stream: FirebaseFirestore.instance
+                                          .collection("users")
+                                          .doc(data[index]["uid"])
+                                          .snapshots(),
+                                      builder: (context, snapshot2) {
+                                        if (snapshot2.hasData) {
+                                          var dataOfUser = snapshot2.data!;
+                                          return Row(
+                                            children: [
+                                              CircleAvatar(
+                                                radius: 25.0,
+                                                backgroundImage: NetworkImage(
+                                                  dataOfUser["image"],
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                width: 15.0,
+                                              ),
+                                              Expanded(
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Row(
+                                                      children: [
+                                                        Text(
+                                                          dataOfUser[
+                                                              "studentName"],
+                                                          style: TextStyle(
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .bodyText1!
+                                                                .color,
+                                                            height: 1.4,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Text(DateTime.fromMillisecondsSinceEpoch(
+                                                            int.parse(data[index]
+                                                                        ["time"]
+                                                                    .seconds
+                                                                    .toString()) *
+                                                                1000)
+                                                        .toString())
+                                                  ],
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                width: 15.0,
+                                              ),
+                                              IconButton(
+                                                icon: const Icon(
+                                                  Icons.more_horiz,
+                                                  size: 16.0,
+                                                ),
+                                                onPressed: () {},
+                                              ),
+                                            ],
+                                          );
+                                        } else {
+                                          return Center(
+                                            child: CircularProgressIndicator(
+                                              color: color2,
+                                            ),
+                                          );
+                                        }
+                                      }),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 15.0,
+                                    ),
+                                    child: Container(
+                                      width: double.infinity,
+                                      height: 1.0,
+                                      color: Colors.grey[300],
+                                    ),
+                                  ),
+                                  Text(
+                                    data[index]["text"],
+                                    style: TextStyle(
+                                      color: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1!
+                                          .color,
+                                      fontSize: 20
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 5.0,
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.end,
+                                      children: [
+                                        const Icon(
+                                          Icons.chat,
+                                          size: 16.0,
+                                          color: Colors.amber,
+                                        ),
+                                        const SizedBox(
+                                          width: 5.0,
+                                        ),
+                                        StreamBuilder<QuerySnapshot>(
+                                            stream: FirebaseFirestore
+                                                .instance
+                                                .collection("posts")
+                                                .doc(data[index].id)
+                                                .collection("comments")
+                                                .snapshots(),
+                                            builder: (context, snapshot3) {
+                                              if (snapshot3.hasData) {
+                                                var comments =
+                                                    snapshot3.data!.docs;
+                                                return Text(
+                                                  '${comments.length} comment',
+                                                  style: TextStyle(
+                                                    color: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyText1!
+                                                        .color,
+                                                  ),
+                                                );
+                                              } else {
+                                                return Text(
+                                                  '0 comment',
+                                                  style: TextStyle(
+                                                    color: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyText1!
+                                                        .color,
+                                                  ),
+                                                );
+                                              }
+                                            })
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                      bottom: 10.0,
+                                    ),
+                                    child: Container(
+                                      width: double.infinity,
+                                      height: 1.0,
+                                      color: Colors.grey[300],
+                                    ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: InkWell(
+                                          child: Row(
+                                            children: [
+                                              CircleAvatar(
+                                                radius: 18.0,
+                                                backgroundImage: NetworkImage(
+                                                  userModel!.image
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: 15.0,
+                                              ),
+                                              Text(
+                                                'write a comment ...',
+                                                style: TextStyle(
+                                                  color: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyText1!
+                                                      .color,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          onTap: () {},
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        });
+                  } else {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        color: color2,
+                      ),
+                    );
+                  }
+                }),
           );
         },
       ),

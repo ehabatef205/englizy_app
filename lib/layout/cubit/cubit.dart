@@ -4,6 +4,7 @@ import 'package:englizy_app/layout/cubit/states.dart';
 import 'package:englizy_app/modules/admin/settings_admin/settings_admin_screen.dart';
 import 'package:englizy_app/modules/student/home/home_screen.dart';
 import 'package:englizy_app/modules/student/posts/posts_screen.dart';
+import 'package:englizy_app/modules/student/posts_of_admin/posts_of_admin_screen.dart';
 import 'package:englizy_app/modules/student/settings_student/settings_student_screen.dart';
 import 'package:fluid_bottom_nav_bar/fluid_bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
@@ -43,30 +44,26 @@ class AppCubit extends Cubit<AppStates> {
   ];
 
   List<Widget> widgetStudent = <Widget>[
-    SettingsStudentScreen(),
+    PostsScreen(),
     Center(
       child: Text(
         'Lectures',
       ),
     ),
     HomeScreen(),
-    PostsScreen(),
-    Center(
-      child: Text(
-        'CONTACT',
-      ),
-    ),
+    PostsOfAdminScreen(),
+    SettingsStudentScreen(),
   ];
 
   List<TabItem> icons() {
     return [
       TabItem(
-        icon: Icon(Icons.settings),
-        title: 'Settings',
+        icon: Icon(Icons.date_range_sharp),
+        title: 'Community',
       ),
       TabItem(
-        icon: Icon(Icons.date_range_sharp),
-        title: 'community',
+        icon: Icon(Icons.ac_unit),
+        title: 'PDF',
       ),
       TabItem(
         icon: Icon(Icons.home_outlined),
@@ -77,8 +74,8 @@ class AppCubit extends Cubit<AppStates> {
         title: 'Posts',
       ),
       TabItem(
-        icon: Icon(Icons.ac_unit),
-        title: 'CONTACT',
+        icon: Icon(Icons.settings),
+        title: 'Settings',
       ),
     ];
   }

@@ -1,6 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:englizy_app/MyBlocObserver.dart';
 import 'package:englizy_app/layout/app_layout.dart';
+import 'package:englizy_app/models/user_model.dart';
+import 'package:englizy_app/modules/logIn/logIn_screen.dart';
+import 'package:englizy_app/shared/constant.dart';
 import 'package:englizy_app/shared/theme.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -29,6 +34,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if(FirebaseAuth.instance.currentUser != null){
+      FirebaseFirestore.instance.collection("users").doc(FirebaseAuth.instance.currentUser!.uid).get().then((value){
+        userModel = UserModel.fromjson(value.data()!);
+      });
+    }
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -43,7 +53,7 @@ class MyApp extends StatelessWidget {
                 title: 'Englizy',
                 theme: theme.getTheme(),
                 debugShowCheckedModeBanner: false,
-                home: const AppScreen(),
+                home: FirebaseAuth.instance.currentUser == null? LoginScreen() : AppScreen(),
               ),
             );
           }),

@@ -1,10 +1,10 @@
 import 'package:englizy_app/modules/student/create_post/cubit/cubit.dart';
 import 'package:englizy_app/modules/student/create_post/cubit/states.dart';
+import 'package:englizy_app/shared/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CreatePostsScreen extends StatelessWidget
-{
+class CreatePostsScreen extends StatelessWidget {
   const CreatePostsScreen({super.key});
 
   @override
@@ -26,7 +26,9 @@ class CreatePostsScreen extends StatelessWidget
               ),
               actions: [
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    cubit.createPost(context: context);
+                  },
                   child: Text(
                     "Post",
                     style: TextStyle(
@@ -46,7 +48,7 @@ class CreatePostsScreen extends StatelessWidget
                       CircleAvatar(
                         radius: 25.0,
                         backgroundImage: NetworkImage(
-                          'https://image.freepik.com/free-photo/skeptical-woman-has-unsure-questioned-expression-points-fingers-sideways_273609-40770.jpg',
+                          userModel!.image
                         ),
                       ),
                       SizedBox(
@@ -54,7 +56,7 @@ class CreatePostsScreen extends StatelessWidget
                       ),
                       Expanded(
                         child: Text(
-                          'Abdallah Salama',
+                          userModel!.studentName,
                           style: TextStyle(
                             height: 1.4,
                           ),
@@ -64,6 +66,7 @@ class CreatePostsScreen extends StatelessWidget
                   ),
                   Expanded(
                     child: TextFormField(
+                      maxLines: 15,
                       controller: cubit.textController,
                       style: TextStyle(
                         color: Theme.of(context).textTheme.bodyText1!.color,
@@ -72,44 +75,10 @@ class CreatePostsScreen extends StatelessWidget
                         hintStyle: TextStyle(
                           color: Theme.of(context).textTheme.bodyText1!.color,
                         ),
-
                         hintText: 'what is on your mind ...',
                         border: InputBorder.none,
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 20.0,
-                  ),
-                  if(cubit.postImage != null)
-                    Stack(
-                    alignment: AlignmentDirectional.topEnd,
-                    children: [
-                      Container(
-                        height: 140.0,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4.0,),
-                          image: DecorationImage(
-                            image: FileImage(cubit.postImage!),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      IconButton(
-                        icon: CircleAvatar(
-                          radius: 20.0,
-                          child: Icon(
-                            Icons.close,
-                            size: 16.0,
-                          ),
-                        ),
-                        onPressed: ()
-                        {
-                          cubit.removePostImage();
-                        },
-                      ),
-                    ],
                   ),
                 ],
               ),

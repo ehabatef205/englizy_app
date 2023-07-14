@@ -102,7 +102,11 @@ class LecturesScreen extends StatelessWidget {
                                                 borderRadius:
                                                     BorderRadius.circular(20),
                                                 border: Border.all(
-                                                    color: Theme.of(context).textTheme.bodyText1!.color!,)),
+                                                  color: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyText1!
+                                                      .color!,
+                                                )),
                                             child: Padding(
                                               padding: const EdgeInsets.all(10),
                                               child: Column(
@@ -111,6 +115,19 @@ class LecturesScreen extends StatelessWidget {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
+                                                  Text(
+                                                    "Question${index + 1}: ",
+                                                    style: TextStyle(
+                                                      fontSize: 14,
+                                                      color: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyText1!
+                                                          .color,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 10,
+                                                  ),
                                                   Text(
                                                     data[index]["questions"]
                                                             [index][
@@ -135,19 +152,8 @@ class LecturesScreen extends StatelessWidget {
                                                         child: Container(
                                                           decoration:
                                                               BoxDecoration(
-                                                            color: data[index]["questions"]
-                                                                            [
-                                                                            index]
-                                                                        [
-                                                                        "answer1"] ==
-                                                                    data[index]["questions"]
-                                                                            [
-                                                                            index]
-                                                                        [
-                                                                        "correct"]
-                                                                ? Colors.green
-                                                                : Colors
-                                                                    .transparent,
+                                                            color: Colors
+                                                                .transparent,
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
@@ -160,20 +166,24 @@ class LecturesScreen extends StatelessWidget {
                                                                   .color!,
                                                             ),
                                                           ),
-                                                          child: Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(10),
-                                                            child: Text(
-                                                              data[index]["questions"]
-                                                                      [index]
-                                                                  ["answer1"],
-                                                              style: TextStyle(
-                                                                color: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .bodyText1!
-                                                                    .color,
+                                                          child: InkWell(
+                                                            onTap: () {},
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(10),
+                                                              child: Text(
+                                                                data[index]["questions"]
+                                                                        [index]
+                                                                    ["answer1"],
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: Theme.of(
+                                                                          context)
+                                                                      .textTheme
+                                                                      .bodyText1!
+                                                                      .color,
+                                                                ),
                                                               ),
                                                             ),
                                                           ),
@@ -186,19 +196,8 @@ class LecturesScreen extends StatelessWidget {
                                                         child: Container(
                                                           decoration:
                                                               BoxDecoration(
-                                                            color: data[index]["questions"]
-                                                                            [
-                                                                            index]
-                                                                        [
-                                                                        "answer2"] ==
-                                                                    data[index]["questions"]
-                                                                            [
-                                                                            index]
-                                                                        [
-                                                                        "correct"]
-                                                                ? Colors.green
-                                                                : Colors
-                                                                    .transparent,
+                                                            color: Colors
+                                                                .transparent,
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
@@ -211,20 +210,24 @@ class LecturesScreen extends StatelessWidget {
                                                                   .color!,
                                                             ),
                                                           ),
-                                                          child: Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(10),
-                                                            child: Text(
-                                                              data[index]["questions"]
-                                                                      [index]
-                                                                  ["answer2"],
-                                                              style: TextStyle(
-                                                                color: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .bodyText1!
-                                                                    .color,
+                                                          child: InkWell(
+                                                            onTap: () {},
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(10),
+                                                              child: Text(
+                                                                data[index]["questions"]
+                                                                        [index]
+                                                                    ["answer2"],
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: Theme.of(
+                                                                          context)
+                                                                      .textTheme
+                                                                      .bodyText1!
+                                                                      .color,
+                                                                ),
                                                               ),
                                                             ),
                                                           ),
@@ -244,19 +247,8 @@ class LecturesScreen extends StatelessWidget {
                                                         child: Container(
                                                           decoration:
                                                               BoxDecoration(
-                                                            color: data[index]["questions"]
-                                                                            [
-                                                                            index]
-                                                                        [
-                                                                        "answer3"] ==
-                                                                    data[index]["questions"]
-                                                                            [
-                                                                            index]
-                                                                        [
-                                                                        "correct"]
-                                                                ? Colors.green
-                                                                : Colors
-                                                                    .transparent,
+                                                            color: Colors
+                                                                .transparent,
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
@@ -269,20 +261,24 @@ class LecturesScreen extends StatelessWidget {
                                                                   .color!,
                                                             ),
                                                           ),
-                                                          child: Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(10),
-                                                            child: Text(
-                                                              data[index]["questions"]
-                                                                      [index]
-                                                                  ["answer3"],
-                                                              style: TextStyle(
-                                                                color: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .bodyText1!
-                                                                    .color,
+                                                          child: InkWell(
+                                                            onTap: () {},
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(10),
+                                                              child: Text(
+                                                                data[index]["questions"]
+                                                                        [index]
+                                                                    ["answer3"],
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: Theme.of(
+                                                                          context)
+                                                                      .textTheme
+                                                                      .bodyText1!
+                                                                      .color,
+                                                                ),
                                                               ),
                                                             ),
                                                           ),
@@ -295,19 +291,8 @@ class LecturesScreen extends StatelessWidget {
                                                         child: Container(
                                                           decoration:
                                                               BoxDecoration(
-                                                            color: data[index]["questions"]
-                                                                            [
-                                                                            index]
-                                                                        [
-                                                                        "answer4"] ==
-                                                                    data[index]["questions"]
-                                                                            [
-                                                                            index]
-                                                                        [
-                                                                        "correct"]
-                                                                ? Colors.green
-                                                                : Colors
-                                                                    .transparent,
+                                                            color: Colors
+                                                                .transparent,
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
@@ -320,20 +305,24 @@ class LecturesScreen extends StatelessWidget {
                                                                   .color!,
                                                             ),
                                                           ),
-                                                          child: Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(10),
-                                                            child: Text(
-                                                              data[index]["questions"]
-                                                                      [index]
-                                                                  ["answer4"],
-                                                              style: TextStyle(
-                                                                color: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .bodyText1!
-                                                                    .color,
+                                                          child: InkWell(
+                                                            onTap: () {},
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(10),
+                                                              child: Text(
+                                                                data[index]["questions"]
+                                                                        [index]
+                                                                    ["answer4"],
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: Theme.of(
+                                                                          context)
+                                                                      .textTheme
+                                                                      .bodyText1!
+                                                                      .color,
+                                                                ),
                                                               ),
                                                             ),
                                                           ),

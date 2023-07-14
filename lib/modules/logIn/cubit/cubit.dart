@@ -12,8 +12,8 @@ class LoginCubit extends Cubit<LoginStates> {
   LoginCubit() : super(LoginInitialState());
 
   static LoginCubit get(context) => BlocProvider.of(context);
-  TextEditingController studentNumberController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  TextEditingController emailLoginController = TextEditingController();
+  TextEditingController passwordLoginController = TextEditingController();
   bool isPassword = true;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -30,16 +30,19 @@ class LoginCubit extends Cubit<LoginStates> {
     emit(ChangeState());
   }
 
-  void userLogin() {
+  void userLogin({required BuildContext context}) {
     isLoading = true;
     emit(LoginLoadingState());
     FirebaseAuth.instance
         .signInWithEmailAndPassword(
-      email: emailController.text,
-      password: passwordController.text,
-    ).then((value) {
-      print(value.user?.email);
-      print(value.user?.uid);
+      email: emailLoginController.text,
+      password: passwordLoginController.text,
+    )
+        .then((value) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => AppScreen()),
+      );
       emit(LoginSuccessState());
     }).catchError((error) {
       isLoading = false;
@@ -60,7 +63,7 @@ class LoginCubit extends Cubit<LoginStates> {
   String dropdownValue = 'academic year';
   String? text1;
   String? text2;
-  String dropdownValue2 = 'center';
+  String dropdownValue2 = 'Center';
 
   //GlobalKey<FormState> formKey2 = GlobalKey<FormState>();
 
@@ -103,7 +106,7 @@ class LoginCubit extends Cubit<LoginStates> {
     emit(RegisterChangeState());
   }
 
-  void userRegister() {
+  void userRegister({required BuildContext context}) {
     emit(RegisterLoadingState());
     FirebaseAuth.instance
         .createUserWithEmailAndPassword(
@@ -111,9 +114,8 @@ class LoginCubit extends Cubit<LoginStates> {
       password: passwordController2.text,
     )
         .then((value) {
-      print(value.user?.email);
-      print(value.user?.uid);
       userCreate(
+        context: context,
         uid: value.user!.uid,
         email: emailController.text,
         parentPhone: parentsPhoneNumberController.text,
@@ -130,6 +132,7 @@ class LoginCubit extends Cubit<LoginStates> {
   }
 
   void userCreate({
+    required BuildContext context,
     required studentName,
     required parentPhone,
     required studentPhone,
@@ -139,19 +142,22 @@ class LoginCubit extends Cubit<LoginStates> {
     required center,
   }) {
     UserModel model = UserModel(
-      uid: uid,
-      email: email,
-      studentName: studentName,
-      parentPhone: parentPhone,
-      studentPhone: studentPhone,
-      academicYear: text1!,
-      center: text2!,
-    );
+        uid: uid,
+        email: email,
+        studentName: studentName,
+        parentPhone: parentPhone,
+        studentPhone: studentPhone,
+        academicYear: text1!,
+        center: text2!,
+        accepted: false,
+        image:
+            "https://firebasestorage.googleapis.com/v0/b/englizy-46f94.appspot.com/o/users%2F360_F_346936114_RaxE6OQogebgAWTalE1myseY1Hbb5qPM.jpg?alt=media&token=6402503a-2de0-41a0-a4a1-7a705ab9f11d");
     FirebaseFirestore.instance
         .collection("users")
         .doc(uid)
         .set(model.toMap())
         .then((value) {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => AppScreen()));
       emit(CreateUserSuccessState());
     }).catchError((error) {
       emit(CreateUserErrorState());

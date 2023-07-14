@@ -25,7 +25,7 @@ class AppScreen extends StatelessWidget {
               style: TabStyle.fixedCircle,
               height: size.height * 0.06,
               initialActiveIndex: cubit.bottomNavIndex,
-              activeColor: Theme.of(context).bottomNavigationBarTheme.selectedItemColor,
+              activeColor: Colors.purple,
               color: Theme.of(context).textTheme.bodyText1!.color,
               items: cubit.icons(),
               onTap: (index){
