@@ -1,8 +1,10 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:englizy_app/modules/logIn/logIn_screen.dart';
 import 'package:englizy_app/modules/student/change_password/change_password_screen.dart';
 import 'package:englizy_app/modules/student/settings_student/cubit/cubit.dart';
 import 'package:englizy_app/modules/student/settings_student/cubit/states.dart';
 import 'package:englizy_app/modules/student/update_profile_student/update_profile_screen.dart';
+import 'package:englizy_app/shared/constant.dart';
 import 'package:englizy_app/shared/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,97 +27,122 @@ class SettingsStudentScreen extends StatelessWidget {
           }
           return Scaffold(
             appBar: AppBar(
-              title: Text(
+              title:AnimatedTextKit(
+                animatedTexts: [
+                  ColorizeAnimatedText(
+                    'Profile',
+                    textStyle: colorizeTextStyle,
+                    colors: colorizeColors,
+                  ),
+                ],
+                isRepeatingAnimation: true,
+                repeatForever: true,
+                displayFullTextOnTap: true,
+              ),
+              /*Text(
                 'Profile',
                 style: TextStyle(
                   fontSize: 20,
                   color: Theme.of(context).textTheme.bodyText1!.color,
+                  fontWeight: FontWeight.w700,
                 ),
-              ),
+              ),*/
             ),
             body: SafeArea(
-              child: ListView(
-                children: [
-                  ListTile(
-                    title: Text(
-                      "Dark Mode",
-                      style: TextStyle(
-                        color: Theme.of(context).textTheme.bodyText1!.color,
+              child: Container(
+                constraints: BoxConstraints.expand(),
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("assets/englizy.jpg"),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                child: Container(
+                  color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.4),
+                  child: ListView(
+                    children: [
+                      ListTile(
+                        title: Text(
+                          "Dark Mode",
+                          style: TextStyle(
+                            color: Theme.of(context).textTheme.bodyText1!.color,
+                          ),
+                        ),
+                        trailing:
+                        Consumer<ThemeNotifier>(builder: (context, theme, _) {
+                          return CupertinoSwitch(
+                            value: cubit.isDark,
+                            onChanged: (value) {
+                              cubit.changeMode(theme, context);
+                            },
+                          );
+                        }),
+                        leading: Icon(
+                          Icons.dark_mode,
+                          color: Theme.of(context).iconTheme.color,
+                        ),
                       ),
-                    ),
-                    trailing:
-                    Consumer<ThemeNotifier>(builder: (context, theme, _) {
-                      return CupertinoSwitch(
-                        value: cubit.isDark,
-                        onChanged: (value) {
-                          cubit.changeMode(theme, context);
+                      ListTile(
+                        leading: Icon(
+                          Icons.person,
+                          color: Theme.of(context).iconTheme.color,
+                        ),
+                        title: Text(
+                          "Update Profile",
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Theme.of(context).textTheme.bodyText1!.color,
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                  const UpdateProfileStudentScreen()));
                         },
-                      );
-                    }),
-                    leading: Icon(
-                      Icons.dark_mode,
-                      color: Theme.of(context).iconTheme.color,
-                    ),
-                  ),
-                  ListTile(
-                    leading: Icon(
-                      Icons.person,
-                      color: Theme.of(context).iconTheme.color,
-                    ),
-                    title: Text(
-                      "Update Profile",
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Theme.of(context).textTheme.bodyText1!.color,
                       ),
-                    ),
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                              const UpdateProfileStudentScreen()));
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(
-                      Icons.password,
-                      color: Theme.of(context).iconTheme.color,
-                    ),
-                    title: Text(
-                      'Change password',
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Theme.of(context).textTheme.bodyText1!.color,
+                      ListTile(
+                        leading: Icon(
+                          Icons.password,
+                          color: Theme.of(context).iconTheme.color,
+                        ),
+                        title: Text(
+                          'Change password',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Theme.of(context).textTheme.bodyText1!.color,
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ChangePasswordScreen()));
+                        },
                       ),
-                    ),
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ChangePasswordScreen()));
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(
-                      Icons.logout_outlined,
-                      color: Theme.of(context).iconTheme.color,
-                    ),
-                    title: Text(
-                      'Logout',
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Theme.of(context).textTheme.bodyText1!.color,
+                      ListTile(
+                        leading: Icon(
+                          Icons.logout_outlined,
+                          color: Theme.of(context).iconTheme.color,
+                        ),
+                        title: Text(
+                          'Logout',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Theme.of(context).textTheme.bodyText1!.color,
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginScreen()));
+                        },
                       ),
-                    ),
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => LoginScreen()));
-                    },
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
           );

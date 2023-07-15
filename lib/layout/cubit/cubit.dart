@@ -6,7 +6,6 @@ import 'package:englizy_app/modules/admin_modules/admin_community/admin_communit
 import 'package:englizy_app/modules/admin_modules/admin_home/admin_home_screen.dart';
 import 'package:englizy_app/modules/admin_modules/admin_pdfs/admin_pdfs_screen.dart';
 import 'package:englizy_app/modules/admin_modules/admin_view_posts/admin_view_posts_screen.dart';
-import 'package:englizy_app/modules/student/home/home_screen.dart';
 import 'package:englizy_app/modules/student/posts/posts_screen.dart';
 import 'package:englizy_app/modules/student/posts_of_admin/posts_of_admin_screen.dart';
 import 'package:englizy_app/modules/student/settings_student/settings_student_screen.dart';
@@ -55,7 +54,14 @@ class AppCubit extends Cubit<AppStates> {
         title: 'PDF',
       ),
       TabItem(
-        icon: Icon(Icons.home_outlined),
+        icon: IconTheme(
+          data: IconThemeData.fallback(),
+          child: CircleAvatar(
+            backgroundImage: AssetImage(
+              'assets/englizy.jpg',
+            ),
+          )
+        ),
         title: 'HOME PAGE',
       ),
       TabItem(

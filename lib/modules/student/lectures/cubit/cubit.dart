@@ -6,6 +6,17 @@ class LecturesCubit extends Cubit<LecturesStates> {
 
   static LecturesCubit get(context) => BlocProvider.of(context);
 
+  int index = 0;
+  bool done = false;
+  String textName = "Next";
 
+  void changeIndex(){
+    index++;
+    emit(ChangeState());
+  }
 
+  void changeTextName(){
+    textName = "Done";
+    emit(ChangeState());
+  }
 }

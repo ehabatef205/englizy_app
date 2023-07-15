@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:englizy_app/models/post_model.dart';
 import 'package:englizy_app/modules/student/comment_of_post/comment_of_post_screen.dart';
@@ -15,7 +16,9 @@ class PostsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery
+        .of(context)
+        .size;
     return BlocProvider(
       create: (BuildContext context) => PostsCubit(),
       child: BlocConsumer<PostsCubit, PostsStates>(
@@ -24,12 +27,26 @@ class PostsScreen extends StatelessWidget {
           PostsCubit cubit = PostsCubit.get(context);
           return Scaffold(
             appBar: AppBar(
-              title: Text(
+              title: AnimatedTextKit(
+                animatedTexts: [
+                  ColorizeAnimatedText(
+                    'Posts',
+                    textStyle: colorizeTextStyle,
+                    colors: colorizeColors,
+                  ),
+                ],
+                isRepeatingAnimation: true,
+                repeatForever: true,
+                displayFullTextOnTap: true,
+              ),
+              /*Text(
                 'Posts',
                 style: TextStyle(
                   color: Theme.of(context).textTheme.bodyText1!.color,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.w700,
                 ),
-              ),
+              ),*/
               centerTitle: true,
               actions: [
                 StreamBuilder<DocumentSnapshot>(
@@ -62,7 +79,11 @@ class PostsScreen extends StatelessWidget {
                           },
                           icon: Icon(
                             Icons.add,
-                            color: Theme.of(context).textTheme.bodyText1!.color,
+                            color: Theme
+                                .of(context)
+                                .textTheme
+                                .bodyText1!
+                                .color,
                           ),
                         );
                       } else {
@@ -70,166 +91,207 @@ class PostsScreen extends StatelessWidget {
                           onPressed: () {},
                           icon: Icon(
                             Icons.add,
-                            color: Theme.of(context).textTheme.bodyText1!.color,
+                            color: Theme
+                                .of(context)
+                                .textTheme
+                                .bodyText1!
+                                .color,
                           ),
                         );
                       }
                     }),
               ],
             ),
-            body: Column(
-              children: [
-                Center(
-                  child: StreamBuilder<QuerySnapshot>(
-                      stream: FirebaseFirestore.instance
-                          .collection("levels")
-                          .snapshots(),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          var date = snapshot.data!.docs;
-                          return DropdownButtonHideUnderline(
-                            child: DropdownButton(
-                              dropdownColor:
-                                  Theme.of(context).scaffoldBackgroundColor,
-                              iconEnabledColor:
-                                  Theme.of(context).iconTheme.color,
-                              hint: const Text(
-                                "Choose level",
-                                style: TextStyle(color: Colors.grey),
-                              ),
-                              items: date.map((item) {
-                                return DropdownMenuItem(
-                                  onTap: () {
-                                    cubit.changeLevelId(item.id);
-                                  },
-                                  value: item["name"],
-                                  child: Text(
-                                    item["name"],
-                                    style: TextStyle(
-                                        color: Theme.of(context)
-                                            .textTheme
-                                            .bodyText1!
-                                            .color),
-                                  ),
-                                );
-                              }).toList(),
-                              value: cubit.level,
-                              onChanged: (newValue) {
-                                cubit.changeLevel(newValue!.toString());
-                              },
-                            ),
-                          );
-                        } else {
-                          return Center(
-                            child: CircularProgressIndicator(
-                              color: color2,
-                            ),
-                          );
-                        }
-                      }),
+            body: Container(
+              constraints: BoxConstraints.expand(),
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/englizy.jpg"),
+                  fit: BoxFit.cover,
                 ),
-                StreamBuilder<QuerySnapshot>(
-                    stream: cubit.getPosts(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        var data = snapshot.data!.docs;
-                        return ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: data.length,
-                            itemBuilder: (context, index) {
-                              return Card(
-                                color:
-                                    Theme.of(context).scaffoldBackgroundColor,
-                                clipBehavior: Clip.antiAliasWithSaveLayer,
-                                elevation: 5.0,
-                                margin: const EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 10),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Column(
-                                    crossAxisAlignment:
+              ),
+              child: Container(
+                color: Theme
+                    .of(context)
+                    .scaffoldBackgroundColor
+                    .withOpacity(0.4),
+                child: Column(
+                  children: [
+                    Center(
+                      child: StreamBuilder<QuerySnapshot>(
+                          stream: FirebaseFirestore.instance
+                              .collection("levels")
+                              .snapshots(),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              var date = snapshot.data!.docs;
+                              return DropdownButtonHideUnderline(
+                                child: DropdownButton(
+                                  dropdownColor:
+                                  Theme
+                                      .of(context)
+                                      .scaffoldBackgroundColor,
+                                  iconEnabledColor:
+                                  Theme
+                                      .of(context)
+                                      .iconTheme
+                                      .color,
+                                  hint: Text(
+                                    "Choose level",
+                                    style: TextStyle(
+                                      color: Theme.of(context).textTheme.bodyText1!.color,
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                  items: date.map((item) {
+                                    return DropdownMenuItem(
+                                      onTap: () {
+                                        cubit.changeLevelId(item.id);
+                                      },
+                                      value: item["name"],
+                                      child: Text(
+                                        item["name"],
+                                        style: TextStyle(
+                                            color: Theme
+                                                .of(context)
+                                                .textTheme
+                                                .bodyText1!
+                                                .color,
+                                          fontSize: 20.0,
+                                          fontWeight: FontWeight
+                                              .w700,
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
+                                  value: cubit.level,
+                                  onChanged: (newValue) {
+                                    cubit.changeLevel(newValue!.toString());
+                                  },
+                                ),
+                              );
+                            } else {
+                              return Center(
+                                child: CircularProgressIndicator(
+                                  color: color2,
+                                ),
+                              );
+                            }
+                          }),
+                    ),
+                    StreamBuilder<QuerySnapshot>(
+                        stream: cubit.getPosts(),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            var data = snapshot.data!.docs;
+                            return ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: data.length,
+                                itemBuilder: (context, index) {
+                                  return Card(
+                                    color:
+                                    Theme
+                                        .of(context)
+                                        .scaffoldBackgroundColor,
+                                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                                    elevation: 5.0,
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 10),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Column(
+                                        crossAxisAlignment:
                                         CrossAxisAlignment.start,
-                                    children: [
-                                      StreamBuilder<DocumentSnapshot>(
-                                          stream: FirebaseFirestore.instance
-                                              .collection("users")
-                                              .doc(data[index]["uid"])
-                                              .snapshots(),
-                                          builder: (context, snapshot2) {
-                                            if (snapshot2.hasData) {
-                                              var dataOfUser = snapshot2.data!;
-                                              return Row(
-                                                children: [
-                                                  CircleAvatar(
-                                                    radius: 25.0,
-                                                    backgroundImage:
+                                        children: [
+                                          StreamBuilder<DocumentSnapshot>(
+                                              stream: FirebaseFirestore.instance
+                                                  .collection("users")
+                                                  .doc(data[index]["uid"])
+                                                  .snapshots(),
+                                              builder: (context, snapshot2) {
+                                                if (snapshot2.hasData) {
+                                                  var dataOfUser = snapshot2
+                                                      .data!;
+                                                  return Row(
+                                                    children: [
+                                                      CircleAvatar(
+                                                        radius: 25.0,
+                                                        backgroundImage:
                                                         NetworkImage(
-                                                      dataOfUser["image"],
-                                                    ),
-                                                  ),
-                                                  const SizedBox(
-                                                    width: 15.0,
-                                                  ),
-                                                  Expanded(
-                                                    child: Column(
-                                                      crossAxisAlignment:
+                                                          dataOfUser["image"],
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                        width: 15.0,
+                                                      ),
+                                                      Expanded(
+                                                        child: Column(
+                                                          crossAxisAlignment:
                                                           CrossAxisAlignment
                                                               .start,
-                                                      children: [
-                                                        Row(
                                                           children: [
-                                                            Text(
-                                                              dataOfUser[
+                                                            Row(
+                                                              children: [
+                                                                Text(
+                                                                  dataOfUser[
                                                                   "studentName"],
-                                                              style: TextStyle(
-                                                                color: Theme.of(
+                                                                  style: TextStyle(
+                                                                    color: Theme
+                                                                        .of(
                                                                         context)
-                                                                    .textTheme
-                                                                    .bodyText1!
-                                                                    .color,
-                                                                height: 1.4,
-                                                              ),
+                                                                        .textTheme
+                                                                        .bodyText1!
+                                                                        .color,
+                                                                    height: 1.4,
+                                                                  ),
+                                                                ),
+                                                              ],
                                                             ),
-                                                          ],
-                                                        ),
-                                                        Text(DateTime.fromMillisecondsSinceEpoch(
-                                                                int.parse(data[index]
-                                                                            [
-                                                                            "time"]
+                                                            Text(DateTime
+                                                                .fromMillisecondsSinceEpoch(
+                                                                int.parse(
+                                                                    data[index]
+                                                                    [
+                                                                    "time"]
                                                                         .seconds
                                                                         .toString()) *
                                                                     1000)
-                                                            .toString())
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  const SizedBox(
-                                                    width: 15.0,
-                                                  ),
-                                                  PopupMenuButton<int>(
-                                                      color: Theme.of(context)
-                                                          .scaffoldBackgroundColor,
-                                                      icon: Icon(
-                                                        Icons
-                                                            .more_vert_outlined,
-                                                        color: Theme.of(context)
-                                                            .iconTheme
-                                                            .color,
+                                                                .toString())
+                                                          ],
+                                                        ),
                                                       ),
-                                                      onSelected: (value) {
-                                                        if (value == 1) {
-                                                          FirebaseFirestore
-                                                              .instance
-                                                              .collection(
+                                                      const SizedBox(
+                                                        width: 15.0,
+                                                      ),
+                                                      PopupMenuButton<int>(
+                                                          color: Theme
+                                                              .of(context)
+                                                              .scaffoldBackgroundColor,
+                                                          icon: Icon(
+                                                            Icons
+                                                                .more_vert_outlined,
+                                                            color: Theme
+                                                                .of(context)
+                                                                .iconTheme
+                                                                .color,
+                                                          ),
+                                                          onSelected: (value) {
+                                                            if (value == 1) {
+                                                              FirebaseFirestore
+                                                                  .instance
+                                                                  .collection(
                                                                   "posts")
-                                                              .doc(data[index]
-                                                                  .id)
-                                                              .update({
-                                                            "view": false
-                                                          });
-                                                        }
-                                                      },
-                                                      itemBuilder: (context) =>
+                                                                  .doc(
+                                                                  data[index]
+                                                                      .id)
+                                                                  .update({
+                                                                "view": false
+                                                              });
+                                                            }
+                                                          },
+                                                          itemBuilder: (
+                                                              context) =>
                                                           [
                                                             PopupMenuItem(
                                                               value: 1,
@@ -245,7 +307,9 @@ class PostsScreen extends StatelessWidget {
                                                                   Text(
                                                                     "Delete post",
                                                                     style: TextStyle(
-                                                                        color: Theme.of(context)
+                                                                        color: Theme
+                                                                            .of(
+                                                                            context)
                                                                             .textTheme
                                                                             .bodyText1!
                                                                             .color),
@@ -254,117 +318,130 @@ class PostsScreen extends StatelessWidget {
                                                               ),
                                                             ),
                                                           ]),
-                                                ],
-                                              );
-                                            } else {
-                                              return Center(
-                                                child:
+                                                    ],
+                                                  );
+                                                } else {
+                                                  return Center(
+                                                    child:
                                                     CircularProgressIndicator(
-                                                  color: color2,
-                                                ),
-                                              );
-                                            }
-                                          }),
-                                      const SizedBox(
-                                        height: 15,
-                                      ),
-                                      Text(
-                                        data[index]["text"],
-                                        style: TextStyle(
-                                            color: Theme.of(context)
-                                                .textTheme
-                                                .bodyText1!
-                                                .color,
-                                            fontSize: 20),
-                                      ),
-                                      const SizedBox(
-                                        height: 15,
-                                      ),
-                                      const Divider(),
-                                      InkWell(
-                                        child: Row(
-                                          children: [
-                                            Padding(
-                                              padding:
+                                                      color: color2,
+                                                    ),
+                                                  );
+                                                }
+                                              }),
+                                          const SizedBox(
+                                            height: 15,
+                                          ),
+                                          Text(
+                                            data[index]["text"],
+                                            style: TextStyle(
+                                                color: Theme
+                                                    .of(context)
+                                                    .textTheme
+                                                    .bodyText1!
+                                                    .color,
+                                                fontSize: 20),
+                                          ),
+                                          const SizedBox(
+                                            height: 15,
+                                          ),
+                                          const Divider(),
+                                          InkWell(
+                                            child: Row(
+                                              children: [
+                                                Padding(
+                                                  padding:
                                                   const EdgeInsets.symmetric(
-                                                vertical: 5.0,
-                                              ),
-                                              child: Row(
-                                                mainAxisAlignment:
+                                                    vertical: 5.0,
+                                                  ),
+                                                  child: Row(
+                                                    mainAxisAlignment:
                                                     MainAxisAlignment.end,
-                                                children: [
-                                                  Icon(
-                                                    Icons
-                                                        .messenger_outline_outlined,
-                                                  ),
-                                                  const SizedBox(
-                                                    width: 5.0,
-                                                  ),
-                                                  StreamBuilder<QuerySnapshot>(
-                                                      stream: FirebaseFirestore
-                                                          .instance
-                                                          .collection("posts")
-                                                          .doc(data[index].id)
-                                                          .collection(
+                                                    children: [
+                                                      Icon(
+                                                        Icons
+                                                            .messenger_outline_outlined,
+                                                      ),
+                                                      const SizedBox(
+                                                        width: 5.0,
+                                                      ),
+                                                      StreamBuilder<
+                                                          QuerySnapshot>(
+                                                          stream: FirebaseFirestore
+                                                              .instance
+                                                              .collection(
+                                                              "posts")
+                                                              .doc(
+                                                              data[index].id)
+                                                              .collection(
                                                               "comments")
-                                                          .snapshots(),
-                                                      builder:
-                                                          (context, snapshot3) {
-                                                        if (snapshot3.hasData) {
-                                                          var comments =
-                                                              snapshot3
-                                                                  .data!.docs;
-                                                          return Text(
-                                                            '${comments.length} comment',
-                                                            style: TextStyle(
-                                                              color: Theme.of(
+                                                              .snapshots(),
+                                                          builder:
+                                                              (context,
+                                                              snapshot3) {
+                                                            if (snapshot3
+                                                                .hasData) {
+                                                              var comments =
+                                                                  snapshot3
+                                                                      .data!
+                                                                      .docs;
+                                                              return Text(
+                                                                '${comments
+                                                                    .length} comment',
+                                                                style: TextStyle(
+                                                                  color: Theme
+                                                                      .of(
                                                                       context)
-                                                                  .textTheme
-                                                                  .bodyText1!
-                                                                  .color,
-                                                            ),
-                                                          );
-                                                        } else {
-                                                          return Text(
-                                                            '0 comment',
-                                                            style: TextStyle(
-                                                              color: Theme.of(
+                                                                      .textTheme
+                                                                      .bodyText1!
+                                                                      .color,
+                                                                ),
+                                                              );
+                                                            } else {
+                                                              return Text(
+                                                                '0 comment',
+                                                                style: TextStyle(
+                                                                  color: Theme
+                                                                      .of(
                                                                       context)
-                                                                  .textTheme
-                                                                  .bodyText1!
-                                                                  .color,
-                                                            ),
-                                                          );
-                                                        }
-                                                      })
-                                                ],
-                                              ),
+                                                                      .textTheme
+                                                                      .bodyText1!
+                                                                      .color,
+                                                                ),
+                                                              );
+                                                            }
+                                                          })
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                          ],
-                                        ),
-                                        onTap: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      CommentOfPostScreen(
-                                                          id: data[index].id)));
-                                        },
+                                            onTap: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          CommentOfPostScreen(
+                                                              id: data[index]
+                                                                  .id)));
+                                            },
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            });
-                      } else {
-                        return Center(
-                          child: CircularProgressIndicator(
-                            color: color2,
-                          ),
-                        );
-                      }
-                    }),
-              ],
+                                    ),
+                                  );
+                                });
+                          } else {
+                            return Center(
+                              child: CircularProgressIndicator(
+                                color: color2,
+                              ),
+                            );
+                          }
+                        }),
+                  ],
+                ),
+              ),
             ),
           );
         },
@@ -372,8 +449,11 @@ class PostsScreen extends StatelessWidget {
     );
   }
 
-  Widget buildPostItem(context, index) => Card(
-        color: Theme.of(context).scaffoldBackgroundColor,
+  Widget buildPostItem(context, index) =>
+      Card(
+        color: Theme
+            .of(context)
+            .scaffoldBackgroundColor,
         clipBehavior: Clip.antiAliasWithSaveLayer,
         elevation: 5.0,
         margin: EdgeInsets.symmetric(
@@ -404,7 +484,8 @@ class PostsScreen extends StatelessWidget {
                             Text(
                               'Abdallah Salama',
                               style: TextStyle(
-                                color: Theme.of(context)
+                                color: Theme
+                                    .of(context)
                                     .textTheme
                                     .bodyText1!
                                     .color,
@@ -417,7 +498,11 @@ class PostsScreen extends StatelessWidget {
                             Icon(
                               Icons.check_circle,
                               color:
-                                  Theme.of(context).textTheme.bodyText1!.color,
+                              Theme
+                                  .of(context)
+                                  .textTheme
+                                  .bodyText1!
+                                  .color,
                               size: 16.0,
                             ),
                           ],
@@ -425,7 +510,11 @@ class PostsScreen extends StatelessWidget {
                         Text('${DateTime.now()}',
                             style: TextStyle(
                               color:
-                                  Theme.of(context).textTheme.bodyText1!.color,
+                              Theme
+                                  .of(context)
+                                  .textTheme
+                                  .bodyText1!
+                                  .color,
                             )),
                       ],
                     ),
@@ -455,7 +544,11 @@ class PostsScreen extends StatelessWidget {
               Text(
                 'ahdkajshfkjasfhaksfnlaksfnaklsfjlak',
                 style: TextStyle(
-                  color: Theme.of(context).textTheme.bodyText1!.color,
+                  color: Theme
+                      .of(context)
+                      .textTheme
+                      .bodyText1!
+                      .color,
                 ),
               ),
               Padding(
@@ -502,7 +595,8 @@ class PostsScreen extends StatelessWidget {
                               Text(
                                 '0 comment',
                                 style: TextStyle(
-                                  color: Theme.of(context)
+                                  color: Theme
+                                      .of(context)
                                       .textTheme
                                       .bodyText1!
                                       .color,
@@ -546,7 +640,11 @@ class PostsScreen extends StatelessWidget {
                             'write a comment ...',
                             style: TextStyle(
                               color:
-                                  Theme.of(context).textTheme.bodyText1!.color,
+                              Theme
+                                  .of(context)
+                                  .textTheme
+                                  .bodyText1!
+                                  .color,
                             ),
                           ),
                         ],

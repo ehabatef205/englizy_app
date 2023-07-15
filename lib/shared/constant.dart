@@ -6,3 +6,14 @@ Color color2 = Colors.purple;
 Color color3 = Colors.purpleAccent;
 
 UserModel? userModel;
+
+const colorizeColors = [
+  Colors.yellow,
+  Colors.red,
+];
+
+const colorizeTextStyle = TextStyle(
+  fontSize: 25.0,
+  fontWeight: FontWeight.w700,
+  fontStyle: FontStyle.italic,
+);
