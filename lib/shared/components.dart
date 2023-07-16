@@ -29,10 +29,13 @@ Widget TextFormFieldWidget({
       minLines: 1,
       obscureText: obscureText,
       textAlign: textAlign,
+      cursorColor: Theme.of(context).textTheme.bodyText1!.color,
       style: TextStyle(
           color: Theme.of(context).textTheme.bodyText1!.color, fontSize: 18),
       decoration: InputDecoration(
         filled: true,
+        hoverColor: Theme.of(context).textTheme.bodyText1!.color,
+        fillColor: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.45),
         hintText: hint,
         labelText: labelText,
         labelStyle: TextStyle(

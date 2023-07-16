@@ -6,6 +6,7 @@ import 'package:englizy_app/modules/student/settings_student/cubit/states.dart';
 import 'package:englizy_app/modules/student/update_profile_student/update_profile_screen.dart';
 import 'package:englizy_app/shared/constant.dart';
 import 'package:englizy_app/shared/theme.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,7 +28,7 @@ class SettingsStudentScreen extends StatelessWidget {
           }
           return Scaffold(
             appBar: AppBar(
-              title:AnimatedTextKit(
+              title: AnimatedTextKit(
                 animatedTexts: [
                   ColorizeAnimatedText(
                     'Profile',
@@ -58,7 +59,9 @@ class SettingsStudentScreen extends StatelessWidget {
                   ),
                 ),
                 child: Container(
-                  color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.4),
+                  color: Theme.of(context)
+                      .scaffoldBackgroundColor
+                      .withOpacity(0.4),
                   child: ListView(
                     children: [
                       ListTile(
@@ -68,8 +71,8 @@ class SettingsStudentScreen extends StatelessWidget {
                             color: Theme.of(context).textTheme.bodyText1!.color,
                           ),
                         ),
-                        trailing:
-                        Consumer<ThemeNotifier>(builder: (context, theme, _) {
+                        trailing: Consumer<ThemeNotifier>(
+                            builder: (context, theme, _) {
                           return CupertinoSwitch(
                             value: cubit.isDark,
                             onChanged: (value) {
@@ -99,7 +102,7 @@ class SettingsStudentScreen extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                  const UpdateProfileStudentScreen()));
+                                      const UpdateProfileStudentScreen()));
                         },
                       ),
                       ListTile(
@@ -118,7 +121,8 @@ class SettingsStudentScreen extends StatelessWidget {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => ChangePasswordScreen()));
+                                  builder: (context) =>
+                                      ChangePasswordScreen()));
                         },
                       ),
                       ListTile(
@@ -134,10 +138,11 @@ class SettingsStudentScreen extends StatelessWidget {
                           ),
                         ),
                         onTap: () {
+                          FirebaseAuth.instance.signOut();
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => LoginScreen()));
+                            context,
+                            MaterialPageRoute(builder: (context) => LoginScreen()),
+                          );
                         },
                       ),
                     ],

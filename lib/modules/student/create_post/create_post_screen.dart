@@ -198,6 +198,9 @@ class CreatePostsScreen extends StatelessWidget {
                               userModel!.studentName,
                               style: TextStyle(
                                 height: 1.4,
+                                color: Theme.of(context).textTheme.bodyText1!.color,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 16.0
                               ),
                             ),
                           ),

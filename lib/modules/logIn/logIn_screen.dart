@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:englizy_app/layout/app_layout.dart';
 import 'package:englizy_app/modules/logIn/cubit/cubit.dart';
 import 'package:englizy_app/modules/logIn/cubit/states.dart';
@@ -164,38 +165,116 @@ class _LoginScreenState extends State<LoginScreen> {
                                           const SizedBox(
                                             height: 8.0,
                                           ),
-                                          DropdownButtonFormField(
-                                            decoration: InputDecoration(
-                                              enabledBorder: OutlineInputBorder(
-                                                borderRadius: BorderRadius.circular(25),
-                                                borderSide: BorderSide(
-                                                    color: Theme.of(context).textTheme.bodyText1!.color!,
-                                                    width: 1),
-                                              ),
-                                              focusedBorder: OutlineInputBorder(
-                                                borderRadius: BorderRadius.circular(25),
-                                                borderSide: BorderSide(
-                                                    color: Theme.of(context).textTheme.bodyText1!.color!,
-                                                    width: 1),
-                                              ),
-                                              filled: true,
+                                          Container(
+                                            height: 66.0,
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyText1!
+                                                      .color!),
+                                              borderRadius: BorderRadius.circular(25),
                                             ),
-                                            hint: Text(cubit.dropdownValue),
-                                            onChanged: (String? newValue) {
-                                              cubit.changeItem(newValue);
-                                            },
-                                            style: TextStyle(color: Theme.of(context).textTheme.bodyText1!.color!),
-                                            items: cubit.academicYearList.map<DropdownMenuItem<String>>(
-                                                (String value) {
-                                              return DropdownMenuItem<String>(
-                                                value: value,
-                                                child: Text(
-                                                  value,
-                                                  style:
-                                                      TextStyle(fontSize: 20),
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(2.0),
+                                              child: Center(
+                                                child: Row(
+                                                  children: [
+                                                    Flexible(
+                                                      child: TextFormField(
+                                                        onEditingComplete: () {
+                                                          FocusScope.of(context).nextFocus();
+                                                        },
+                                                        keyboardType: TextInputType.datetime,
+                                                        enabled: false,
+                                                        controller: cubit.levelController,
+                                                        minLines: 1,
+                                                        cursorColor: Theme.of(context)
+                                                            .textTheme
+                                                            .bodyText1!
+                                                            .color,
+                                                        style: TextStyle(
+                                                            color: Theme.of(context)
+                                                                .textTheme
+                                                                .bodyText1!
+                                                                .color,
+                                                            fontSize: 18),
+                                                        decoration: InputDecoration(
+                                                          filled: true,
+                                                          hintText: "Type",
+                                                          hintStyle: TextStyle(
+                                                              color: Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyText1!
+                                                                  .color!
+                                                                  .withOpacity(0.5)),
+                                                          disabledBorder: OutlineInputBorder(
+                                                            borderRadius:
+                                                            BorderRadius.circular(50),
+                                                            borderSide: const BorderSide(
+                                                              color: Colors.transparent,
+                                                            ),
+                                                          ),
+                                                          errorBorder: OutlineInputBorder(
+                                                            borderRadius:
+                                                            BorderRadius.circular(50),
+                                                            borderSide: const BorderSide(
+                                                              color: Colors.transparent,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    StreamBuilder<QuerySnapshot>(
+                                                        stream: FirebaseFirestore.instance
+                                                            .collection("levels")
+                                                            .snapshots(),
+                                                        builder: (context, snapshot) {
+                                                          if (snapshot.hasData) {
+                                                            var date = snapshot.data!.docs;
+                                                            return DropdownButtonHideUnderline(
+                                                              child: DropdownButton(
+                                                                dropdownColor: Theme.of(context)
+                                                                    .scaffoldBackgroundColor,
+                                                                iconEnabledColor:
+                                                                Theme.of(context)
+                                                                    .iconTheme
+                                                                    .color,
+                                                                items: date.map((item) {
+                                                                  return DropdownMenuItem(
+                                                                    onTap: () {
+                                                                      cubit
+                                                                          .changeLevelId(item.id);
+                                                                    },
+                                                                    value: item["name"],
+                                                                    child: Text(
+                                                                      item["name"],
+                                                                      style: TextStyle(
+                                                                          color: Theme.of(context)
+                                                                              .textTheme
+                                                                              .bodyText1!
+                                                                              .color),
+                                                                    ),
+                                                                  );
+                                                                }).toList(),
+                                                                onChanged: (newValue) {
+                                                                  cubit.changeLevel(
+                                                                      newValue!.toString());
+                                                                },
+                                                              ),
+                                                            );
+                                                          } else {
+                                                            return Center(
+                                                              child: CircularProgressIndicator(
+                                                                color: color2,
+                                                              ),
+                                                            );
+                                                          }
+                                                        }),
+                                                  ],
                                                 ),
-                                              );
-                                            }).toList(),
+                                              ),
+                                            ),
                                           ),
                                           const SizedBox(
                                             height: 8.0,

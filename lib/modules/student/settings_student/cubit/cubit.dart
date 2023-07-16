@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:englizy_app/modules/student/settings_student/cubit/states.dart';
 import 'package:englizy_app/shared/theme.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';

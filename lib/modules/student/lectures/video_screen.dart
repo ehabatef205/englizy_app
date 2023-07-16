@@ -7,6 +7,7 @@ import 'package:video_player/video_player.dart';
 
 class VideoScreen extends StatefulWidget {
   final String video;
+
   const VideoScreen({required this.video, super.key});
 
   @override
@@ -59,16 +60,24 @@ class _VideoScreenState extends State<VideoScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return chewieController != null &&
-        chewieController!.videoPlayerController.value.isInitialized
+            chewieController!.videoPlayerController.value.isInitialized
         ? SizedBox(
-      width: size.width,
-      height: size.height * 0.25,
-          child: Chewie(
-      controller: chewieController!,
-    ),
-        ) : SizedBox(
-        height: 50,
-        width: 50,
-        child: Text("Loading..."));
+            width: size.width,
+            height: size.height * 0.25,
+            child: Chewie(
+              controller: chewieController!,
+            ),
+          )
+        : SizedBox(
+            height: 50,
+            width: 50,
+            child: Text(
+              "Loading...",
+              style: TextStyle(
+                color: Theme.of(context).textTheme.bodyText1!.color,
+                fontSize: 18.0,
+              ),
+            ),
+          );
   }
 }

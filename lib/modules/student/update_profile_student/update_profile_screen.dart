@@ -1,6 +1,9 @@
 // ignore_for_file: deprecated_member_use
 
+import 'dart:io';
+
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:englizy_app/modules/student/settings_student/settings_student_screen.dart';
 import 'package:englizy_app/modules/student/update_profile_student/cubit/cubit.dart';
 import 'package:englizy_app/modules/student/update_profile_student/cubit/states.dart';
@@ -17,7 +20,7 @@ class UpdateProfileStudentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return BlocProvider(
-      create: (context) => UpdateProfileStudentCubit(),
+      create: (context) => UpdateProfileStudentCubit()..dataUser(),
       child:
           BlocConsumer<UpdateProfileStudentCubit, UpdateProfileStudentStates>(
         listener: (context, state) {},
@@ -58,7 +61,9 @@ class UpdateProfileStudentScreen extends StatelessWidget {
                   ),
                 ),
                 child: Container(
-                  color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.4),
+                  color: Theme.of(context)
+                      .scaffoldBackgroundColor
+                      .withOpacity(0.4),
                   child: Padding(
                     padding: const EdgeInsets.all(10),
                     child: SingleChildScrollView(
@@ -76,10 +81,17 @@ class UpdateProfileStudentScreen extends StatelessWidget {
                                   width: 150,
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
-                                    image: DecorationImage(
-                                      image: AssetImage('assets/back2.jpg'),
-                                      fit: BoxFit.cover,
-                                    ),
+                                    image: cubit.image == null
+                                        ? DecorationImage(
+                                            image:
+                                                NetworkImage(userModel!.image),
+                                            fit: BoxFit.cover,
+                                          )
+                                        : DecorationImage(
+                                            image: FileImage(
+                                                File(cubit.image!.path)),
+                                            fit: BoxFit.cover,
+                                          ),
                                   ),
                                 ),
                               ),
@@ -134,70 +146,229 @@ class UpdateProfileStudentScreen extends StatelessWidget {
                               const SizedBox(
                                 height: 8.0,
                               ),
-                              DropdownButtonFormField(
-                                decoration: InputDecoration(
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(25),
-                                    borderSide: BorderSide(
-                                        color: Theme.of(context)
-                                            .textTheme
-                                            .bodyText1!
-                                            .color!
-                                            .withOpacity(0.7),
-                                        width: 2),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(25),
-                                    borderSide: BorderSide(
-                                        color: Theme.of(context)
-                                            .textTheme
-                                            .bodyText1!
-                                            .color!
-                                            .withOpacity(0.7),
-                                        width: 2),
-                                  ),
-                                  filled: true,
+                              Container(
+                                height: 66.0,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1!
+                                          .color!),
+                                  borderRadius: BorderRadius.circular(25),
                                 ),
-                                hint: Text(
-                                  cubit.dropdownValue,
-                                  style: TextStyle(
-                                    color: Theme.of(context)
-                                        .textTheme
-                                        .bodyText1!
-                                        .color,
-                                  ),
-                                ),
-                                onChanged: (String? newValue) {
-                                  cubit.changeItem(newValue);
-                                },
-                                style: TextStyle(
-                                  color:
-                                      Theme.of(context).textTheme.bodyText1!.color,
-                                ),
-                                items: cubit.academicYearList
-                                    .map<DropdownMenuItem<String>>((String value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Text(
-                                      value,
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        color: Theme.of(context)
-                                            .textTheme
-                                            .bodyText1!
-                                            .color,
-                                      ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(2.0),
+                                  child: Center(
+                                    child: Row(
+                                      children: [
+                                        Flexible(
+                                          child: TextFormField(
+                                            onEditingComplete: () {
+                                              FocusScope.of(context)
+                                                  .nextFocus();
+                                            },
+                                            keyboardType:
+                                                TextInputType.datetime,
+                                            enabled: false,
+                                            controller: cubit.levelController,
+                                            minLines: 1,
+                                            cursorColor: Theme.of(context)
+                                                .textTheme
+                                                .bodyText1!
+                                                .color,
+                                            style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyText1!
+                                                    .color,
+                                                fontSize: 18),
+                                            decoration: InputDecoration(
+                                              filled: true,
+                                              hintText: "Type",
+                                              hintStyle: TextStyle(
+                                                  color: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyText1!
+                                                      .color!
+                                                      .withOpacity(0.5)),
+                                              disabledBorder:
+                                                  OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(50),
+                                                borderSide: const BorderSide(
+                                                  color: Colors.transparent,
+                                                ),
+                                              ),
+                                              errorBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(50),
+                                                borderSide: const BorderSide(
+                                                  color: Colors.transparent,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        StreamBuilder<QuerySnapshot>(
+                                            stream: FirebaseFirestore.instance
+                                                .collection("levels")
+                                                .snapshots(),
+                                            builder: (context, snapshot) {
+                                              if (snapshot.hasData) {
+                                                var date = snapshot.data!.docs;
+                                                return DropdownButtonHideUnderline(
+                                                  child: DropdownButton(
+                                                    dropdownColor: Theme.of(
+                                                            context)
+                                                        .scaffoldBackgroundColor,
+                                                    iconEnabledColor:
+                                                        Theme.of(context)
+                                                            .iconTheme
+                                                            .color,
+                                                    items: date.map((item) {
+                                                      return DropdownMenuItem(
+                                                        onTap: () {
+                                                          cubit.changeLevelId(
+                                                              item.id);
+                                                        },
+                                                        value: item["name"],
+                                                        child: Text(
+                                                          item["name"],
+                                                          style: TextStyle(
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .bodyText1!
+                                                                  .color),
+                                                        ),
+                                                      );
+                                                    }).toList(),
+                                                    onChanged: (newValue) {
+                                                      cubit.changeLevel(
+                                                          newValue!.toString());
+                                                    },
+                                                  ),
+                                                );
+                                              } else {
+                                                return Center(
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                    color: color2,
+                                                  ),
+                                                );
+                                              }
+                                            })
+                                      ],
                                     ),
-                                  );
-                                }).toList(),
+                                  ),
+                                ),
                               ),
                               const SizedBox(
                                 height: 8.0,
                               ),
-                              DropdownButtonFormField(
+                              Container(
+                                height: 66.0,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1!
+                                          .color!),
+                                  borderRadius: BorderRadius.circular(25),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(2.0),
+                                  child: Center(
+                                    child: Row(
+                                      children: [
+                                        Flexible(
+                                          child: TextFormField(
+                                            onEditingComplete: () {
+                                              FocusScope.of(context)
+                                                  .nextFocus();
+                                            },
+                                            keyboardType:
+                                                TextInputType.datetime,
+                                            enabled: false,
+                                            controller: cubit.centerController,
+                                            minLines: 1,
+                                            cursorColor: Theme.of(context)
+                                                .textTheme
+                                                .bodyText1!
+                                                .color,
+                                            style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyText1!
+                                                    .color,
+                                                fontSize: 18),
+                                            decoration: InputDecoration(
+                                              filled: true,
+                                              hintText: "Center",
+                                              hintStyle: TextStyle(
+                                                  color: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyText1!
+                                                      .color!
+                                                      .withOpacity(0.5)),
+                                              disabledBorder:
+                                                  OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(50),
+                                                borderSide: const BorderSide(
+                                                  color: Colors.transparent,
+                                                ),
+                                              ),
+                                              errorBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(50),
+                                                borderSide: const BorderSide(
+                                                  color: Colors.transparent,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        DropdownButtonHideUnderline(
+                                          child: DropdownButton(
+                                            dropdownColor: Theme.of(context)
+                                                .scaffoldBackgroundColor,
+                                            iconEnabledColor: Theme.of(context)
+                                                .iconTheme
+                                                .color,
+                                            items: cubit.centerList
+                                                .map<DropdownMenuItem<String>>(
+                                                    (String value) {
+                                              return DropdownMenuItem<String>(
+                                                value: value,
+                                                child: Text(
+                                                  value,
+                                                  style: TextStyle(
+                                                    fontSize: 18,
+                                                    color: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyText1!
+                                                        .color,
+                                                  ),
+                                                ),
+                                              );
+                                            }).toList(),
+                                            onChanged: (newValue) {
+                                              cubit.changeItem2(newValue);
+                                            },
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              /*DropdownButtonFormField(
                                 style: TextStyle(
-                                  color:
-                                      Theme.of(context).textTheme.bodyText1!.color,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1!
+                                      .color,
                                 ),
                                 decoration: InputDecoration(
                                   enabledBorder: OutlineInputBorder(
@@ -235,13 +406,14 @@ class UpdateProfileStudentScreen extends StatelessWidget {
                                   cubit.changeItem2(newValue);
                                 },
                                 items: cubit.centerList
-                                    .map<DropdownMenuItem<String>>((String value) {
+                                    .map<DropdownMenuItem<String>>(
+                                        (String value) {
                                   return DropdownMenuItem<String>(
                                     value: value,
                                     child: Text(
                                       value,
                                       style: TextStyle(
-                                        fontSize: 20,
+                                        fontSize: 18,
                                         color: Theme.of(context)
                                             .textTheme
                                             .bodyText1!
@@ -250,7 +422,7 @@ class UpdateProfileStudentScreen extends StatelessWidget {
                                     ),
                                   );
                                 }).toList(),
-                              ),
+                              ),*/
                               const SizedBox(
                                 height: 20.0,
                               ),
@@ -264,19 +436,15 @@ class UpdateProfileStudentScreen extends StatelessWidget {
                                       width: size.width * 0.7,
                                       clipBehavior: Clip.antiAliasWithSaveLayer,
                                       decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(15.0),
+                                        borderRadius:
+                                            BorderRadius.circular(15.0),
                                       ),
                                       child: MaterialButton(
                                         onPressed: () {
                                           if (cubit.formKey.currentState!
                                               .validate()) {
                                             cubit.formKey.currentState!.save();
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      SettingsStudentScreen()),
-                                            );
+                                            cubit.uploadImage(context);
                                           }
                                         },
                                         color: Colors.indigo,

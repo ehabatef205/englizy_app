@@ -1,7 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:englizy_app/modules/student/update_profile_student/cubit/states.dart';
+import 'package:englizy_app/shared/constant.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,6 +18,8 @@ class UpdateProfileStudentCubit extends Cubit<UpdateProfileStudentStates> {
   TextEditingController parentsPhoneNumberController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
+  TextEditingController levelController = TextEditingController();
+  TextEditingController centerController = TextEditingController();
   String? academicYear;
   String? center;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -23,6 +28,37 @@ class UpdateProfileStudentCubit extends Cubit<UpdateProfileStudentStates> {
   String img64 = '';
   String dropdownValue = 'academic year';
   String dropdownValue2 = 'center';
+  String? levelId;
+
+  void changeLevelId(String? id) {
+    levelId = id;
+    emit(ChangeState());
+  }
+
+  void changeLevel(String? level) {
+    levelController.text = level!;
+    emit(ChangeState());
+  }
+
+  void changeItem2(newValue) {
+    centerController.text = newValue;
+    emit(ChangeState());
+  }
+
+  void dataUser() {
+    parentsPhoneNumberController.text = userModel!.parentPhone;
+    nameController.text = userModel!.studentName;
+    phoneController.text = userModel!.studentPhone;
+    centerController.text = userModel!.center;
+    FirebaseFirestore.instance
+        .collection("levels")
+        .doc(userModel!.level)
+        .get()
+        .then((value) {
+      levelController.text = value["name"];
+    });
+    emit(ChangeDataState());
+  }
 
   List<String> academicYearList = [
     'First year of high school',
@@ -47,25 +83,72 @@ class UpdateProfileStudentCubit extends Cubit<UpdateProfileStudentStates> {
     emit(ChangeState());
   }
 
-  void changeItem2(newValue) {
-    dropdownValue2 = newValue;
-    center = dropdownValue2;
-    emit(ChangeState());
-  }
-
   void chooseImage() async {
     image = await ImagePicker().pickImage(
       source: ImageSource.gallery,
     );
 
-    File imagefile = File(image!.path);
-
-    Uint8List bytes = await imagefile.readAsBytes();
-
-    img64 = "data:image/jpeg;base64,${base64.encode(bytes)}";
-
-    print(img64);
-
     emit(ChangeImageState());
+  }
+
+  Future uploadImage(BuildContext context) async {
+    if (image != null) {
+      Reference reference = FirebaseStorage.instance
+          .ref()
+          .child("users")
+          .child(userModel!.uid)
+          .child(
+              "${DateTime.now().millisecondsSinceEpoch}.${getName(File(image!.path))}");
+
+      UploadTask uploadTask =
+          reference.putData(await File(image!.path).readAsBytes());
+      await uploadTask!.whenComplete(() async {
+        await reference.getDownloadURL().then((urlImage) async {
+          await FirebaseFirestore.instance
+              .collection("users")
+              .doc(userModel!.uid)
+              .update({
+            "image": urlImage,
+            "parentPhone": parentsPhoneNumberController.text,
+            "studentName": nameController.text,
+            "studentPhone": phoneController.text,
+            "center": centerController.text,
+            "level": levelId == null? userModel!.level : levelId,
+          }).whenComplete(() async {
+            userModel!.image = urlImage;
+            userModel!.parentPhone = parentsPhoneNumberController.text;
+            userModel!.studentName = nameController.text;
+            userModel!.studentPhone = phoneController.text;
+            userModel!.center = centerController.text;
+            userModel!.level = levelId == null? userModel!.level : levelId!;
+            emit(UpdateSuccessState());
+            Navigator.pop(context);
+          });
+        });
+      });
+    } else {
+      await FirebaseFirestore.instance
+          .collection("users")
+          .doc(userModel!.uid)
+          .update({
+        "parentPhone": parentsPhoneNumberController.text,
+        "studentName": nameController.text,
+        "studentPhone": phoneController.text,
+        "center": centerController.text,
+        "level": levelId == null? userModel!.level : levelId,
+      }).whenComplete(() async {
+        userModel!.parentPhone = parentsPhoneNumberController.text;
+        userModel!.studentName = nameController.text;
+        userModel!.studentPhone = phoneController.text;
+        userModel!.center = centerController.text;
+        userModel!.level = levelId == null? userModel!.level : levelId!;
+        emit(UpdateSuccessState());
+        Navigator.pop(context);
+      });
+    }
+  }
+
+  String getName(File imageFile) {
+    return imageFile.path.split(".").last;
   }
 }
