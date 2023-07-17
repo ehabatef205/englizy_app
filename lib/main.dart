@@ -9,6 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'layout/cubit/cubit.dart';
@@ -22,6 +23,9 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  Future.delayed(Duration.zero, () async {
+    await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+  });
 
   return runApp(ChangeNotifierProvider<ThemeNotifier>(
     create: (_) => ThemeNotifier(),
@@ -34,8 +38,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if(FirebaseAuth.instance.currentUser != null){
-      FirebaseFirestore.instance.collection("users").doc(FirebaseAuth.instance.currentUser!.uid).get().then((value){
+    if (FirebaseAuth.instance.currentUser != null) {
+      FirebaseFirestore.instance
+          .collection("users")
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .get()
+          .then((value) {
         userModel = UserModel.fromjson(value.data()!);
         print(userModel!.level);
       });
@@ -54,7 +62,9 @@ class MyApp extends StatelessWidget {
                 title: 'Englizy',
                 theme: theme.getTheme(),
                 debugShowCheckedModeBanner: false,
-                home: FirebaseAuth.instance.currentUser == null? LoginScreen() : AppScreen(),
+                home: FirebaseAuth.instance.currentUser == null
+                    ? LoginScreen()
+                    : AppScreen(),
               ),
             );
           }),
