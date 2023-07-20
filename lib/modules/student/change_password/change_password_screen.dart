@@ -144,6 +144,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                                     validate: (value) {
                                       if (value!.isEmpty) {
                                         return "Confirm New Password is required";
+                                      }else if(value != cubit.newPasswordController.text){
+                                        return "Password is not match";
                                       }
                                       return null;
                                     },
@@ -167,10 +169,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                                           ),
                                           child: MaterialButton(
                                             onPressed: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(builder: (context) => SettingsStudentScreen()),
-                                              );
+                                              cubit.changePassword(context: context);
                                             },
                                             color: Colors.indigo,
                                             height: 50.0,

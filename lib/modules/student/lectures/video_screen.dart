@@ -1,7 +1,4 @@
-import 'dart:io';
-
 import 'package:chewie/chewie.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
@@ -54,6 +51,7 @@ class _VideoScreenState extends State<VideoScreen> {
     // TODO: implement dispose
     super.dispose();
     chewieController?.dispose();
+    _videoPlayerController1!.dispose();
   }
 
   @override

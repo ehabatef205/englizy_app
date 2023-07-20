@@ -31,14 +31,6 @@ class CreatePostsScreen extends StatelessWidget {
                 repeatForever: true,
                 displayFullTextOnTap: true,
               ),
-              /*Text(
-                'Create Post',
-                style: TextStyle(
-                  color: Theme.of(context).textTheme.bodyText1!.color,
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),*/
               actions: [
                 TextButton(
                   onPressed: () {
@@ -104,7 +96,7 @@ class CreatePostsScreen extends StatelessWidget {
                                         fontSize: 18),
                                     decoration: InputDecoration(
                                       filled: true,
-                                      hintText: "Type",
+                                      hintText: "Level",
                                       hintStyle: TextStyle(
                                           color: Theme.of(context)
                                               .textTheme

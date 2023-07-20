@@ -1,4 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:englizy_app/modules/logIn/logIn_screen.dart';
 import 'package:englizy_app/modules/student/change_password/change_password_screen.dart';
 import 'package:englizy_app/modules/student/settings_student/cubit/cubit.dart';
@@ -28,6 +29,7 @@ class SettingsStudentScreen extends StatelessWidget {
           }
           return Scaffold(
             appBar: AppBar(
+              leading: const SizedBox(),
               title: AnimatedTextKit(
                 animatedTexts: [
                   ColorizeAnimatedText(
@@ -138,10 +140,19 @@ class SettingsStudentScreen extends StatelessWidget {
                           ),
                         ),
                         onTap: () {
-                          FirebaseAuth.instance.signOut();
+                          FirebaseFirestore.instance
+                              .collection("users")
+                              .doc(userModel!.uid)
+                              .update({
+                            "open": false,
+                          }).whenComplete(() {
+                            cubit.signOut(context: context);
+                            FirebaseAuth.instance.signOut();
+                          });
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => LoginScreen()),
+                            MaterialPageRoute(
+                                builder: (context) => LoginScreen()),
                           );
                         },
                       ),

@@ -1,7 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:englizy_app/models/post_model.dart';
-import 'package:englizy_app/modules/student/create_post/create_post_screen.dart';
 import 'package:englizy_app/modules/student/comment_of_post/cubit/cubit.dart';
 import 'package:englizy_app/modules/student/comment_of_post/cubit/states.dart';
 import 'package:englizy_app/shared/components.dart';

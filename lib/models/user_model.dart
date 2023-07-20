@@ -8,6 +8,8 @@ class UserModel {
   late String level;
   late String email;
   late bool accepted;
+  late bool admin;
+  late bool open;
 
   UserModel({
     required this.uid,
@@ -19,6 +21,8 @@ class UserModel {
     required this.level,
     required this.center,
     required this.accepted,
+    required this.admin,
+    required this.open,
   });
 
   UserModel.fromjson(Map<String, dynamic> json) {
@@ -31,6 +35,8 @@ class UserModel {
     center = json['center'];
     accepted = json['accepted'];
     level = json['level'];
+    admin = json['admin'];
+    open = json['open'];
   }
 
   Map<String, dynamic> toMap() {
@@ -44,6 +50,8 @@ class UserModel {
       'center': center,
       'level': level,
       'accepted': accepted,
+      'admin': admin,
+      'open': open,
     };
   }
 }

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:englizy_app/layout/app_layout.dart';
+import 'package:englizy_app/layout/cubit/cubit.dart';
 import 'package:englizy_app/models/user_model.dart';
 import 'package:englizy_app/modules/logIn/cubit/states.dart';
 import 'package:englizy_app/shared/constant.dart';
@@ -7,7 +8,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginCubit extends Cubit<LoginStates> {
   LoginCubit() : super(LoginInitialState());
@@ -39,14 +39,42 @@ class LoginCubit extends Cubit<LoginStates> {
       email: emailLoginController.text,
       password: passwordLoginController.text,
     )
-        .then((value) {
-          FirebaseFirestore.instance.collection("users").doc(value.user!.uid).get().then((value2) {
+        .then((value) async {
+      DocumentSnapshot doc = await FirebaseFirestore.instance
+          .collection("users")
+          .doc(value.user!.uid)
+          .get();
+      if (!doc.get("open") || doc.get("open")) {
+        FirebaseFirestore.instance
+            .collection("users")
+            .doc(value.user!.uid)
+            .update({"open": true}).whenComplete(() async {
+          FirebaseFirestore.instance
+              .collection("users")
+              .doc(value.user!.uid)
+              .get()
+              .then((value2) {
             userModel = UserModel.fromjson(value2.data()!);
+            AppCubit.get(context).changeLevelText();
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => AppScreen()),
             );
           });
+        });
+      } else {
+        Fluttertoast.showToast(
+          msg: "This email opened in anther phone",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+        FirebaseAuth.instance.signOut();
+      }
+
       emit(LoginSuccessState());
     }).catchError((error) {
       isLoading = false;
@@ -63,6 +91,7 @@ class LoginCubit extends Cubit<LoginStates> {
   TextEditingController confirmPasswordController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController levelController = TextEditingController();
+  TextEditingController centerController = TextEditingController();
   bool isPassword2 = true;
   bool isConfirmPassword = true;
   String dropdownValue = 'academic year';
@@ -109,6 +138,7 @@ class LoginCubit extends Cubit<LoginStates> {
   void changeItem2(newValue) {
     dropdownValue2 = newValue;
     text2 = dropdownValue2;
+    centerController.text = dropdownValue2;
     emit(RegisterChangeState());
   }
 
@@ -164,6 +194,8 @@ class LoginCubit extends Cubit<LoginStates> {
         studentPhone: studentPhone,
         center: text2!,
         accepted: false,
+        open: true,
+        admin: false,
         image:
             "https://firebasestorage.googleapis.com/v0/b/englizy-46f94.appspot.com/o/users%2F360_F_346936114_RaxE6OQogebgAWTalE1myseY1Hbb5qPM.jpg?alt=media&token=6402503a-2de0-41a0-a4a1-7a705ab9f11d");
     FirebaseFirestore.instance
@@ -171,7 +203,9 @@ class LoginCubit extends Cubit<LoginStates> {
         .doc(uid)
         .set(model.toMap())
         .then((value) {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => AppScreen()));
+      AppCubit.get(context).changeLevelText();
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => AppScreen()));
       emit(CreateUserSuccessState());
     }).catchError((error) {
       emit(CreateUserErrorState());

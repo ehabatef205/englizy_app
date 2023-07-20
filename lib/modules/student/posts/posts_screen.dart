@@ -1,11 +1,9 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:englizy_app/models/post_model.dart';
 import 'package:englizy_app/modules/student/comment_of_post/comment_of_post_screen.dart';
 import 'package:englizy_app/modules/student/create_post/create_post_screen.dart';
 import 'package:englizy_app/modules/student/posts/cubit/cubit.dart';
 import 'package:englizy_app/modules/student/posts/cubit/states.dart';
-import 'package:englizy_app/shared/components.dart';
 import 'package:englizy_app/shared/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,6 +25,7 @@ class PostsScreen extends StatelessWidget {
           PostsCubit cubit = PostsCubit.get(context);
           return Scaffold(
             appBar: AppBar(
+              leading: const SizedBox(),
               title: AnimatedTextKit(
                 animatedTexts: [
                   ColorizeAnimatedText(
@@ -137,7 +136,7 @@ class PostsScreen extends StatelessWidget {
                                       .iconTheme
                                       .color,
                                   hint: Text(
-                                    "Choose level",
+                                    levelText!,
                                     style: TextStyle(
                                       color: Theme.of(context).textTheme.bodyText1!.color,
                                       fontSize: 20.0,

@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:englizy_app/models/post_model.dart';
 import 'package:englizy_app/modules/student/posts/cubit/states.dart';
 import 'package:englizy_app/shared/constant.dart';
 import 'package:flutter/cupertino.dart';

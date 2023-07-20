@@ -1,10 +1,7 @@
-// ignore_for_file: deprecated_member_use
-
 import 'dart:io';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:englizy_app/modules/student/settings_student/settings_student_screen.dart';
 import 'package:englizy_app/modules/student/update_profile_student/cubit/cubit.dart';
 import 'package:englizy_app/modules/student/update_profile_student/cubit/states.dart';
 import 'package:englizy_app/shared/color.dart';
@@ -184,7 +181,7 @@ class UpdateProfileStudentScreen extends StatelessWidget {
                                                 fontSize: 18),
                                             decoration: InputDecoration(
                                               filled: true,
-                                              hintText: "Type",
+                                              hintText: "Level",
                                               hintStyle: TextStyle(
                                                   color: Theme.of(context)
                                                       .textTheme

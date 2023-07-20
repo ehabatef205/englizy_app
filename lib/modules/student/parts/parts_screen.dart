@@ -3,13 +3,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:englizy_app/modules/student/lectures/lectures_screen.dart';
 import 'package:englizy_app/modules/student/parts/cubit/cubit.dart';
 import 'package:englizy_app/modules/student/parts/cubit/states.dart';
-import 'package:englizy_app/modules/student/student_home/student_home_screen.dart';
 import 'package:englizy_app/shared/constant.dart';
+import 'package:englizy_app/modules/student/parts/view_pdf_link_homework.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class PartsScreen extends StatelessWidget {
   final QueryDocumentSnapshot<Object?> dataOfUnit;
+
   const PartsScreen({super.key, required this.dataOfUnit});
 
   @override
@@ -17,112 +20,175 @@ class PartsScreen extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return BlocProvider(
       create: (BuildContext context) => StudentViewPartsCubit(),
-      child: BlocConsumer<StudentViewPartsCubit , StudentViewPartsStates>(
-        listener: (context, state) {},
-        builder: (context, state) {
-          StudentViewPartsCubit cubit = StudentViewPartsCubit.get(context);
-          return Scaffold(
-            appBar: AppBar(
-              title:AnimatedTextKit(
-                animatedTexts: [
-                  ColorizeAnimatedText(
-                    'Parts',
-                    textStyle: colorizeTextStyle,
-                    colors: colorizeColors,
-                  ),
-                ],
-                isRepeatingAnimation: true,
-                repeatForever: true,
-                displayFullTextOnTap: true,
-              ),
-              /*Text(
-                'Parts',
-                style: TextStyle(
-                  color: Theme.of(context).textTheme.bodyText1!.color,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
+      child: BlocConsumer<StudentViewPartsCubit, StudentViewPartsStates>(
+          listener: (context, state) {},
+          builder: (context, state) {
+            StudentViewPartsCubit cubit = StudentViewPartsCubit.get(context);
+            return Scaffold(
+              appBar: AppBar(
+                title: AnimatedTextKit(
+                  animatedTexts: [
+                    ColorizeAnimatedText(
+                      dataOfUnit["name"],
+                      textStyle: colorizeTextStyle,
+                      colors: colorizeColors,
+                    ),
+                  ],
+                  isRepeatingAnimation: true,
+                  repeatForever: true,
+                  displayFullTextOnTap: true,
                 ),
-              ),*/
-            ),
-            body: Container(
-              constraints: BoxConstraints.expand(),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/englizy.jpg"),
-                  fit: BoxFit.cover,
-                ),
-              ),
-              child: Container(
-                color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.4),
-                child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: StreamBuilder<QuerySnapshot>(
-                      stream: cubit.getParts(dataOfUnit.id),
-                      builder: (context, snapshot) {
-                        if(snapshot.hasData) {
-                          var data = snapshot.data!.docs;
-                          return GridView.builder(
-                            gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              childAspectRatio: 0.8,
-                            ),
-                            shrinkWrap: true,
-                            itemCount: data.length,
-                            itemBuilder: (context , index) {
-                              return Container(
-                                width: size.width * 0.35,
-                                decoration: BoxDecoration(
-                                  color: Theme.of(context).scaffoldBackgroundColor,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1!
-                                          .color!
-                                          .withOpacity(0.2),
-                                      spreadRadius: 1,
-                                      blurRadius: 4,
-                                      offset: const Offset(0, 0),
-                                    ),
-                                  ],
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => LecturesScreen(unitId: dataOfUnit.id, partId: data[index].id),
-                                      ),
-                                    );
-                                  },
-                                  child: Center(
-                                    child: Text(
-                                      'Part ${index + 1}',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1!
-                                          .copyWith(fontSize: 20),
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                          );
-                        } else {
-                          return const Center(
-                            child: CircularProgressIndicator(),
+                actions: [
+                  TextButton(
+                      onPressed: () async{
+                        DocumentSnapshot doc = await FirebaseFirestore.instance
+                            .collection("users")
+                            .doc(userModel!.uid)
+                            .get();
+                        if(doc.get("accepted")){
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ViewPdfLinkHomework(
+                                      link: dataOfUnit["homework"],
+                                      name: dataOfUnit["name"], id: dataOfUnit.id)));
+                        }else{
+                          Fluttertoast.showToast(
+                            msg: "Wait",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                            fontSize: 16.0,
                           );
                         }
-                      }
+                      },
+                      child: Text(
+                        "Homework",
+                        style: TextStyle(
+                            color:
+                                Theme.of(context).textTheme.bodyText1!.color),
+                      ))
+                ],
+              ),
+              body: Container(
+                constraints: BoxConstraints.expand(),
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("assets/englizy.jpg"),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                child: Container(
+                  color: Theme.of(context)
+                      .scaffoldBackgroundColor
+                      .withOpacity(0.4),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: StreamBuilder<DocumentSnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection("users")
+                            .doc(FirebaseAuth.instance.currentUser!.uid)
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            var dataOfUser = snapshot.data;
+                            return StreamBuilder<QuerySnapshot>(
+                                stream: cubit.getParts(dataOfUnit.id),
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData) {
+                                    var data = snapshot.data!.docs;
+                                    return GridView.builder(
+                                      gridDelegate:
+                                          const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        childAspectRatio: 0.8,
+                                      ),
+                                      shrinkWrap: true,
+                                      itemCount: data.length,
+                                      itemBuilder: (context, index) {
+                                        return Container(
+                                          width: size.width * 0.35,
+                                          decoration: BoxDecoration(
+                                            color: Theme.of(context)
+                                                .scaffoldBackgroundColor,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyText1!
+                                                    .color!
+                                                    .withOpacity(0.2),
+                                                spreadRadius: 1,
+                                                blurRadius: 4,
+                                                offset: const Offset(0, 0),
+                                              ),
+                                            ],
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                          child: InkWell(
+                                            onTap: () {
+                                              if (dataOfUser!["accepted"] ||
+                                                  data[index]["free"]) {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        LecturesScreen(
+                                                            unitId:
+                                                                dataOfUnit.id,
+                                                            partId:
+                                                                data[index].id),
+                                                  ),
+                                                );
+                                              } else {
+                                                Fluttertoast.showToast(
+                                                  msg:
+                                                      "Wait for accept by admin",
+                                                  toastLength:
+                                                      Toast.LENGTH_SHORT,
+                                                  gravity: ToastGravity.BOTTOM,
+                                                  timeInSecForIosWeb: 1,
+                                                  backgroundColor: Colors.red,
+                                                  textColor: Colors.white,
+                                                  fontSize: 16.0,
+                                                );
+                                              }
+                                            },
+                                            child: Center(
+                                              child: Text(
+                                                'Part ${index + 1}',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyText1!
+                                                    .copyWith(fontSize: 20),
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  } else {
+                                    return const Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  }
+                                });
+                          } else {
+                            return Center(
+                              child: CircularProgressIndicator(
+                                color: color2,
+                              ),
+                            );
+                          }
+                        }),
                   ),
                 ),
               ),
-            ),
-          );
-        }
-      ),
+            );
+          }),
     );
   }
 }

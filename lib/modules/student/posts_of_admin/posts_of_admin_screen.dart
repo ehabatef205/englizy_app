@@ -22,6 +22,7 @@ class PostsOfAdminScreen extends StatelessWidget {
           PostsOfAdminCubit cubit = PostsOfAdminCubit.get(context);
           return Scaffold(
             appBar: AppBar(
+              leading: const SizedBox(),
               centerTitle: true,
               title: AnimatedTextKit(
                 animatedTexts: [

@@ -1,11 +1,10 @@
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:englizy_app/layout/cubit/cubit.dart';
 import 'package:englizy_app/layout/cubit/states.dart';
-import 'package:fluid_bottom_nav_bar/fluid_bottom_nav_bar.dart';
+import 'package:englizy_app/shared/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:molten_navigationbar_flutter/molten_navigationbar_flutter.dart';
 
 class AppScreen extends StatelessWidget {
   const AppScreen({super.key});
@@ -13,13 +12,16 @@ class AppScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return BlocProvider(
-      create: (BuildContext context) => AppCubit(),
-      child: BlocConsumer<AppCubit, AppStates>(
-        listener: (context, state) {},
-        builder: (context, state) {
-          AppCubit cubit = AppCubit.get(context);
-          return Scaffold(
+    return BlocConsumer<AppCubit, AppStates>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        AppCubit cubit = AppCubit.get(context);
+        return WillPopScope(
+          onWillPop: () async {
+            SystemNavigator.pop();
+            return Future.value(true);
+          },
+          child: Scaffold(
             bottomNavigationBar: ConvexAppBar(
               backgroundColor: Theme.of(context).bottomNavigationBarTheme.backgroundColor,
               style: TabStyle.fixedCircle,
@@ -32,32 +34,10 @@ class AppScreen extends StatelessWidget {
                 cubit.changeIndex(index);
               },
             ),
-            body: cubit.widgetStudent[cubit.bottomNavIndex],
-          );
-        },
-      ),
+            body: userModel!.admin? cubit.widgetAdmin[cubit.bottomNavIndex] : cubit.widgetStudent[cubit.bottomNavIndex],
+          ),
+        );
+      },
     );
   }
 }
-
-/*
-MoltenBottomNavigationBar(
-              tabs: cubit.icons(),
-              onTabChange: (index){
-                cubit.changeIndex(index);
-              },
-              selectedIndex: cubit.bottomNavIndex,
-              borderRaduis: BorderRadius.circular(25),
-            )
-BottomNavigationBar(
-              items: cubit.bottomBar,
-              showUnselectedLabels: true,
-              backgroundColor: Colors.black,
-              currentIndex: cubit.bottomNavIndex,
-              onTap: (index){
-                cubit.changeIndex(index);
-              },
-              unselectedItemColor: Colors.black,
-              selectedItemColor: Colors.blueAccent,
-            )
- */

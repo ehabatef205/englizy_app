@@ -7,6 +7,8 @@ Color color3 = Colors.purpleAccent;
 
 UserModel? userModel;
 
+String? levelText;
+
 const colorizeColors = [
   Colors.yellow,
   Colors.red,
