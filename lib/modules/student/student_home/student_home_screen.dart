@@ -1,5 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:englizy_app/modules/demo_unit/demo_unit_screen.dart';
 import 'package:englizy_app/modules/student/parts/parts_screen.dart';
 import 'package:englizy_app/modules/student/student_home/cubit/cubit.dart';
 import 'package:englizy_app/modules/student/student_home/cubit/states.dart';
@@ -10,7 +11,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class StudentHomeScreen extends StatelessWidget {
-  const StudentHomeScreen({super.key});
+  final QueryDocumentSnapshot<Object?> dataOfUnit;
+  const StudentHomeScreen({super.key, required this.dataOfUnit});
 
   @override
   Widget build(BuildContext context) {
@@ -156,10 +158,7 @@ class StudentHomeScreen extends StatelessWidget {
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          PartsScreen(
-                                                            dataOfUnit:
-                                                                data[index],
-                                                          )));
+                                                      DemoUnitScreen(unitId: dataOfUnit.id,)));
                                             },
                                             child: Column(
                                               crossAxisAlignment:
