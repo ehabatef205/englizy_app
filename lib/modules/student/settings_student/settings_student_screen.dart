@@ -140,20 +140,7 @@ class SettingsStudentScreen extends StatelessWidget {
                           ),
                         ),
                         onTap: () {
-                          FirebaseFirestore.instance
-                              .collection("users")
-                              .doc(userModel!.uid)
-                              .update({
-                            "open": false,
-                          }).whenComplete(() {
-                            cubit.signOut(context: context);
-                            FirebaseAuth.instance.signOut();
-                          });
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => LoginScreen()),
-                          );
+                          cubit.signOut(context: context);
                         },
                       ),
                     ],

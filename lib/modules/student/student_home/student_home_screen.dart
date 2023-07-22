@@ -79,7 +79,7 @@ class StudentHomeScreen extends StatelessWidget {
                                 iconEnabledColor:
                                     Theme.of(context).iconTheme.color,
                                 hint: Text(
-                                  levelText!,
+                                  levelText?? "choose Level",
                                   style: TextStyle(
                                     color: Theme.of(context)
                                         .textTheme

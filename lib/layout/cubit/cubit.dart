@@ -78,16 +78,18 @@ class AppCubit extends Cubit<AppStates> {
     emit(ChangeIndexState());
   }
 
-  void changeLevelText() {
-    FirebaseFirestore.instance.collection("users").doc(FirebaseAuth.instance.currentUser!.uid).get().then((value) {
-      FirebaseFirestore.instance
-          .collection("levels")
-          .doc(value["level"])
-          .get()
-          .then((value) {
-        levelText = value["name"];
-        emit(GetLevelTextState());
+  Future<void> changeLevelText() async{
+    if(FirebaseAuth.instance.currentUser != null){
+      await FirebaseFirestore.instance.collection("users").doc(FirebaseAuth.instance.currentUser!.uid).get().then((value) {
+        FirebaseFirestore.instance
+            .collection("levels")
+            .doc(value["level"])
+            .get()
+            .then((value) {
+          levelText = value["name"];
+          emit(GetLevelTextState());
+        });
       });
-    });
+    }
   }
 }

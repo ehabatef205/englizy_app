@@ -184,7 +184,7 @@ class LoginCubit extends Cubit<LoginStates> {
     required email,
     required uid,
     required center,
-  }) {
+  }) async{
     UserModel model = UserModel(
         level: levelId!,
         uid: uid,
@@ -197,15 +197,16 @@ class LoginCubit extends Cubit<LoginStates> {
         admin: false,
         image:
             "https://firebasestorage.googleapis.com/v0/b/englizy-46f94.appspot.com/o/users%2F360_F_346936114_RaxE6OQogebgAWTalE1myseY1Hbb5qPM.jpg?alt=media&token=6402503a-2de0-41a0-a4a1-7a705ab9f11d");
-    FirebaseFirestore.instance
+    emit(CreateUserSuccessState());
+    await FirebaseFirestore.instance
         .collection("users")
         .doc(uid)
         .set(model.toMap())
-        .then((value) {
-      AppCubit.get(context).changeLevelText();
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => AppScreen()));
-      emit(CreateUserSuccessState());
+        .then((value) async{
+      AppCubit.get(context).changeLevelText().whenComplete(() async{
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => AppScreen()));
+      });
     }).catchError((error) {
       emit(CreateUserErrorState());
     });

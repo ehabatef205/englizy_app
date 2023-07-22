@@ -40,9 +40,7 @@ class PartsScreen extends StatelessWidget {
                 ),
                 actions: [
                   TextButton(
-                      onPressed: () async{
-
-                      },
+                      onPressed: () async {},
                       child: Text(
                         "Homework",
                         style: TextStyle(
@@ -109,7 +107,10 @@ class PartsScreen extends StatelessWidget {
                                           ),
                                           child: InkWell(
                                             onTap: () {
-
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(builder: (context) => LecturesScreen(unitId: dataOfUnit.id, partId: data[index].id,)),
+                                              );
                                             },
                                             child: Center(
                                               child: Text(

@@ -620,7 +620,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 }
                                               }
                                             },
-                                            color: Colors.indigo,
+                                            color: color1,
                                             height: 50.0,
                                             child: Text(
                                               cubit.isLogin
@@ -667,7 +667,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         );*/
                                         cubit.loginChange();
                                       },
-                                      color: Colors.indigoAccent,
+                                      color: color2,
                                       height: 50.0,
                                       child: Text(
                                         cubit.isLogin ? 'Register' : 'Login',
