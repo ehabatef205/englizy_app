@@ -41,28 +41,7 @@ class PartsScreen extends StatelessWidget {
                 actions: [
                   TextButton(
                       onPressed: () async{
-                        DocumentSnapshot doc = await FirebaseFirestore.instance
-                            .collection("users")
-                            .doc(userModel!.uid)
-                            .get();
-                        if(doc.get("accepted")){
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ViewPdfLinkHomework(
-                                      link: dataOfUnit["homework"],
-                                      name: dataOfUnit["name"], id: dataOfUnit.id)));
-                        }else{
-                          Fluttertoast.showToast(
-                            msg: "Wait",
-                            toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.BOTTOM,
-                            timeInSecForIosWeb: 1,
-                            backgroundColor: Colors.red,
-                            textColor: Colors.white,
-                            fontSize: 16.0,
-                          );
-                        }
+
                       },
                       child: Text(
                         "Homework",
@@ -130,32 +109,7 @@ class PartsScreen extends StatelessWidget {
                                           ),
                                           child: InkWell(
                                             onTap: () {
-                                              if (dataOfUser!["accepted"] ||
-                                                  data[index]["free"]) {
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        LecturesScreen(
-                                                            unitId:
-                                                                dataOfUnit.id,
-                                                            partId:
-                                                                data[index].id),
-                                                  ),
-                                                );
-                                              } else {
-                                                Fluttertoast.showToast(
-                                                  msg:
-                                                      "Wait for accept by admin",
-                                                  toastLength:
-                                                      Toast.LENGTH_SHORT,
-                                                  gravity: ToastGravity.BOTTOM,
-                                                  timeInSecForIosWeb: 1,
-                                                  backgroundColor: Colors.red,
-                                                  textColor: Colors.white,
-                                                  fontSize: 16.0,
-                                                );
-                                              }
+
                                             },
                                             child: Center(
                                               child: Text(

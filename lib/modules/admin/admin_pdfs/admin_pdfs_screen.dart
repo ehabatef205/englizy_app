@@ -23,6 +23,7 @@ class AdminPDFSScreen extends StatelessWidget {
           AdminPDFSCubit cubit = AdminPDFSCubit.get(context);
           return Scaffold(
             appBar: AppBar(
+              leading: const SizedBox(),
               centerTitle: true,
               title: Text("PDF", style: TextStyle(
                 color: Theme

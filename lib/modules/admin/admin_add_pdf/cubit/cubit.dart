@@ -15,6 +15,7 @@ class AdminAddPDFCubit extends Cubit<AdminAddPDFStates> {
 
   TextEditingController namePdfController = TextEditingController();
   TextEditingController levelController = TextEditingController();
+  TextEditingController unitController = TextEditingController();
   List<TextEditingController> controllers = [];
   List<Map<String, dynamic>> questions = [];
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -22,8 +23,9 @@ class AdminAddPDFCubit extends Cubit<AdminAddPDFStates> {
   FilePickerResult? pdf;
   UploadTask? uploadTask;
 
-  String? levelId;
-  String? level;
+  String? levelId = "";
+
+  String? unitId;
 
   void changeLevel(String? level) {
     levelController.text = level!;
@@ -32,6 +34,16 @@ class AdminAddPDFCubit extends Cubit<AdminAddPDFStates> {
 
   void changeLevelId(String? newLevel) {
     levelId = newLevel;
+    emit(ChangeState());
+  }
+
+  void changeUnit(String? unit) {
+    unitController.text = unit!;
+    emit(ChangeState());
+  }
+
+  void changeUnitId(String? newUnit) {
+    unitId = newUnit;
     emit(ChangeState());
   }
 
@@ -58,6 +70,7 @@ class AdminAddPDFCubit extends Cubit<AdminAddPDFStates> {
             "name": namePdfController.text,
             "time": DateTime.now(),
             "level": levelId,
+            "unit": unitId,
             "view": false
           }).whenComplete(() async{
             Navigator.pop(context);

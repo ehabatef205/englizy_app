@@ -22,6 +22,7 @@ class AdminHomeScreen extends StatelessWidget {
           AdminHomeCubit cubit = AdminHomeCubit.get(context);
           return Scaffold(
             appBar: AppBar(
+              leading: const SizedBox(),
               centerTitle: true,
               title: Text(
                 "Home",

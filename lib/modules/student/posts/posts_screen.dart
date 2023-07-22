@@ -58,23 +58,11 @@ class PostsScreen extends StatelessWidget {
                         var data = snapshot.data;
                         return IconButton(
                           onPressed: () {
-                            if (data!["accepted"]) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => CreatePostsScreen()),
-                              );
-                            } else {
-                              Fluttertoast.showToast(
-                                msg: "Wait for accept by admin",
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.BOTTOM,
-                                timeInSecForIosWeb: 1,
-                                backgroundColor: Colors.red,
-                                textColor: Colors.white,
-                                fontSize: 16.0,
-                              );
-                            }
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CreatePostsScreen()),
+                            );
                           },
                           icon: Icon(
                             Icons.add,

@@ -22,6 +22,7 @@ class AdminViewPostsScreen extends StatelessWidget {
           AdminViewPostsCubit cubit = AdminViewPostsCubit.get(context);
           return Scaffold(
             appBar: AppBar(
+              leading: const SizedBox(),
               centerTitle: true,
               title: Text("Posts of Teacher", style: TextStyle(
                 color: Theme

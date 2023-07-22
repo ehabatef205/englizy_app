@@ -6,6 +6,8 @@ class ChangeIsAddState extends AdminAddUnitStates {}
 
 class ChangeState extends AdminAddUnitStates {}
 
+class ChangeVideoState extends AdminAddUnitStates {}
+
 class ChangeImageState extends AdminAddUnitStates {}
 
 class ChooseImageState extends AdminAddUnitStates {}

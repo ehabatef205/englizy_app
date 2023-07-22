@@ -1,5 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:englizy_app/modules/student/demo_unit/demo_unit_screen.dart';
 import 'package:englizy_app/modules/student/pdfs/cubit/cubit.dart';
 import 'package:englizy_app/modules/student/pdfs/cubit/states.dart';
 import 'package:englizy_app/shared/constant.dart';
@@ -7,6 +8,7 @@ import 'package:englizy_app/shared/view_pdf_link.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class PDFSScreen extends StatelessWidget {
   const PDFSScreen({super.key});
@@ -74,7 +76,10 @@ class PDFSScreen extends StatelessWidget {
                                   hint: Text(
                                     levelText!,
                                     style: TextStyle(
-                                      color: Theme.of(context).textTheme.bodyText1!.color,
+                                      color: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1!
+                                          .color,
                                       fontSize: 20.0,
                                       fontWeight: FontWeight.w700,
                                     ),
@@ -121,12 +126,31 @@ class PDFSScreen extends StatelessWidget {
                             itemBuilder: (context, index) {
                               return ListTile(
                                 onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => ViewPdfLink(
-                                              link: data[index]["pdf"],
-                                              name: data[index]["name"])));
+                                  FirebaseFirestore.instance
+                                      .collection("units")
+                                      .doc(data[index]["unit"])
+                                      .get()
+                                      .then((value) {
+                                    if (value["students"]
+                                        .contains(userModel!.uid)) {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => ViewPdfLink(
+                                                  link: data[index]["pdf"],
+                                                  name: data[index]["name"])));
+                                    } else {
+                                      Fluttertoast.showToast(
+                                        msg: "Please buy ${value["name"]}",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.BOTTOM,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor: Colors.red,
+                                        textColor: Colors.white,
+                                        fontSize: 16.0,
+                                      );
+                                    }
+                                  });
                                 },
                                 title: Text(
                                   data[index]["name"],

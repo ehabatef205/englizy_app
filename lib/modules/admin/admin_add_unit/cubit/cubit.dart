@@ -16,6 +16,8 @@ class AdminAddUnitCubit extends Cubit<AdminAddUnitStates> {
 
   TextEditingController nameUnitController = TextEditingController();
   TextEditingController levelController = TextEditingController();
+  TextEditingController descriptionUnitController = TextEditingController();
+  TextEditingController priceUnitController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   bool isLoading = false;
@@ -23,11 +25,15 @@ class AdminAddUnitCubit extends Cubit<AdminAddUnitStates> {
   FilePickerResult? pdf;
   UploadTask? uploadTask;
 
+  FilePickerResult? result;
+  UploadTask? uploadTask2;
+
   String? levelId;
 
   XFile? image;
 
   String imageUrl = "";
+  String videoUrl = "";
   String pdfUrl = "";
 
   void chooseImage() async {
@@ -53,20 +59,26 @@ class AdminAddUnitCubit extends Cubit<AdminAddUnitStates> {
       isLoading = true;
       emit(LoadingState());
       uploadPhoto().whenComplete(() async {
-        uploadPdf().whenComplete(() async{
-          await FirebaseFirestore.instance.collection("units").add({
-            "name": nameUnitController.text,
-            "level": levelId,
-            "homework": pdfUrl,
-            "view": false,
-            "image": imageUrl,
-            "time": DateTime.now(),
-          }).whenComplete(() async {
-            isLoading = false;
-            Navigator.pop(context);
-            emit(LoadingSuccessState());
-          }).catchError((error) {
-            emit(LoadingErrorState());
+        uploadVideo().whenComplete(() async {
+          uploadPdf().whenComplete(() async {
+            await FirebaseFirestore.instance.collection("units").add({
+              "name": nameUnitController.text,
+              "level": levelId,
+              "video": videoUrl,
+              "homework": pdfUrl,
+              "description": descriptionUnitController.text,
+              "price": priceUnitController.text,
+              "students": [],
+              "view": false,
+              "image": imageUrl,
+              "time": DateTime.now(),
+            }).whenComplete(() async {
+              isLoading = false;
+              Navigator.pop(context);
+              emit(LoadingSuccessState());
+            }).catchError((error) {
+              emit(LoadingErrorState());
+            });
           });
         });
       });
@@ -95,9 +107,17 @@ class AdminAddUnitCubit extends Cubit<AdminAddUnitStates> {
     return video.path.split(".").last;
   }
 
+  void chooseVideo() async {
+    result = await FilePicker.platform
+        .pickFiles(type: FileType.video, allowMultiple: false);
+    emit(ChangeVideoState());
+  }
+
   void choosePdf() async {
-    pdf = await FilePicker.platform
-        .pickFiles(type: FileType.custom, allowedExtensions: ["pdf"], allowMultiple: false);
+    pdf = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ["pdf"],
+        allowMultiple: false);
     emit(ChangePDFState());
   }
 
@@ -106,12 +126,32 @@ class AdminAddUnitCubit extends Cubit<AdminAddUnitStates> {
         .ref()
         .child("units")
         .child("pdfs")
-        .child("${DateTime.now().millisecondsSinceEpoch}.${getName(File(pdf!.files[0].path!))}");
+        .child(
+            "${DateTime.now().millisecondsSinceEpoch}.${getName(File(pdf!.files[0].path!))}");
 
-    uploadTask = reference.putData(await File(pdf!.files[0].path!).readAsBytes());
+    uploadTask =
+        reference.putData(await File(pdf!.files[0].path!).readAsBytes());
     await uploadTask!.whenComplete(() async {
       await reference.getDownloadURL().then((urlPdf) async {
         pdfUrl = urlPdf;
+        emit(AddPDFState());
+      });
+    });
+  }
+
+  Future uploadVideo() async {
+    Reference reference = FirebaseStorage.instance
+        .ref()
+        .child("units")
+        .child("videos")
+        .child(
+            "${DateTime.now().millisecondsSinceEpoch}.${getName(File(result!.files[0].path!))}");
+
+    uploadTask2 =
+        reference.putData(await File(result!.files[0].path!).readAsBytes());
+    await uploadTask2!.whenComplete(() async {
+      await reference.getDownloadURL().then((urlVideo) async {
+        videoUrl = urlVideo;
         emit(AddPDFState());
       });
     });

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:englizy_app/modules/admin/admin_add_part/video_screen.dart';
 import 'package:englizy_app/modules/admin/admin_add_pdf/view_pdf.dart';
 import 'package:englizy_app/modules/admin/admin_add_unit/cubit/cubit.dart';
 import 'package:englizy_app/modules/admin/admin_add_unit/cubit/states.dart';
@@ -35,13 +36,17 @@ class AdminAddUnitScreen extends StatelessWidget {
             ),
             body: Center(
               child: Padding(
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Form(
                   key: cubit.formKey,
                   child: SingleChildScrollView(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Text("Image", style: TextStyle(color: Theme.of(context).textTheme.bodyText1!.color),),
+                        ),
                         Container(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
@@ -71,6 +76,78 @@ class AdminAddUnitScreen extends StatelessWidget {
                                             ),
                                             fit: BoxFit.cover)),
                                   ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Text("Video", style: TextStyle(color: Theme.of(context).textTheme.bodyText1!.color),),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.grey),
+                          child: InkWell(
+                            onTap: () {
+                              cubit.chooseVideo();
+                            },
+                            child: cubit.result == null
+                                ? const SizedBox(
+                              height: 150,
+                              width: 150,
+                              child: Icon(
+                                Icons.video_call_outlined,
+                                size: 100,
+                              ),
+                            )
+                                : Container(
+                              height: size.height * 0.3,
+                              width: size.width,
+                              child: VideoScreen(
+                                video: cubit.result!.files[0],
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Text("Pdf", style: TextStyle(color: Theme.of(context).textTheme.bodyText1!.color),),
+                        ),
+                        cubit.pdf != null
+                            ? ListTile(
+                          onTap: () {
+                            if (!cubit.isLoading) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ViewPdf(
+                                        path: cubit.pdf!.files[0].path!,
+                                      )));
+                            }
+                          },
+                          title: Text(
+                            cubit.pdf!.files[0].path!.split("/").last,
+                            style: TextStyle(
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1!
+                                    .color),
+                          ),
+                        )
+                            : SizedBox(),
+                        InkWell(
+                          onTap: () {
+                            if (!cubit.isLoading) {
+                              cubit.choosePdf();
+                            }
+                          },
+                          child: SizedBox(
+                            child: Icon(
+                              cubit.pdf == null
+                                  ? Icons.add_box_rounded
+                                  : Icons.change_circle_outlined,
+                              color: Theme.of(context).iconTheme.color,
+                              size: 50,
+                            ),
                           ),
                         ),
                         const SizedBox(
@@ -194,10 +271,10 @@ class AdminAddUnitScreen extends StatelessWidget {
                           controller: cubit.nameUnitController,
                           type: TextInputType.text,
                           context: context,
-                          labelText: "Unit",
+                          labelText: "Unit name",
                           validate: (value) {
                             if (value!.isEmpty) {
-                              return "Unit is required";
+                              return "Unit name is required";
                             }
                             return null;
                           },
@@ -205,43 +282,32 @@ class AdminAddUnitScreen extends StatelessWidget {
                         const SizedBox(
                           height: 20,
                         ),
-                        cubit.pdf != null
-                            ? ListTile(
-                          onTap: () {
-                            if (!cubit.isLoading) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ViewPdf(
-                                        path: cubit.pdf!.files[0].path!,
-                                      )));
+                        TextFormFieldWidget(
+                          controller: cubit.descriptionUnitController,
+                          type: TextInputType.text,
+                          context: context,
+                          labelText: "Description",
+                          validate: (value) {
+                            if (value!.isEmpty) {
+                              return "Description is required";
                             }
+                            return null;
                           },
-                          title: Text(
-                            cubit.pdf!.files[0].path!.split("/").last,
-                            style: TextStyle(
-                                color: Theme.of(context)
-                                    .textTheme
-                                    .bodyText1!
-                                    .color),
-                          ),
-                        )
-                            : SizedBox(),
-                        InkWell(
-                          onTap: () {
-                            if (!cubit.isLoading) {
-                              cubit.choosePdf();
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        TextFormFieldWidget(
+                          controller: cubit.priceUnitController,
+                          type: TextInputType.name,
+                          context: context,
+                          labelText: "Price",
+                          validate: (value) {
+                            if (value!.isEmpty) {
+                              return "Price is required";
                             }
+                            return null;
                           },
-                          child: SizedBox(
-                            child: Icon(
-                              cubit.pdf == null
-                                  ? Icons.add_box_rounded
-                                  : Icons.change_circle_outlined,
-                              color: Theme.of(context).iconTheme.color,
-                              size: 50,
-                            ),
-                          ),
                         ),
                         const SizedBox(
                           height: 20,

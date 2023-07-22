@@ -20,13 +20,12 @@ class AdminViewStudentsScreen extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               centerTitle: true,
-              title: Text("Students", style: TextStyle(
-                color: Theme
-                    .of(context)
-                    .textTheme
-                    .bodyText1!
-                    .color,
-              ),),
+              title: Text(
+                "Students",
+                style: TextStyle(
+                  color: Theme.of(context).textTheme.bodyText1!.color,
+                ),
+              ),
             ),
             body: Padding(
               padding: const EdgeInsets.all(10),
@@ -41,8 +40,7 @@ class AdminViewStudentsScreen extends StatelessWidget {
                         itemCount: data.length,
                         itemBuilder: (context, index) {
                           return ListTile(
-                            onTap: () {
-                            },
+                            onTap: () {},
                             leading: Container(
                               height: 50,
                               width: 50,
@@ -50,9 +48,8 @@ class AdminViewStudentsScreen extends StatelessWidget {
                                 shape: BoxShape.circle,
                                 color: Colors.grey,
                                 image: DecorationImage(
-                                  image: NetworkImage(data[index]["image"]),
-                                  fit: BoxFit.cover
-                                ),
+                                    image: NetworkImage(data[index]["image"]),
+                                    fit: BoxFit.cover),
                               ),
                             ),
                             title: Text(
@@ -62,22 +59,6 @@ class AdminViewStudentsScreen extends StatelessWidget {
                                       .textTheme
                                       .bodyText1!
                                       .color),
-                            ),
-                            trailing: Theme(
-                              data: ThemeData(
-                                unselectedWidgetColor: Theme.of(context).iconTheme.color
-                              ),
-                              child: Checkbox(
-                                activeColor: Theme.of(context).iconTheme.color,
-                                checkColor: Theme.of(context).scaffoldBackgroundColor,
-                                value: data[index]["accepted"],
-                                onChanged: (value) {
-                                  FirebaseFirestore.instance
-                                      .collection("users")
-                                      .doc(data[index].id)
-                                      .update({"accepted": value});
-                                },
-                              ),
                             ),
                           );
                         });

@@ -42,28 +42,6 @@ class AdminAddPartScreen extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("Free", style: TextStyle(color: Theme.of(context).textTheme.bodyText1!.color),),
-                            Theme(
-                              data: ThemeData(
-                                  unselectedWidgetColor: Theme.of(context).iconTheme.color
-                              ),
-                              child: Checkbox(
-                                activeColor: Theme.of(context).iconTheme.color,
-                                checkColor: Theme.of(context).scaffoldBackgroundColor,
-                                value: cubit.isFree,
-                                onChanged: (value) {
-                                  cubit.changeFree();
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
                       SizedBox(
                           child: cubit.result != null
                               ? ListView.builder(

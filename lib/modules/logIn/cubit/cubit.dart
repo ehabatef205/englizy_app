@@ -193,7 +193,6 @@ class LoginCubit extends Cubit<LoginStates> {
         parentPhone: parentPhone,
         studentPhone: studentPhone,
         center: text2!,
-        accepted: false,
         open: true,
         admin: false,
         image:

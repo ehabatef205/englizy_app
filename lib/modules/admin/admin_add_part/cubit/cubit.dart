@@ -28,12 +28,6 @@ class AdminAddPartCubit extends Cubit<AdminAddPartStates> {
   UploadTask? uploadTask;
   List<String> videosUrl = [];
   List<bool> isDone = [];
-  bool isFree = false;
-
-  void changeFree() {
-    isFree = !isFree;
-    emit(ChangeFreeState());
-  }
 
   void createChewieController(PlatformFile video) {
     VideoPlayerController controller = VideoPlayerController.file(File(video.path!))
@@ -143,7 +137,6 @@ class AdminAddPartCubit extends Cubit<AdminAddPartStates> {
       "description": descriptionUnitController.text,
       "questions": questions,
       "time": DateTime.now(),
-      "free": isFree,
       "view": false,
       "viewGrade": false,
     }).whenComplete(() async{

@@ -23,6 +23,7 @@ class AdminCommunityScreen extends StatelessWidget {
           AdminCommunityCubit cubit = AdminCommunityCubit.get(context);
           return Scaffold(
             appBar: AppBar(
+              leading: const SizedBox(),
               title: Text(
                 'Community',
                 style: TextStyle(
