@@ -491,7 +491,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 }
                                               }
                                             },
-                                            color: cubit.isLogin ? Color.fromRGBO(74, 93, 170, 1) : Color.fromRGBO(255, 203, 6, 1),
+                                            color: cubit.isLogin ? Color.fromRGBO(74, 93, 170, 1) : Color.fromRGBO(0, 168, 132, 1),
                                             height: 50.0,
                                             child: Text(
                                               cubit.isLogin
@@ -538,7 +538,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         );*/
                                         cubit.loginChange();
                                       },
-                                      color: cubit.isLogin ? Color.fromRGBO(255, 203, 6, 1) : Color.fromRGBO(74, 93, 170, 1),
+                                      color: cubit.isLogin ? Color.fromRGBO(0, 168, 132, 1) : Color.fromRGBO(74, 93, 170, 1),
                                       height: 50.0,
                                       child: Text(
                                         cubit.isLogin ? 'Register' : 'Login',
