@@ -77,14 +77,6 @@ class LecturesScreen extends StatelessWidget {
                               repeatForever: true,
                               displayFullTextOnTap: true,
                             ),
-              /*Text(
-                "Lectures",
-                style: TextStyle(
-                  color: Theme.of(context).textTheme.bodyText1!.color,
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),*/
             ),
             body: Container(
               constraints: BoxConstraints.expand(),
@@ -685,19 +677,69 @@ class LecturesScreen extends StatelessWidget {
                                                   ),
                                                 )
                                               : const SizedBox(),
-                                          !cubit.done
+                                          cubit.index != 2
                                               ? const SizedBox()
-                                              : Text(
-                                                  !data["viewGrade"]
-                                                      ? ''
-                                                      : dataOfGrade["grade"]
-                                                          .toString(),
-                                                  style: const TextStyle(
-                                                    color: Colors.white,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20.0,
+                                              : Container(
+                                                height:
+                                                    size.height * 0.05,
+                                                width: size.width * 0.33,
+                                                decoration: BoxDecoration(
+                                                  border: Border(
+                                                    top: BorderSide(
+                                                        color: Theme.of(
+                                                                context)
+                                                            .textTheme
+                                                            .bodyText1!
+                                                            .color!),
+                                                    bottom: BorderSide(
+                                                        color: Theme.of(
+                                                                context)
+                                                            .textTheme
+                                                            .bodyText1!
+                                                            .color!),
+                                                    left: BorderSide(
+                                                        color: Theme.of(
+                                                                context)
+                                                            .textTheme
+                                                            .bodyText1!
+                                                            .color!),
+                                                    right: BorderSide(
+                                                        color: Theme.of(
+                                                                context)
+                                                            .textTheme
+                                                            .bodyText1!
+                                                            .color!),
                                                   ),
                                                 ),
+                                                child: Center(
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                      Text(
+                                                        'Grade : ',
+                                                        style: TextStyle(
+                                                          color: Theme.of(context).textTheme.bodyText1!.color,
+                                                          fontSize: 20.0,
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        !data["viewGrade"]
+                                                            ? ''
+                                                            : dataOfGrade[
+                                                                    "grade"]
+                                                                .toString(),
+                                                        style:
+                                                            const TextStyle(
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 20.0,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
                                           Container(
                                             width: size.width * 0.25,
                                             clipBehavior:
@@ -725,7 +767,7 @@ class LecturesScreen extends StatelessWidget {
                                                         partId: data.id,
                                                         data: data["questions"],
                                                         context: context);
-                                                  }else{
+                                                  } else {
                                                     Navigator.pop(context);
                                                   }
                                                 }
@@ -733,7 +775,7 @@ class LecturesScreen extends StatelessWidget {
                                               color: Colors.indigo,
                                               height: 50.0,
                                               child: Text(
-                                                !cubit.done ? 'Next' : 'Done',
+                                                cubit.index != 2 ? 'Next' : 'Done',
                                                 style: const TextStyle(
                                                   color: Colors.white,
                                                   fontWeight: FontWeight.bold,

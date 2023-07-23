@@ -38,18 +38,6 @@ class StudentHomeScreen extends StatelessWidget {
                 repeatForever: true,
                 displayFullTextOnTap: true,
               ),
-              /*Text(
-                "Units",
-                style: TextStyle(
-                  color: Theme
-                      .of(context)
-                      .textTheme
-                      .bodyText1!
-                      .color,
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),*/
             ),
             body: Container(
               constraints: BoxConstraints.expand(),
@@ -205,26 +193,20 @@ class StudentHomeScreen extends StatelessWidget {
                                                   height: 5,
                                                 ),
                                                 Center(
-                                                  child: DefaultTextStyle(
+                                                  child: Text(
+                                                    data[index]["name"],
                                                     style: TextStyle(
-                                                      fontSize: 22.0,
-                                                      color: Theme.of(context)
+                                                      color: Theme
+                                                          .of(context)
                                                           .textTheme
                                                           .bodyText1!
                                                           .color,
-                                                      fontWeight:
-                                                          FontWeight.w700,
+                                                      fontSize: 18,
+                                                      fontWeight: FontWeight.w500,
                                                     ),
-                                                    child: AnimatedTextKit(
-                                                      animatedTexts: [
-                                                        WavyAnimatedText(
-                                                            data[index]
-                                                                ["name"]),
-                                                      ],
-                                                      isRepeatingAnimation:
-                                                          true,
-                                                      repeatForever: true,
-                                                    ),
+                                                    maxLines: 1,
+                                                    overflow: TextOverflow
+                                                        .ellipsis,
                                                   ),
                                                   /*TextLiquidFill(
                                                               text: data[index]["name"],

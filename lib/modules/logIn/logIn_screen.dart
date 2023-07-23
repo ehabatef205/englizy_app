@@ -53,26 +53,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Text(
-                                              "Hello dear student",
-                                              style: TextStyle(
-                                                color: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyText1!
-                                                    .color,
-                                                fontSize: 18.0,
-                                                fontWeight: FontWeight.w900,
-                                              ),
-                                            ),
-                                            Text(
-                                              "We'd love you to join us",
-                                              style: TextStyle(
-                                                color: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyText1!
-                                                    .color,
-                                                fontSize: 18.0,
-                                                fontWeight: FontWeight.w900,
+                                            Center(
+                                              child: Text(
+                                                "Login",
+                                                style: TextStyle(
+                                                  color: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyText1!
+                                                      .color,
+                                                  fontSize: 28.0,
+                                                  fontWeight: FontWeight.w900,
+                                                ),
                                               ),
                                             ),
                                             const SizedBox(
@@ -152,15 +143,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Text(
-                                              "Hello dear student",
-                                              style: TextStyle(
-                                                color: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyText1!
-                                                    .color,
-                                                fontSize: 18.0,
-                                                fontWeight: FontWeight.w900,
+                                            Center(
+                                              child: Text(
+                                                "Registration",
+                                                style: TextStyle(
+                                                  color: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyText1!
+                                                      .color,
+                                                  fontSize: 28.0,
+                                                  fontWeight: FontWeight.w900,
+                                                ),
                                               ),
                                             ),
                                             const SizedBox(
@@ -333,128 +326,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                             const SizedBox(
                                               height: 8.0,
                                             ),
-                                            Container(
-                                              height: 66.0,
-                                              decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    color: Theme.of(context)
-                                                        .textTheme
-                                                        .bodyText1!
-                                                        .color!),
-                                                borderRadius:
-                                                    BorderRadius.circular(25),
-                                              ),
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(2.0),
-                                                child: Center(
-                                                  child: Row(
-                                                    children: [
-                                                      Flexible(
-                                                        child: TextFormField(
-                                                          onEditingComplete: () {
-                                                            FocusScope.of(context)
-                                                                .nextFocus();
-                                                          },
-                                                          keyboardType:
-                                                              TextInputType
-                                                                  .datetime,
-                                                          enabled: false,
-                                                          controller: cubit
-                                                              .centerController,
-                                                          minLines: 1,
-                                                          cursorColor:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .bodyText1!
-                                                                  .color,
-                                                          style: TextStyle(
-                                                              color: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .bodyText1!
-                                                                  .color,
-                                                              fontSize: 18),
-                                                          decoration:
-                                                              InputDecoration(
-                                                            filled: true,
-                                                            hintText: "Center",
-                                                            hintStyle: TextStyle(
-                                                                color: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .bodyText1!
-                                                                    .color!
-                                                                    .withOpacity(
-                                                                        0.5)),
-                                                            disabledBorder:
-                                                                OutlineInputBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          50),
-                                                              borderSide:
-                                                                  const BorderSide(
-                                                                color: Colors
-                                                                    .transparent,
-                                                              ),
-                                                            ),
-                                                            errorBorder:
-                                                                OutlineInputBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          50),
-                                                              borderSide:
-                                                                  const BorderSide(
-                                                                color: Colors
-                                                                    .transparent,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      DropdownButtonHideUnderline(
-                                                        child: DropdownButton(
-                                                          dropdownColor: Theme.of(
-                                                                  context)
-                                                              .scaffoldBackgroundColor,
-                                                          iconEnabledColor:
-                                                              Theme.of(context)
-                                                                  .iconTheme
-                                                                  .color,
-                                                          items: cubit.centerList
-                                                              .map((item) {
-                                                            return DropdownMenuItem(
-                                                              value: item,
-                                                              child: Text(
-                                                                item,
-                                                                style: TextStyle(
-                                                                    color: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyText1!
-                                                                        .color),
-                                                              ),
-                                                            );
-                                                          }).toList(),
-                                                          onChanged: (newValue) {
-                                                            cubit.changeItem2(
-                                                                newValue);
-                                                          },
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 8.0,
-                                            ),
-                                            const SizedBox(
-                                              height: 8.0,
-                                            ),
                                             TextFormFieldWidget(
                                               controller: cubit
                                                   .parentsPhoneNumberController,
@@ -620,7 +491,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 }
                                               }
                                             },
-                                            color: color1,
+                                            color: cubit.isLogin ? Color.fromRGBO(74, 93, 170, 1) : Color.fromRGBO(255, 203, 6, 1),
                                             height: 50.0,
                                             child: Text(
                                               cubit.isLogin
@@ -667,7 +538,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         );*/
                                         cubit.loginChange();
                                       },
-                                      color: color2,
+                                      color: cubit.isLogin ? Color.fromRGBO(255, 203, 6, 1) : Color.fromRGBO(74, 93, 170, 1),
                                       height: 50.0,
                                       child: Text(
                                         cubit.isLogin ? 'Register' : 'Login',
@@ -711,42 +582,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           color: color1,
                           height: size.height * 0.25,
                           width: size.width,
-                          child: SafeArea(
-                            child: Padding(
-                              padding: const EdgeInsets.all(10),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    cubit.isLogin ? "Login" : "Registration",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 25.0,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  LoginScreen()));
-                                    },
-                                    child: Text(
-                                      "Support",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
                         ),
                       ),
                     ],

@@ -19,13 +19,11 @@ class UpdateProfileStudentCubit extends Cubit<UpdateProfileStudentStates> {
   TextEditingController levelController = TextEditingController();
   TextEditingController centerController = TextEditingController();
   String? academicYear;
-  String? center;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool isLoading = false;
   XFile? image;
   String img64 = '';
   String dropdownValue = 'academic year';
-  String dropdownValue2 = 'center';
   String? levelId;
 
   void changeLevelId(String? id) {
@@ -47,7 +45,6 @@ class UpdateProfileStudentCubit extends Cubit<UpdateProfileStudentStates> {
     parentsPhoneNumberController.text = userModel!.parentPhone;
     nameController.text = userModel!.studentName;
     phoneController.text = userModel!.studentPhone;
-    centerController.text = userModel!.center;
     FirebaseFirestore.instance
         .collection("levels")
         .doc(userModel!.level)
@@ -62,17 +59,6 @@ class UpdateProfileStudentCubit extends Cubit<UpdateProfileStudentStates> {
     'First year of high school',
     'Second year of high school',
     'Third year of high school',
-  ];
-  List<String> centerList = [
-    'Safa1',
-    'Safa2',
-    'Safa3',
-    'Safa4',
-    'Safa5',
-    'Safa6',
-    'Safa7',
-    'Safa8',
-    'Safa9',
   ];
 
   void changeItem(newValue) {
@@ -110,14 +96,12 @@ class UpdateProfileStudentCubit extends Cubit<UpdateProfileStudentStates> {
             "parentPhone": parentsPhoneNumberController.text,
             "studentName": nameController.text,
             "studentPhone": phoneController.text,
-            "center": centerController.text,
             "level": levelId == null? userModel!.level : levelId,
           }).whenComplete(() async {
             userModel!.image = urlImage;
             userModel!.parentPhone = parentsPhoneNumberController.text;
             userModel!.studentName = nameController.text;
             userModel!.studentPhone = phoneController.text;
-            userModel!.center = centerController.text;
             userModel!.level = levelId == null? userModel!.level : levelId!;
             emit(UpdateSuccessState());
             Navigator.pop(context);
@@ -132,13 +116,11 @@ class UpdateProfileStudentCubit extends Cubit<UpdateProfileStudentStates> {
         "parentPhone": parentsPhoneNumberController.text,
         "studentName": nameController.text,
         "studentPhone": phoneController.text,
-        "center": centerController.text,
         "level": levelId == null? userModel!.level : levelId,
       }).whenComplete(() async {
         userModel!.parentPhone = parentsPhoneNumberController.text;
         userModel!.studentName = nameController.text;
         userModel!.studentPhone = phoneController.text;
-        userModel!.center = centerController.text;
         userModel!.level = levelId == null? userModel!.level : levelId!;
         emit(UpdateSuccessState());
         Navigator.pop(context);

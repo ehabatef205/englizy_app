@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:englizy_app/modules/admin/admin_view_students/cubit/cubit.dart';
 import 'package:englizy_app/modules/admin/admin_view_students/cubit/states.dart';
+import 'package:englizy_app/modules/admin/view_student/view_student_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,7 +41,12 @@ class AdminViewStudentsScreen extends StatelessWidget {
                         itemCount: data.length,
                         itemBuilder: (context, index) {
                           return ListTile(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => ViewStudentScreen(data: data[index])),
+                              );
+                            },
                             leading: Container(
                               height: 50,
                               width: 50,

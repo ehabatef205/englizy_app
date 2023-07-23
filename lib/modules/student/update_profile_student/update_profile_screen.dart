@@ -38,14 +38,6 @@ class UpdateProfileStudentScreen extends StatelessWidget {
                 repeatForever: true,
                 displayFullTextOnTap: true,
               ),
-              /*Text(
-                "Update Profile",
-                style: TextStyle(
-                  color: Theme.of(context).textTheme.bodyText1!.color,
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),*/
               centerTitle: true,
             ),
             body: SafeArea(
@@ -146,6 +138,7 @@ class UpdateProfileStudentScreen extends StatelessWidget {
                               Container(
                                 height: 66.0,
                                 decoration: BoxDecoration(
+                                  color: Colors.black38,
                                   border: Border.all(
                                       color: Theme.of(context)
                                           .textTheme
@@ -260,166 +253,6 @@ class UpdateProfileStudentScreen extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              const SizedBox(
-                                height: 8.0,
-                              ),
-                              Container(
-                                height: 66.0,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1!
-                                          .color!),
-                                  borderRadius: BorderRadius.circular(25),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(2.0),
-                                  child: Center(
-                                    child: Row(
-                                      children: [
-                                        Flexible(
-                                          child: TextFormField(
-                                            onEditingComplete: () {
-                                              FocusScope.of(context)
-                                                  .nextFocus();
-                                            },
-                                            keyboardType:
-                                                TextInputType.datetime,
-                                            enabled: false,
-                                            controller: cubit.centerController,
-                                            minLines: 1,
-                                            cursorColor: Theme.of(context)
-                                                .textTheme
-                                                .bodyText1!
-                                                .color,
-                                            style: TextStyle(
-                                                color: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyText1!
-                                                    .color,
-                                                fontSize: 18),
-                                            decoration: InputDecoration(
-                                              filled: true,
-                                              hintText: "Center",
-                                              hintStyle: TextStyle(
-                                                  color: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyText1!
-                                                      .color!
-                                                      .withOpacity(0.5)),
-                                              disabledBorder:
-                                                  OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(50),
-                                                borderSide: const BorderSide(
-                                                  color: Colors.transparent,
-                                                ),
-                                              ),
-                                              errorBorder: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(50),
-                                                borderSide: const BorderSide(
-                                                  color: Colors.transparent,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        DropdownButtonHideUnderline(
-                                          child: DropdownButton(
-                                            dropdownColor: Theme.of(context)
-                                                .scaffoldBackgroundColor,
-                                            iconEnabledColor: Theme.of(context)
-                                                .iconTheme
-                                                .color,
-                                            items: cubit.centerList
-                                                .map<DropdownMenuItem<String>>(
-                                                    (String value) {
-                                              return DropdownMenuItem<String>(
-                                                value: value,
-                                                child: Text(
-                                                  value,
-                                                  style: TextStyle(
-                                                    fontSize: 18,
-                                                    color: Theme.of(context)
-                                                        .textTheme
-                                                        .bodyText1!
-                                                        .color,
-                                                  ),
-                                                ),
-                                              );
-                                            }).toList(),
-                                            onChanged: (newValue) {
-                                              cubit.changeItem2(newValue);
-                                            },
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              /*DropdownButtonFormField(
-                                style: TextStyle(
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1!
-                                      .color,
-                                ),
-                                decoration: InputDecoration(
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(25),
-                                    borderSide: BorderSide(
-                                        color: Theme.of(context)
-                                            .textTheme
-                                            .bodyText1!
-                                            .color!
-                                            .withOpacity(0.7),
-                                        width: 2),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(25),
-                                    borderSide: BorderSide(
-                                        color: Theme.of(context)
-                                            .textTheme
-                                            .bodyText1!
-                                            .color!
-                                            .withOpacity(0.7),
-                                        width: 2),
-                                  ),
-                                  filled: true,
-                                ),
-                                hint: Text(
-                                  cubit.dropdownValue2,
-                                  style: TextStyle(
-                                    color: Theme.of(context)
-                                        .textTheme
-                                        .bodyText1!
-                                        .color,
-                                  ),
-                                ),
-                                onChanged: (String? newValue) {
-                                  cubit.changeItem2(newValue);
-                                },
-                                items: cubit.centerList
-                                    .map<DropdownMenuItem<String>>(
-                                        (String value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Text(
-                                      value,
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        color: Theme.of(context)
-                                            .textTheme
-                                            .bodyText1!
-                                            .color,
-                                      ),
-                                    ),
-                                  );
-                                }).toList(),
-                              ),*/
                               const SizedBox(
                                 height: 20.0,
                               ),

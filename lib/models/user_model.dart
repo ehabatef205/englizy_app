@@ -3,7 +3,6 @@ class UserModel {
   late String image;
   late String parentPhone;
   late String studentPhone;
-  late String center;
   late String uid;
   late String level;
   late String email;
@@ -18,7 +17,6 @@ class UserModel {
     required this.parentPhone,
     required this.studentPhone,
     required this.level,
-    required this.center,
     required this.admin,
     required this.open,
   });
@@ -30,7 +28,6 @@ class UserModel {
     studentName = json['studentName'];
     parentPhone = json['parentPhone'];
     studentPhone = json['studentPhone'];
-    center = json['center'];
     level = json['level'];
     admin = json['admin'];
     open = json['open'];
@@ -44,7 +41,6 @@ class UserModel {
       'image': image,
       'parentPhone': parentPhone,
       'studentPhone': studentPhone,
-      'center': center,
       'level': level,
       'admin': admin,
       'open': open,

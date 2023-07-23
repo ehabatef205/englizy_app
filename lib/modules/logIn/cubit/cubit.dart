@@ -91,7 +91,6 @@ class LoginCubit extends Cubit<LoginStates> {
   TextEditingController confirmPasswordController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController levelController = TextEditingController();
-  TextEditingController centerController = TextEditingController();
   bool isPassword2 = true;
   bool isConfirmPassword = true;
   String dropdownValue = 'academic year';
@@ -105,17 +104,6 @@ class LoginCubit extends Cubit<LoginStates> {
     'First year of high school',
     'Second year of high school',
     'Third year of high school',
-  ];
-  List<String> centerList = [
-    'Safa1',
-    'Safa2',
-    'Safa3',
-    'Safa4',
-    'Safa5',
-    'Safa6',
-    'Safa7',
-    'Safa8',
-    'Safa9',
   ];
   String? levelId;
 
@@ -132,13 +120,6 @@ class LoginCubit extends Cubit<LoginStates> {
   void changeItem(newValue) {
     dropdownValue = newValue;
     text1 = dropdownValue;
-    emit(RegisterChangeState());
-  }
-
-  void changeItem2(newValue) {
-    dropdownValue2 = newValue;
-    text2 = dropdownValue2;
-    centerController.text = dropdownValue2;
     emit(RegisterChangeState());
   }
 
@@ -167,7 +148,6 @@ class LoginCubit extends Cubit<LoginStates> {
         parentPhone: parentsPhoneNumberController.text,
         studentName: quadrupleNameController.text,
         studentPhone: studentPhoneNumberController.text,
-        center: text2,
       );
       emit(RegisterSuccessState());
     }).catchError((error) {
@@ -183,7 +163,6 @@ class LoginCubit extends Cubit<LoginStates> {
     required studentPhone,
     required email,
     required uid,
-    required center,
   }) async{
     UserModel model = UserModel(
         level: levelId!,
@@ -192,7 +171,6 @@ class LoginCubit extends Cubit<LoginStates> {
         studentName: studentName,
         parentPhone: parentPhone,
         studentPhone: studentPhone,
-        center: text2!,
         open: true,
         admin: false,
         image:
