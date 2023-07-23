@@ -4,6 +4,7 @@ import 'package:englizy_app/modules/admin/view_student/cubit/states.dart';
 import 'package:englizy_app/shared/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ViewStudentScreen extends StatelessWidget {
   final QueryDocumentSnapshot<Object?> data;
@@ -100,27 +101,37 @@ class ViewStudentScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(
-                          height: 10,
+                          height: 15,
                         ),
-                        Text(
-                          'Student Phone : ${data["studentPhone"]}',
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                            color:
-                            Theme.of(context).textTheme.bodyText1!.color,
+                        InkWell(
+                          onTap: () async{
+                            await launch("tel:${data["studentPhone"]}");
+                          },
+                          child: Text(
+                            'Student Phone : ${data["studentPhone"]}',
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.bold,
+                              color:
+                              Theme.of(context).textTheme.bodyText1!.color,
+                            ),
                           ),
                         ),
                         const SizedBox(
-                          height: 10,
+                          height: 15,
                         ),
-                        Text(
-                          'Parent Phone : ${data["parentPhone"]}',
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                            color:
-                            Theme.of(context).textTheme.bodyText1!.color,
+                        InkWell(
+                          onTap: () async{
+                            await launch("tel:${data["parentPhone"]}");
+                          },
+                          child: Text(
+                            'Parent Phone : ${data["parentPhone"]}',
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.bold,
+                              color:
+                              Theme.of(context).textTheme.bodyText1!.color,
+                            ),
                           ),
                         ),
                       ],
