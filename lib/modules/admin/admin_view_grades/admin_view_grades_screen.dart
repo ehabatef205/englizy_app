@@ -130,7 +130,7 @@ class AdminViewGradesScreen extends StatelessWidget {
                                                   .color),
                                         ),
                                         trailing: Text(
-                                          data[index]["grade"].toString(),
+                                          data[index]["grade"],
                                           style: TextStyle(
                                               color: Theme.of(context)
                                                   .textTheme

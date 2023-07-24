@@ -55,11 +55,12 @@ class LoginCubit extends Cubit<LoginStates> {
               .get()
               .then((value2) {
             userModel = UserModel.fromjson(value2.data()!);
-            AppCubit.get(context).changeLevelText();
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => AppScreen()),
-            );
+            AppCubit.get(context).changeLevelText().whenComplete(() async{
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AppScreen()),
+              );
+            });
           });
         });
       } else {

@@ -84,7 +84,7 @@ class _ViewPdfLinkHomeworkState extends State<ViewPdfLinkHomework> {
             .doc(userModel!.uid)
             .set({
           "pdf": urlPdf,
-          "grade": 0,
+          "grade": "0",
           "uid": userModel!.uid,
           "time": DateTime.now(),
         }).whenComplete(() async {
@@ -123,7 +123,7 @@ class _ViewPdfLinkHomeworkState extends State<ViewPdfLinkHomework> {
                     .get();
                 if(doc.exists){
                   Fluttertoast.showToast(
-                    msg: doc.get("grade").toString(),
+                    msg: "Your grade is ${doc.get("grade")}",
                     toastLength: Toast.LENGTH_SHORT,
                     gravity: ToastGravity.BOTTOM,
                     timeInSecForIosWeb: 1,

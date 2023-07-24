@@ -28,7 +28,7 @@ class AdminViewStudentsInUnitScreen extends StatelessWidget {
             appBar: AppBar(
               centerTitle: true,
               title: Text(
-                "Levels",
+                "Students",
                 style: TextStyle(
                   color: Theme.of(context).textTheme.bodyText1!.color,
                 ),

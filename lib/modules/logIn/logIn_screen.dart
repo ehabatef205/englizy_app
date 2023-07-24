@@ -36,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Container(
                     height: size.height,
                     child: Padding(
-                      padding: const EdgeInsets.all(25.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
                       child: SafeArea(
                         child: Center(
                           child: SingleChildScrollView(

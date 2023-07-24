@@ -253,11 +253,10 @@ class AdminAddPartScreen extends StatelessWidget {
                               ],
                             );
                           }),
-                      /*cubit.isLoading
+                      cubit.isLoading
                           ? Center(
                         child: CircularProgressIndicator(),
-                      )
-                          : */
+                      ) :
                       Container(
                         width: double.infinity,
                         clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -271,7 +270,7 @@ class AdminAddPartScreen extends StatelessWidget {
                           color: Colors.indigoAccent,
                           height: 50.0,
                           child: const Text(
-                            'Add unit',
+                            'Add part',
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,

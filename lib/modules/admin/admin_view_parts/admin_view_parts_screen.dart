@@ -3,6 +3,7 @@ import 'package:englizy_app/modules/admin/admin_add_part/admin_add_part_screen.d
 import 'package:englizy_app/modules/admin/admin_view_part/admin_view_part_screen.dart';
 import 'package:englizy_app/modules/admin/admin_view_parts/cubit/cubit.dart';
 import 'package:englizy_app/modules/admin/admin_view_parts/cubit/states.dart';
+import 'package:englizy_app/modules/admin/admin_view_students_in_homework/admin_view_students_in_homrwork_screen.dart';
 import 'package:englizy_app/modules/admin/admin_view_students_in_unit/admin_view_students_in_unit_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -123,7 +124,25 @@ class AdminViewPartsScreen extends StatelessWidget {
                         );
                       },
                       title: Text(
-                        "students",
+                        "Students",
+                        style: TextStyle(
+                          color: Theme.of(context).textTheme.bodyText1!.color,
+                        ),
+                      ),
+                    ),
+                    ListTile(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AdminViewStudentsInHomeworkScreen(
+                              unit: dataOfUnit,
+                            ),
+                          ),
+                        );
+                      },
+                      title: Text(
+                        "Homework",
                         style: TextStyle(
                           color: Theme.of(context).textTheme.bodyText1!.color,
                         ),

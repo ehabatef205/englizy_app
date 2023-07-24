@@ -40,7 +40,9 @@ class PartsScreen extends StatelessWidget {
                 ),
                 actions: [
                   TextButton(
-                      onPressed: () async {},
+                      onPressed: () async {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => ViewPdfLinkHomework(link: dataOfUnit["homework"], name: dataOfUnit["name"], id: dataOfUnit.id)));
+                      },
                       child: Text(
                         "Homework",
                         style: TextStyle(
@@ -85,40 +87,43 @@ class PartsScreen extends StatelessWidget {
                                       shrinkWrap: true,
                                       itemCount: data.length,
                                       itemBuilder: (context, index) {
-                                        return Container(
-                                          width: size.width * 0.35,
-                                          decoration: BoxDecoration(
-                                            color: Theme.of(context)
-                                                .scaffoldBackgroundColor,
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyText1!
-                                                    .color!
-                                                    .withOpacity(0.2),
-                                                spreadRadius: 1,
-                                                blurRadius: 4,
-                                                offset: const Offset(0, 0),
-                                              ),
-                                            ],
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                          child: InkWell(
-                                            onTap: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(builder: (context) => LecturesScreen(unitId: dataOfUnit.id, partId: data[index].id,)),
-                                              );
-                                            },
-                                            child: Center(
-                                              child: Text(
-                                                'Part ${index + 1}',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyText1!
-                                                    .copyWith(fontSize: 20),
+                                        return Padding(
+                                          padding: const EdgeInsets.all(5),
+                                          child: Container(
+                                            width: size.width * 0.32,
+                                            decoration: BoxDecoration(
+                                              color: Theme.of(context)
+                                                  .scaffoldBackgroundColor,
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyText1!
+                                                      .color!
+                                                      .withOpacity(0.2),
+                                                  spreadRadius: 1,
+                                                  blurRadius: 4,
+                                                  offset: const Offset(0, 0),
+                                                ),
+                                              ],
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            child: InkWell(
+                                              onTap: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(builder: (context) => LecturesScreen(unitId: dataOfUnit.id, partId: data[index].id,)),
+                                                );
+                                              },
+                                              child: Center(
+                                                child: Text(
+                                                  'Part ${index + 1}',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyText1!
+                                                      .copyWith(fontSize: 20),
+                                                ),
                                               ),
                                             ),
                                           ),

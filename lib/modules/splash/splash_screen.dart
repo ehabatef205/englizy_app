@@ -59,7 +59,7 @@ class _SplashScreenState extends State<SplashScreen> {
               child: Text(
                 "powered by Custom mind",
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                   fontSize: 20.0,
                   fontWeight: FontWeight.w700,
                 ),

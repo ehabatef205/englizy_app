@@ -32,6 +32,7 @@ class LecturesCubit extends Cubit<LecturesStates> {
         userModel!.uid).get();
 
     exist = doc.exists;
+    print("Hello ${doc.exists}");
     emit(ExistState());
   }
 
@@ -87,12 +88,11 @@ class LecturesCubit extends Cubit<LecturesStates> {
           .set({
         "answers": answers,
         "time": DateTime.now(),
-        "grade": grade
+        "grade": grade.toString(),
       }).whenComplete(() async {
         Navigator.pop(context);
       });
     } else {
-      changeIndex2();
       Fluttertoast.showToast(
         msg: "You answered before that",
         toastLength: Toast.LENGTH_SHORT,

@@ -72,8 +72,9 @@ class AdminViewPartScreen extends StatelessWidget {
                             .doc(unitId)
                             .collection("parts")
                             .doc(data.id)
-                            .delete().whenComplete(() {
-                              Navigator.pop(context);
+                            .delete()
+                            .whenComplete(() {
+                          Navigator.pop(context);
                         });
                       });
                     },
@@ -121,8 +122,13 @@ class AdminViewPartScreen extends StatelessWidget {
                           padding: const EdgeInsets.all(10),
                           child: Container(
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                border: Border.all(color: Colors.black)),
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1!
+                                      .color!),
+                            ),
                             child: Padding(
                               padding: const EdgeInsets.all(10),
                               child: Column(
@@ -158,7 +164,10 @@ class AdminViewPartScreen extends StatelessWidget {
                                             borderRadius:
                                                 BorderRadius.circular(5),
                                             border:
-                                                Border.all(color: Colors.black),
+                                                Border.all(color: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyText1!
+                                                    .color!),
                                           ),
                                           child: Padding(
                                             padding: const EdgeInsets.all(10),
@@ -189,7 +198,10 @@ class AdminViewPartScreen extends StatelessWidget {
                                             borderRadius:
                                                 BorderRadius.circular(5),
                                             border:
-                                                Border.all(color: Colors.black),
+                                                Border.all(color: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyText1!
+                                                    .color!),
                                           ),
                                           child: Padding(
                                             padding: const EdgeInsets.all(10),
@@ -226,7 +238,10 @@ class AdminViewPartScreen extends StatelessWidget {
                                             borderRadius:
                                                 BorderRadius.circular(5),
                                             border:
-                                                Border.all(color: Colors.black),
+                                                Border.all(color: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyText1!
+                                                    .color!),
                                           ),
                                           child: Padding(
                                             padding: const EdgeInsets.all(10),
@@ -257,7 +272,10 @@ class AdminViewPartScreen extends StatelessWidget {
                                             borderRadius:
                                                 BorderRadius.circular(5),
                                             border:
-                                                Border.all(color: Colors.black),
+                                                Border.all(color: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyText1!
+                                                    .color!),
                                           ),
                                           child: Padding(
                                             padding: const EdgeInsets.all(10),

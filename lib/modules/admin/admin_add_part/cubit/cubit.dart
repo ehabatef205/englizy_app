@@ -112,6 +112,8 @@ class AdminAddPartCubit extends Cubit<AdminAddPartStates> {
   }
 
   Future uploadVideos(BuildContext context, String name, String id) async {
+    isLoading = true;
+    emit(LoadingState());
     for(int i = 0; i < result!.files.length; i++){
       final file = File(result!.files[i].path!);
       isDone[i] = true;
@@ -140,7 +142,12 @@ class AdminAddPartCubit extends Cubit<AdminAddPartStates> {
       "view": false,
       "viewGrade": false,
     }).whenComplete(() async{
+      isLoading = false;
+      emit(LoadingState());
       Navigator.pop(context);
+    }).catchError((error) {
+      isLoading = false;
+      emit(LoadingState());
     });
   }
 

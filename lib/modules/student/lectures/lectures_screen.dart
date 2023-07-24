@@ -152,245 +152,421 @@ class LecturesScreen extends StatelessWidget {
                                                   ),
                                                 )
                                               : data["viewGrade"]
-                                                  ? ListView.builder(
-                                                      shrinkWrap: true,
-                                                      itemCount:
-                                                          data["questions"]
-                                                              .length,
-                                                      itemBuilder:
-                                                          (context, index) {
-                                                        return Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(10),
-                                                          child: Container(
-                                                            decoration:
-                                                                BoxDecoration(
-                                                                    color: Theme.of(
-                                                                            context)
-                                                                        .scaffoldBackgroundColor
-                                                                        .withOpacity(
-                                                                            0.8),
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            10),
-                                                                    border:
-                                                                        Border
-                                                                            .all(
-                                                                      color: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyText1!
-                                                                          .color!,
-                                                                    )),
-                                                            child: Padding(
+                                                  ? cubit.exist
+                                                      ? ListView.builder(
+                                                          shrinkWrap: true,
+                                                          itemCount:
+                                                              data["questions"]
+                                                                  .length,
+                                                          itemBuilder:
+                                                              (context, index) {
+                                                            return Padding(
                                                               padding:
                                                                   const EdgeInsets
                                                                       .all(10),
-                                                              child: Column(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .start,
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
-                                                                children: [
-                                                                  Text(
-                                                                    "Question${index + 1}: ",
-                                                                    style:
-                                                                        TextStyle(
-                                                                      fontSize:
-                                                                          20,
-                                                                      color: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyText1!
-                                                                          .color,
-                                                                    ),
-                                                                  ),
-                                                                  const SizedBox(
-                                                                    height: 10,
-                                                                  ),
-                                                                  Text(
-                                                                    data["questions"]
+                                                              child: Container(
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                        color: Theme.of(context)
+                                                                            .scaffoldBackgroundColor
+                                                                            .withOpacity(
+                                                                                0.8),
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(
+                                                                                10),
+                                                                        border:
+                                                                            Border.all(
+                                                                          color: Theme.of(context)
+                                                                              .textTheme
+                                                                              .bodyText1!
+                                                                              .color!,
+                                                                        )),
+                                                                child: Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                          .all(10),
+                                                                  child: Column(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .start,
+                                                                    crossAxisAlignment:
+                                                                        CrossAxisAlignment
+                                                                            .start,
+                                                                    children: [
+                                                                      Text(
+                                                                        "Question${index + 1}: ",
+                                                                        style:
+                                                                            TextStyle(
+                                                                          fontSize:
+                                                                              20,
+                                                                          color: Theme.of(context)
+                                                                              .textTheme
+                                                                              .bodyText1!
+                                                                              .color,
+                                                                        ),
+                                                                      ),
+                                                                      const SizedBox(
+                                                                        height:
+                                                                            10,
+                                                                      ),
+                                                                      Text(
+                                                                        data["questions"][index]
                                                                             [
-                                                                            index]
-                                                                        [
-                                                                        "question${index + 1}"],
-                                                                    style:
-                                                                        TextStyle(
-                                                                      fontSize:
-                                                                          20,
-                                                                      color: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodyText1!
-                                                                          .color,
-                                                                    ),
-                                                                  ),
-                                                                  const SizedBox(
-                                                                    height: 10,
-                                                                  ),
-                                                                  Row(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .spaceBetween,
-                                                                    children: [
-                                                                      Expanded(
-                                                                        child:
-                                                                            Container(
-                                                                          decoration:
-                                                                              BoxDecoration(
-                                                                            color: dataOfGrade["answers"][index] == data["questions"][index]["answer1"]
-                                                                                ? dataOfGrade["answers"][index] == data["questions"][index]["correct"]
-                                                                                    ? Colors.green
-                                                                                    : Colors.red
-                                                                                : Colors.transparent,
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(5),
-                                                                            border:
-                                                                                Border.all(
-                                                                              color: Theme.of(context).textTheme.bodyText1!.color!,
-                                                                            ),
-                                                                          ),
-                                                                          child:
-                                                                              Padding(
-                                                                            padding:
-                                                                                const EdgeInsets.all(10),
-                                                                            child:
-                                                                                Text(
-                                                                              data["questions"][index]["answer1"],
-                                                                              style: TextStyle(
-                                                                                fontSize: 18,
-                                                                                color: Theme.of(context).textTheme.bodyText1!.color,
-                                                                              ),
-                                                                            ),
-                                                                          ),
+                                                                            "question${index + 1}"],
+                                                                        style:
+                                                                            TextStyle(
+                                                                          fontSize:
+                                                                              20,
+                                                                          color: Theme.of(context)
+                                                                              .textTheme
+                                                                              .bodyText1!
+                                                                              .color,
                                                                         ),
                                                                       ),
                                                                       const SizedBox(
-                                                                        width:
+                                                                        height:
                                                                             10,
                                                                       ),
-                                                                      Expanded(
-                                                                        child:
-                                                                            Container(
-                                                                          decoration:
-                                                                              BoxDecoration(
-                                                                            color: dataOfGrade["answers"][index] == data["questions"][index]["answer2"]
-                                                                                ? dataOfGrade["answers"][index] == data["questions"][index]["correct"]
-                                                                                    ? Colors.green
-                                                                                    : Colors.red
-                                                                                : Colors.transparent,
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(5),
-                                                                            border:
-                                                                                Border.all(
-                                                                              color: Theme.of(context).textTheme.bodyText1!.color!,
-                                                                            ),
-                                                                          ),
-                                                                          child:
-                                                                              Padding(
-                                                                            padding:
-                                                                                const EdgeInsets.all(10),
+                                                                      Row(
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.spaceBetween,
+                                                                        children: [
+                                                                          Expanded(
                                                                             child:
-                                                                                Text(
-                                                                              data["questions"][index]["answer2"],
-                                                                              style: TextStyle(
-                                                                                fontSize: 18,
-                                                                                color: Theme.of(context).textTheme.bodyText1!.color,
+                                                                                Container(
+                                                                              decoration: BoxDecoration(
+                                                                                color: dataOfGrade["answers"][index] == data["questions"][index]["answer1"]
+                                                                                    ? dataOfGrade["answers"][index] == data["questions"][index]["correct"]
+                                                                                        ? Colors.green
+                                                                                        : Colors.red
+                                                                                    : data["questions"][index]["correct"] == data["questions"][index]["answer1"]
+                                                                                        ? Colors.green
+                                                                                        : Colors.transparent,
+                                                                                borderRadius: BorderRadius.circular(5),
+                                                                                border: Border.all(
+                                                                                  color: Theme.of(context).textTheme.bodyText1!.color!,
+                                                                                ),
+                                                                              ),
+                                                                              child: Padding(
+                                                                                padding: const EdgeInsets.all(10),
+                                                                                child: Text(
+                                                                                  data["questions"][index]["answer1"],
+                                                                                  style: TextStyle(
+                                                                                    fontSize: 18,
+                                                                                    color: Theme.of(context).textTheme.bodyText1!.color,
+                                                                                  ),
+                                                                                ),
                                                                               ),
                                                                             ),
                                                                           ),
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                  const SizedBox(
-                                                                    height: 10,
-                                                                  ),
-                                                                  Row(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .spaceBetween,
-                                                                    children: [
-                                                                      Expanded(
-                                                                        child:
-                                                                            Container(
-                                                                          decoration:
-                                                                              BoxDecoration(
-                                                                            color: dataOfGrade["answers"][index] == data["questions"][index]["answer3"]
-                                                                                ? dataOfGrade["answers"][index] == data["questions"][index]["correct"]
-                                                                                    ? Colors.green
-                                                                                    : Colors.red
-                                                                                : Colors.transparent,
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(5),
-                                                                            border:
-                                                                                Border.all(
-                                                                              color: Theme.of(context).textTheme.bodyText1!.color!,
-                                                                            ),
+                                                                          const SizedBox(
+                                                                            width:
+                                                                                10,
                                                                           ),
-                                                                          child:
-                                                                              Padding(
-                                                                            padding:
-                                                                                const EdgeInsets.all(10),
+                                                                          Expanded(
                                                                             child:
-                                                                                Text(
-                                                                              data["questions"][index]["answer3"],
-                                                                              style: TextStyle(
-                                                                                fontSize: 18,
-                                                                                color: Theme.of(context).textTheme.bodyText1!.color,
+                                                                                Container(
+                                                                              decoration: BoxDecoration(
+                                                                                color: dataOfGrade["answers"][index] == data["questions"][index]["answer2"]
+                                                                                    ? dataOfGrade["answers"][index] == data["questions"][index]["correct"]
+                                                                                        ? Colors.green
+                                                                                        : Colors.red
+                                                                                    : data["questions"][index]["correct"] == data["questions"][index]["answer2"]
+                                                                                    ? Colors.green
+                                                                                    : Colors.transparent,
+                                                                                borderRadius: BorderRadius.circular(5),
+                                                                                border: Border.all(
+                                                                                  color: Theme.of(context).textTheme.bodyText1!.color!,
+                                                                                ),
+                                                                              ),
+                                                                              child: Padding(
+                                                                                padding: const EdgeInsets.all(10),
+                                                                                child: Text(
+                                                                                  data["questions"][index]["answer2"],
+                                                                                  style: TextStyle(
+                                                                                    fontSize: 18,
+                                                                                    color: Theme.of(context).textTheme.bodyText1!.color,
+                                                                                  ),
+                                                                                ),
                                                                               ),
                                                                             ),
                                                                           ),
-                                                                        ),
+                                                                        ],
                                                                       ),
                                                                       const SizedBox(
-                                                                        width:
+                                                                        height:
                                                                             10,
                                                                       ),
-                                                                      Expanded(
-                                                                        child:
-                                                                            Container(
-                                                                          decoration:
-                                                                              BoxDecoration(
-                                                                            color: dataOfGrade["answers"][index] == data["questions"][index]["answer4"]
-                                                                                ? dataOfGrade["answers"][index] == data["questions"][index]["correct"]
-                                                                                    ? Colors.green
-                                                                                    : Colors.red
-                                                                                : Colors.transparent,
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(5),
-                                                                            border:
-                                                                                Border.all(
-                                                                              color: Theme.of(context).textTheme.bodyText1!.color!,
-                                                                            ),
-                                                                          ),
-                                                                          child:
-                                                                              Padding(
-                                                                            padding:
-                                                                                const EdgeInsets.all(10),
+                                                                      Row(
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.spaceBetween,
+                                                                        children: [
+                                                                          Expanded(
                                                                             child:
-                                                                                Text(
-                                                                              data["questions"][index]["answer4"],
-                                                                              style: TextStyle(
-                                                                                fontSize: 18,
-                                                                                color: Theme.of(context).textTheme.bodyText1!.color,
+                                                                                Container(
+                                                                              decoration: BoxDecoration(
+                                                                                color: dataOfGrade["answers"][index] == data["questions"][index]["answer3"]
+                                                                                    ? dataOfGrade["answers"][index] == data["questions"][index]["correct"]
+                                                                                        ? Colors.green
+                                                                                        : Colors.red
+                                                                                    : data["questions"][index]["correct"] == data["questions"][index]["answer3"]
+                                                                                    ? Colors.green
+                                                                                    : Colors.transparent,
+                                                                                borderRadius: BorderRadius.circular(5),
+                                                                                border: Border.all(
+                                                                                  color: Theme.of(context).textTheme.bodyText1!.color!,
+                                                                                ),
+                                                                              ),
+                                                                              child: Padding(
+                                                                                padding: const EdgeInsets.all(10),
+                                                                                child: Text(
+                                                                                  data["questions"][index]["answer3"],
+                                                                                  style: TextStyle(
+                                                                                    fontSize: 18,
+                                                                                    color: Theme.of(context).textTheme.bodyText1!.color,
+                                                                                  ),
+                                                                                ),
                                                                               ),
                                                                             ),
                                                                           ),
-                                                                        ),
+                                                                          const SizedBox(
+                                                                            width:
+                                                                                10,
+                                                                          ),
+                                                                          Expanded(
+                                                                            child:
+                                                                                Container(
+                                                                              decoration: BoxDecoration(
+                                                                                color: dataOfGrade["answers"][index] == data["questions"][index]["answer4"]
+                                                                                    ? dataOfGrade["answers"][index] == data["questions"][index]["correct"]
+                                                                                        ? Colors.green
+                                                                                        : Colors.red
+                                                                                    : data["questions"][index]["correct"] == data["questions"][index]["answer4"]
+                                                                                    ? Colors.green
+                                                                                    : Colors.transparent,
+                                                                                borderRadius: BorderRadius.circular(5),
+                                                                                border: Border.all(
+                                                                                  color: Theme.of(context).textTheme.bodyText1!.color!,
+                                                                                ),
+                                                                              ),
+                                                                              child: Padding(
+                                                                                padding: const EdgeInsets.all(10),
+                                                                                child: Text(
+                                                                                  data["questions"][index]["answer4"],
+                                                                                  style: TextStyle(
+                                                                                    fontSize: 18,
+                                                                                    color: Theme.of(context).textTheme.bodyText1!.color,
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ],
                                                                       ),
                                                                     ],
                                                                   ),
-                                                                ],
+                                                                ),
                                                               ),
-                                                            ),
-                                                          ),
-                                                        );
-                                                      },
-                                                    )
+                                                            );
+                                                          },
+                                                        )
+                                                      : ListView.builder(
+                                                          shrinkWrap: true,
+                                                          itemCount:
+                                                              data["questions"]
+                                                                  .length,
+                                                          itemBuilder:
+                                                              (context, index) {
+                                                            return Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(10),
+                                                              child: Container(
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                        color: Theme.of(context)
+                                                                            .scaffoldBackgroundColor
+                                                                            .withOpacity(
+                                                                                0.8),
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(
+                                                                                10),
+                                                                        border:
+                                                                            Border.all(
+                                                                          color: Theme.of(context)
+                                                                              .textTheme
+                                                                              .bodyText1!
+                                                                              .color!,
+                                                                        )),
+                                                                child: Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                          .all(10),
+                                                                  child: Column(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .start,
+                                                                    crossAxisAlignment:
+                                                                        CrossAxisAlignment
+                                                                            .start,
+                                                                    children: [
+                                                                      Text(
+                                                                        "Question${index + 1}: ",
+                                                                        style:
+                                                                            TextStyle(
+                                                                          fontSize:
+                                                                              20,
+                                                                          color: Theme.of(context)
+                                                                              .textTheme
+                                                                              .bodyText1!
+                                                                              .color,
+                                                                        ),
+                                                                      ),
+                                                                      const SizedBox(
+                                                                        height:
+                                                                            10,
+                                                                      ),
+                                                                      Text(
+                                                                        data["questions"][index]
+                                                                            [
+                                                                            "question${index + 1}"],
+                                                                        style:
+                                                                            TextStyle(
+                                                                          fontSize:
+                                                                              20,
+                                                                          color: Theme.of(context)
+                                                                              .textTheme
+                                                                              .bodyText1!
+                                                                              .color,
+                                                                        ),
+                                                                      ),
+                                                                      const SizedBox(
+                                                                        height:
+                                                                            10,
+                                                                      ),
+                                                                      Row(
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.spaceBetween,
+                                                                        children: [
+                                                                          Expanded(
+                                                                            child:
+                                                                                Container(
+                                                                              decoration: BoxDecoration(
+                                                                                color: data["questions"][index]["correct"] == data["questions"][index]["answer1"]
+                                                                                        ? Colors.green : Colors.transparent,
+                                                                                borderRadius: BorderRadius.circular(5),
+                                                                                border: Border.all(
+                                                                                  color: Theme.of(context).textTheme.bodyText1!.color!,
+                                                                                ),
+                                                                              ),
+                                                                              child: Padding(
+                                                                                padding: const EdgeInsets.all(10),
+                                                                                child: Text(
+                                                                                  data["questions"][index]["answer1"],
+                                                                                  style: TextStyle(
+                                                                                    fontSize: 18,
+                                                                                    color: Theme.of(context).textTheme.bodyText1!.color,
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                          const SizedBox(
+                                                                            width:
+                                                                                10,
+                                                                          ),
+                                                                          Expanded(
+                                                                            child:
+                                                                                Container(
+                                                                              decoration: BoxDecoration(
+                                                                                color: data["questions"][index]["correct"] == data["questions"][index]["answer2"]
+                                                                                    ? Colors.green : Colors.transparent,
+                                                                                borderRadius: BorderRadius.circular(5),
+                                                                                border: Border.all(
+                                                                                  color: Theme.of(context).textTheme.bodyText1!.color!,
+                                                                                ),
+                                                                              ),
+                                                                              child: Padding(
+                                                                                padding: const EdgeInsets.all(10),
+                                                                                child: Text(
+                                                                                  data["questions"][index]["answer2"],
+                                                                                  style: TextStyle(
+                                                                                    fontSize: 18,
+                                                                                    color: Theme.of(context).textTheme.bodyText1!.color,
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                      const SizedBox(
+                                                                        height:
+                                                                            10,
+                                                                      ),
+                                                                      Row(
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.spaceBetween,
+                                                                        children: [
+                                                                          Expanded(
+                                                                            child:
+                                                                                Container(
+                                                                              decoration: BoxDecoration(
+                                                                                color: data["questions"][index]["correct"] == data["questions"][index]["answer3"]
+                                                                                    ? Colors.green : Colors.transparent,
+                                                                                borderRadius: BorderRadius.circular(5),
+                                                                                border: Border.all(
+                                                                                  color: Theme.of(context).textTheme.bodyText1!.color!,
+                                                                                ),
+                                                                              ),
+                                                                              child: Padding(
+                                                                                padding: const EdgeInsets.all(10),
+                                                                                child: Text(
+                                                                                  data["questions"][index]["answer3"],
+                                                                                  style: TextStyle(
+                                                                                    fontSize: 18,
+                                                                                    color: Theme.of(context).textTheme.bodyText1!.color,
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                          const SizedBox(
+                                                                            width:
+                                                                                10,
+                                                                          ),
+                                                                          Expanded(
+                                                                            child:
+                                                                                Container(
+                                                                              decoration: BoxDecoration(
+                                                                                color: data["questions"][index]["correct"] == data["questions"][index]["answer4"]
+                                                                                    ? Colors.green : Colors.transparent,
+                                                                                borderRadius: BorderRadius.circular(5),
+                                                                                border: Border.all(
+                                                                                  color: Theme.of(context).textTheme.bodyText1!.color!,
+                                                                                ),
+                                                                              ),
+                                                                              child: Padding(
+                                                                                padding: const EdgeInsets.all(10),
+                                                                                child: Text(
+                                                                                  data["questions"][index]["answer4"],
+                                                                                  style: TextStyle(
+                                                                                    fontSize: 18,
+                                                                                    color: Theme.of(context).textTheme.bodyText1!.color,
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            );
+                                                          },
+                                                        )
                                                   : ListView.builder(
                                                       shrinkWrap: true,
                                                       itemCount:
@@ -680,66 +856,73 @@ class LecturesScreen extends StatelessWidget {
                                           cubit.index != 2
                                               ? const SizedBox()
                                               : Container(
-                                                height:
-                                                    size.height * 0.05,
-                                                width: size.width * 0.33,
-                                                decoration: BoxDecoration(
-                                                  border: Border(
-                                                    top: BorderSide(
-                                                        color: Theme.of(
-                                                                context)
-                                                            .textTheme
-                                                            .bodyText1!
-                                                            .color!),
-                                                    bottom: BorderSide(
-                                                        color: Theme.of(
-                                                                context)
-                                                            .textTheme
-                                                            .bodyText1!
-                                                            .color!),
-                                                    left: BorderSide(
-                                                        color: Theme.of(
-                                                                context)
-                                                            .textTheme
-                                                            .bodyText1!
-                                                            .color!),
-                                                    right: BorderSide(
-                                                        color: Theme.of(
-                                                                context)
-                                                            .textTheme
-                                                            .bodyText1!
-                                                            .color!),
+                                                  height: size.height * 0.05,
+                                                  width: size.width * 0.33,
+                                                  decoration: BoxDecoration(
+                                                    border: Border(
+                                                      top: BorderSide(
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyText1!
+                                                                  .color!),
+                                                      bottom: BorderSide(
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyText1!
+                                                                  .color!),
+                                                      left: BorderSide(
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyText1!
+                                                                  .color!),
+                                                      right: BorderSide(
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyText1!
+                                                                  .color!),
+                                                    ),
+                                                  ),
+                                                  child: Center(
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Text(
+                                                          'Grade : ',
+                                                          style: TextStyle(
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .bodyText1!
+                                                                .color,
+                                                            fontSize: 20.0,
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          !data["viewGrade"]
+                                                              ? ''
+                                                              : cubit.exist
+                                                                  ? dataOfGrade[
+                                                                      "grade"]
+                                                                  : "0"
+                                                                      .toString(),
+                                                          style:
+                                                              const TextStyle(
+                                                            color: Colors.white,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 20.0,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
-                                                child: Center(
-                                                  child: Row(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                    children: [
-                                                      Text(
-                                                        'Grade : ',
-                                                        style: TextStyle(
-                                                          color: Theme.of(context).textTheme.bodyText1!.color,
-                                                          fontSize: 20.0,
-                                                        ),
-                                                      ),
-                                                      Text(
-                                                        !data["viewGrade"]
-                                                            ? ''
-                                                            : dataOfGrade[
-                                                                    "grade"]
-                                                                .toString(),
-                                                        style:
-                                                            const TextStyle(
-                                                          color: Colors.white,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 20.0,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
                                           Container(
                                             width: size.width * 0.25,
                                             clipBehavior:
@@ -750,17 +933,17 @@ class LecturesScreen extends StatelessWidget {
                                             ),
                                             child: MaterialButton(
                                               onPressed: () {
-                                                cubit.changeIndex();
-                                                if (cubit.index == 2) {
-                                                  cubit.done = true;
+                                                if (cubit.index == 0) {
+                                                  cubit.changeIndex();
                                                   cubit.checkExist(
                                                       unitId: unitId,
                                                       partId: partId);
                                                   cubit.changeAnswers(
                                                       length: data["questions"]
                                                           .length);
-                                                }
-                                                if (cubit.index == 3) {
+                                                } else if (cubit.index == 1) {
+                                                  cubit.changeIndex();
+                                                } else {
                                                   if (!data["viewGrade"]) {
                                                     cubit.submitAnswers(
                                                         id: unitId,
@@ -775,7 +958,9 @@ class LecturesScreen extends StatelessWidget {
                                               color: Colors.indigo,
                                               height: 50.0,
                                               child: Text(
-                                                cubit.index != 2 ? 'Next' : 'Done',
+                                                cubit.index != 2
+                                                    ? 'Next'
+                                                    : 'Done',
                                                 style: const TextStyle(
                                                   color: Colors.white,
                                                   fontWeight: FontWeight.bold,
