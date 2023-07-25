@@ -26,26 +26,15 @@ class PostsScreen extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               leading: const SizedBox(),
-              title: AnimatedTextKit(
-                animatedTexts: [
-                  ColorizeAnimatedText(
-                    'Posts',
-                    textStyle: colorizeTextStyle,
-                    colors: colorizeColors,
-                  ),
-                ],
-                isRepeatingAnimation: true,
-                repeatForever: true,
-                displayFullTextOnTap: true,
-              ),
-              /*Text(
+              title: Text(
                 'Posts',
                 style: TextStyle(
-                  color: Theme.of(context).textTheme.bodyText1!.color,
-                  fontSize: 20.0,
+                  color: Color.fromRGBO(102, 144, 206, 1),
+                  fontSize: 25.0,
                   fontWeight: FontWeight.w700,
+                  fontStyle: FontStyle.italic,
                 ),
-              ),*/
+              ),
               centerTitle: true,
               actions: [
                 StreamBuilder<DocumentSnapshot>(

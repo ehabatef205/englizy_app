@@ -30,26 +30,15 @@ class SettingsStudentScreen extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               leading: const SizedBox(),
-              title: AnimatedTextKit(
-                animatedTexts: [
-                  ColorizeAnimatedText(
-                    'Profile',
-                    textStyle: colorizeTextStyle,
-                    colors: colorizeColors,
-                  ),
-                ],
-                isRepeatingAnimation: true,
-                repeatForever: true,
-                displayFullTextOnTap: true,
-              ),
-              /*Text(
+              title: Text(
                 'Profile',
                 style: TextStyle(
-                  fontSize: 20,
-                  color: Theme.of(context).textTheme.bodyText1!.color,
+                  color: Color.fromRGBO(102, 144, 206, 1),
+                  fontSize: 25.0,
                   fontWeight: FontWeight.w700,
+                  fontStyle: FontStyle.italic,
                 ),
-              ),*/
+              ),
             ),
             body: SafeArea(
               child: Container(

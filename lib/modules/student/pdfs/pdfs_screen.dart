@@ -26,24 +26,15 @@ class PDFSScreen extends StatelessWidget {
             appBar: AppBar(
               centerTitle: true,
               leading: const SizedBox(),
-              title: AnimatedTextKit(
-                animatedTexts: [
-                  ColorizeAnimatedText(
-                    'PDF',
-                    textStyle: colorizeTextStyle,
-                    colors: colorizeColors,
-                  ),
-                ],
-                isRepeatingAnimation: true,
-                repeatForever: true,
-                displayFullTextOnTap: true,
-              ), /*Text("PDF", style: TextStyle(
-                color: Theme
-                    .of(context)
-                    .textTheme
-                    .bodyText1!
-                    .color,
-              ),),*/
+              title: Text(
+                'PDF',
+                style: TextStyle(
+                  color: Color.fromRGBO(102, 144, 206, 1),
+                  fontSize: 25.0,
+                  fontWeight: FontWeight.w700,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
             ),
             body: Container(
               constraints: BoxConstraints.expand(),

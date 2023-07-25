@@ -45,7 +45,7 @@ class AppCubit extends Cubit<AppStates> {
     return [
       TabItem(
         icon: Icon(Icons.date_range_sharp),
-        title: 'Community',
+        title: 'Questions',
       ),
       TabItem(
         icon: Icon(Icons.ac_unit),

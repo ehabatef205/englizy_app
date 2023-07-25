@@ -23,26 +23,15 @@ class CommentOfPostScreen extends StatelessWidget {
           CommentOfPostCubit cubit = CommentOfPostCubit.get(context);
           return Scaffold(
             appBar: AppBar(
-              title: AnimatedTextKit(
-                animatedTexts: [
-                  ColorizeAnimatedText(
-                    'Comments',
-                    textStyle: colorizeTextStyle,
-                    colors: colorizeColors,
-                  ),
-                ],
-                isRepeatingAnimation: true,
-                repeatForever: true,
-                displayFullTextOnTap: true,
-              ),
-              /*Text(
+              title: Text(
                 'Comments',
                 style: TextStyle(
-                  color: Theme.of(context).textTheme.bodyText1!.color,
-                  fontSize: 20.0,
+                  color: Color.fromRGBO(102, 144, 206, 1),
+                  fontSize: 25.0,
                   fontWeight: FontWeight.w700,
+                  fontStyle: FontStyle.italic,
                 ),
-              ),*/
+              ),
               centerTitle: true,
             ),
             body: Container(

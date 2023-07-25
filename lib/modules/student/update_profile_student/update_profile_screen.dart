@@ -26,17 +26,14 @@ class UpdateProfileStudentScreen extends StatelessWidget {
               UpdateProfileStudentCubit.get(context);
           return Scaffold(
             appBar: AppBar(
-              title: AnimatedTextKit(
-                animatedTexts: [
-                  ColorizeAnimatedText(
-                    'Update Profile',
-                    textStyle: colorizeTextStyle,
-                    colors: colorizeColors,
-                  ),
-                ],
-                isRepeatingAnimation: true,
-                repeatForever: true,
-                displayFullTextOnTap: true,
+              title: Text(
+                'Update Profile',
+                style: TextStyle(
+                  color: Color.fromRGBO(102, 144, 206, 1),
+                  fontSize: 25.0,
+                  fontWeight: FontWeight.w700,
+                  fontStyle: FontStyle.italic,
+                ),
               ),
               centerTitle: true,
             ),

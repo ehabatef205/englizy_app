@@ -19,17 +19,14 @@ class CreatePostsScreen extends StatelessWidget {
           CreatePostsCubit cubit = CreatePostsCubit.get(context);
           return Scaffold(
             appBar: AppBar(
-              title: AnimatedTextKit(
-                animatedTexts: [
-                  ColorizeAnimatedText(
-                    'Create Post',
-                    textStyle: colorizeTextStyle,
-                    colors: colorizeColors,
-                  ),
-                ],
-                isRepeatingAnimation: true,
-                repeatForever: true,
-                displayFullTextOnTap: true,
+              title: Text(
+                'Create Post',
+                style: TextStyle(
+                  color: Color.fromRGBO(102, 144, 206, 1),
+                  fontSize: 25.0,
+                  fontWeight: FontWeight.w700,
+                  fontStyle: FontStyle.italic,
+                ),
               ),
               actions: [
                 TextButton(

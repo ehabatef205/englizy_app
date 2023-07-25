@@ -30,563 +30,544 @@ class _LoginScreenState extends State<LoginScreen> {
               return Future.value(true);
             },
             child: Scaffold(
-              body: Stack(
-                //alignment: Alignment.bottomCenter,
-                children: [
-                  Container(
-                    height: size.height,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
-                      child: SafeArea(
-                        child: Center(
-                          child: SingleChildScrollView(
-                            child: Form(
-                              key: cubit.formKey,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    height: size.height * 0.25,
-                                  ),
-                                  cubit.isLogin
-                                      ? Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Center(
-                                              child: Text(
-                                                "Login",
-                                                style: TextStyle(
-                                                  color: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyText1!
-                                                      .color,
-                                                  fontSize: 28.0,
-                                                  fontWeight: FontWeight.w900,
-                                                ),
+              body: Container(
+                constraints: const BoxConstraints.expand(),
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("assets/englizy.jpg"),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                child: Container(
+                  color: Theme.of(context)
+                      .scaffoldBackgroundColor
+                      .withOpacity(0.7),
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+                    child: SafeArea(
+                      child: Center(
+                        child: SingleChildScrollView(
+                          child: Form(
+                            key: cubit.formKey,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                cubit.isLogin
+                                    ? Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Center(
+                                            child: Text(
+                                              "Login",
+                                              style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyText1!
+                                                    .color,
+                                                fontSize: 28.0,
+                                                fontWeight: FontWeight.w900,
                                               ),
                                             ),
-                                            const SizedBox(
-                                              height: 20,
-                                            ),
-                                            TextFormFieldWidget(
-                                              controller:
-                                                  cubit.emailLoginController,
-                                              type: TextInputType.emailAddress,
-                                              context: context,
-                                              labelText: "Email",
-                                              validate: (value) {
-                                                if (value!.isEmpty) {
-                                                  return "Email is required";
-                                                }
-                                                return null;
-                                              },
-                                            ),
-                                            const SizedBox(
-                                              height: 20.0,
-                                            ),
-                                            TextFormFieldWidget(
-                                              controller:
-                                                  cubit.passwordLoginController,
-                                              type: TextInputType.visiblePassword,
-                                              context: context,
-                                              suffixIcon: IconButton(
-                                                icon: Icon(
-                                                  cubit.isPassword
-                                                      ? Icons.visibility
-                                                      : Icons.visibility_off,
-                                                  color: Theme.of(context)
-                                                      .iconTheme
-                                                      .color,
-                                                ),
-                                                onPressed: () {
-                                                  cubit.passwordChange();
-                                                },
-                                                color: Colors.black,
+                                          ),
+                                          const SizedBox(
+                                            height: 20,
+                                          ),
+                                          TextFormFieldWidget(
+                                            controller:
+                                                cubit.emailLoginController,
+                                            type: TextInputType.emailAddress,
+                                            context: context,
+                                            labelText: "Email",
+                                            validate: (value) {
+                                              if (value!.isEmpty) {
+                                                return "Email is required";
+                                              }
+                                              return null;
+                                            },
+                                          ),
+                                          const SizedBox(
+                                            height: 20.0,
+                                          ),
+                                          TextFormFieldWidget(
+                                            controller:
+                                                cubit.passwordLoginController,
+                                            type: TextInputType.visiblePassword,
+                                            context: context,
+                                            suffixIcon: IconButton(
+                                              icon: Icon(
+                                                cubit.isPassword
+                                                    ? Icons.visibility
+                                                    : Icons.visibility_off,
+                                                color: Theme.of(context)
+                                                    .iconTheme
+                                                    .color,
                                               ),
-                                              labelText: "Password",
-                                              obscureText: cubit.isPassword,
-                                              validate: (value) {
-                                                if (value!.isEmpty) {
-                                                  return "password is required";
-                                                }
-                                                return null;
+                                              onPressed: () {
+                                                cubit.passwordChange();
                                               },
+                                              color: Colors.black,
                                             ),
-                                            const SizedBox(
-                                              height: 10.0,
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              children: [
-                                                InkWell(
-                                                  onTap: () {},
-                                                  child: Text(
-                                                    "Forgot your password?",
-                                                    style: TextStyle(
-                                                      color: Theme.of(context)
-                                                          .textTheme
-                                                          .bodyText1!
-                                                          .color,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            const SizedBox(
-                                              height: 30.0,
-                                            ),
-                                          ],
-                                        )
-                                      : Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Center(
-                                              child: Text(
-                                                "Registration",
-                                                style: TextStyle(
-                                                  color: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyText1!
-                                                      .color,
-                                                  fontSize: 28.0,
-                                                  fontWeight: FontWeight.w900,
-                                                ),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            TextFormFieldWidget(
-                                              controller:
-                                                  cubit.quadrupleNameController,
-                                              type: TextInputType.name,
-                                              context: context,
-                                              labelText: "Quadruple name",
-                                              validate: (value) {
-                                                if (value!.isEmpty) {
-                                                  return "Quadruple name is required";
-                                                }
-                                                return null;
-                                              },
-                                            ),
-                                            const SizedBox(
-                                              height: 8.0,
-                                            ),
-                                            Container(
-                                              height: 66.0,
-                                              decoration: BoxDecoration(
-                                                border: Border.all(
+                                            labelText: "Password",
+                                            obscureText: cubit.isPassword,
+                                            validate: (value) {
+                                              if (value!.isEmpty) {
+                                                return "password is required";
+                                              }
+                                              return null;
+                                            },
+                                          ),
+                                          const SizedBox(
+                                            height: 10.0,
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              InkWell(
+                                                onTap: () {},
+                                                child: Text(
+                                                  "Forgot your password?",
+                                                  style: TextStyle(
                                                     color: Theme.of(context)
                                                         .textTheme
                                                         .bodyText1!
-                                                        .color!),
-                                                borderRadius:
-                                                    BorderRadius.circular(25),
+                                                        .color,
+                                                  ),
+                                                ),
                                               ),
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(2.0),
-                                                child: Center(
-                                                  child: Row(
-                                                    children: [
-                                                      Flexible(
-                                                        child: TextFormField(
-                                                          onEditingComplete: () {
-                                                            FocusScope.of(context)
-                                                                .nextFocus();
-                                                          },
-                                                          keyboardType:
-                                                              TextInputType
-                                                                  .datetime,
-                                                          enabled: false,
-                                                          controller: cubit
-                                                              .levelController,
-                                                          minLines: 1,
-                                                          cursorColor:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .bodyText1!
-                                                                  .color,
-                                                          style: TextStyle(
+                                            ],
+                                          ),
+                                          const SizedBox(
+                                            height: 30.0,
+                                          ),
+                                        ],
+                                      )
+                                    : Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Center(
+                                            child: Text(
+                                              "Registration",
+                                              style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyText1!
+                                                    .color,
+                                                fontSize: 28.0,
+                                                fontWeight: FontWeight.w900,
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          TextFormFieldWidget(
+                                            controller:
+                                                cubit.quadrupleNameController,
+                                            type: TextInputType.name,
+                                            context: context,
+                                            labelText: "Name",
+                                            validate: (value) {
+                                              if (value!.isEmpty) {
+                                                return "Name is required";
+                                              }
+                                              return null;
+                                            },
+                                          ),
+                                          const SizedBox(
+                                            height: 8.0,
+                                          ),
+                                          Container(
+                                            height: 66.0,
+                                            decoration: BoxDecoration(
+                                              color: Colors.black26,
+                                              border: Border.all(
+                                                  color: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyText1!
+                                                      .color!),
+                                              borderRadius:
+                                                  BorderRadius.circular(25),
+                                            ),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(2.0),
+                                              child: Center(
+                                                child: Row(
+                                                  children: [
+                                                    Flexible(
+                                                      child: TextFormField(
+                                                        onEditingComplete: () {
+                                                          FocusScope.of(context)
+                                                              .nextFocus();
+                                                        },
+                                                        keyboardType:
+                                                            TextInputType
+                                                                .datetime,
+                                                        enabled: false,
+                                                        controller: cubit
+                                                            .levelController,
+                                                        minLines: 1,
+                                                        cursorColor:
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .bodyText1!
+                                                                .color,
+                                                        style: TextStyle(
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .bodyText1!
+                                                                .color,
+                                                            fontSize: 18),
+                                                        decoration:
+                                                            InputDecoration(
+                                                          filled: true,
+                                                          hintText: "Level",
+                                                          hintStyle: TextStyle(
                                                               color: Theme.of(
                                                                       context)
                                                                   .textTheme
                                                                   .bodyText1!
-                                                                  .color,
-                                                              fontSize: 18),
-                                                          decoration:
-                                                              InputDecoration(
-                                                            filled: true,
-                                                            hintText: "Level",
-                                                            hintStyle: TextStyle(
-                                                                color: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .bodyText1!
-                                                                    .color!
-                                                                    .withOpacity(
-                                                                        0.5)),
-                                                            disabledBorder:
-                                                                OutlineInputBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          50),
-                                                              borderSide:
-                                                                  const BorderSide(
-                                                                color: Colors
-                                                                    .transparent,
-                                                              ),
+                                                                  .color!
+                                                                  .withOpacity(
+                                                                      0.5)),
+                                                          disabledBorder:
+                                                              OutlineInputBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        50),
+                                                            borderSide:
+                                                                const BorderSide(
+                                                              color: Colors
+                                                                  .transparent,
                                                             ),
-                                                            errorBorder:
-                                                                OutlineInputBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          50),
-                                                              borderSide:
-                                                                  const BorderSide(
-                                                                color: Colors
-                                                                    .transparent,
-                                                              ),
+                                                          ),
+                                                          errorBorder:
+                                                              OutlineInputBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        50),
+                                                            borderSide:
+                                                                const BorderSide(
+                                                              color: Colors
+                                                                  .transparent,
                                                             ),
                                                           ),
                                                         ),
                                                       ),
-                                                      StreamBuilder<
-                                                              QuerySnapshot>(
-                                                          stream:
-                                                              FirebaseFirestore
-                                                                  .instance
-                                                                  .collection(
-                                                                      "levels")
-                                                                  .snapshots(),
-                                                          builder: (context,
-                                                              snapshot) {
-                                                            if (snapshot
-                                                                .hasData) {
-                                                              var date = snapshot
-                                                                  .data!.docs;
-                                                              return DropdownButtonHideUnderline(
-                                                                child:
-                                                                    DropdownButton(
-                                                                  dropdownColor: Theme.of(
-                                                                          context)
-                                                                      .scaffoldBackgroundColor,
-                                                                  iconEnabledColor:
-                                                                      Theme.of(
-                                                                              context)
-                                                                          .iconTheme
-                                                                          .color,
-                                                                  items: date.map(
-                                                                      (item) {
-                                                                    return DropdownMenuItem(
-                                                                      onTap: () {
-                                                                        cubit.changeLevelId(
-                                                                            item.id);
-                                                                      },
-                                                                      value: item[
+                                                    ),
+                                                    StreamBuilder<
+                                                            QuerySnapshot>(
+                                                        stream:
+                                                            FirebaseFirestore
+                                                                .instance
+                                                                .collection(
+                                                                    "levels")
+                                                                .snapshots(),
+                                                        builder: (context,
+                                                            snapshot) {
+                                                          if (snapshot
+                                                              .hasData) {
+                                                            var date = snapshot
+                                                                .data!.docs;
+                                                            return DropdownButtonHideUnderline(
+                                                              child:
+                                                                  DropdownButton(
+                                                                dropdownColor: Theme.of(
+                                                                        context)
+                                                                    .scaffoldBackgroundColor,
+                                                                iconEnabledColor:
+                                                                    Theme.of(
+                                                                            context)
+                                                                        .iconTheme
+                                                                        .color,
+                                                                items: date.map(
+                                                                    (item) {
+                                                                  return DropdownMenuItem(
+                                                                    onTap: () {
+                                                                      cubit.changeLevelId(
+                                                                          item.id);
+                                                                    },
+                                                                    value: item[
+                                                                        "name"],
+                                                                    child: Text(
+                                                                      item[
                                                                           "name"],
-                                                                      child: Text(
-                                                                        item[
-                                                                            "name"],
-                                                                        style: TextStyle(
-                                                                            color: Theme.of(context)
-                                                                                .textTheme
-                                                                                .bodyText1!
-                                                                                .color),
-                                                                      ),
-                                                                    );
-                                                                  }).toList(),
-                                                                  onChanged:
-                                                                      (newValue) {
-                                                                    cubit.changeLevel(
-                                                                        newValue!
-                                                                            .toString());
-                                                                  },
-                                                                ),
-                                                              );
-                                                            } else {
-                                                              return Center(
-                                                                child:
-                                                                    CircularProgressIndicator(
-                                                                  color: color2,
-                                                                ),
-                                                              );
-                                                            }
-                                                          }),
-                                                    ],
-                                                  ),
+                                                                      style: TextStyle(
+                                                                          color: Theme.of(context)
+                                                                              .textTheme
+                                                                              .bodyText1!
+                                                                              .color),
+                                                                    ),
+                                                                  );
+                                                                }).toList(),
+                                                                onChanged:
+                                                                    (newValue) {
+                                                                  cubit.changeLevel(
+                                                                      newValue!
+                                                                          .toString());
+                                                                },
+                                                              ),
+                                                            );
+                                                          } else {
+                                                            return Center(
+                                                              child:
+                                                                  CircularProgressIndicator(
+                                                                color: color2,
+                                                              ),
+                                                            );
+                                                          }
+                                                        }),
+                                                  ],
                                                 ),
                                               ),
                                             ),
-                                            const SizedBox(
-                                              height: 8.0,
-                                            ),
-                                            TextFormFieldWidget(
-                                              controller: cubit
-                                                  .parentsPhoneNumberController,
-                                              type: TextInputType.phone,
-                                              context: context,
-                                              labelText: "Parent's phone number",
-                                              validate: (value) {
-                                                if (value!.isEmpty) {
-                                                  return "Parent's phone number is required";
-                                                }
-                                                return null;
-                                              },
-                                            ),
-                                            const SizedBox(
-                                              height: 8.0,
-                                            ),
-                                            TextFormFieldWidget(
-                                              controller: cubit
-                                                  .studentPhoneNumberController,
-                                              type: TextInputType.phone,
-                                              context: context,
-                                              labelText: "Student Phone Number",
-                                              validate: (value) {
-                                                if (value!.isEmpty) {
-                                                  return "Student Phone Number is required";
-                                                }
-                                                return null;
-                                              },
-                                            ),
-                                            const SizedBox(
-                                              height: 8.0,
-                                            ),
-                                            TextFormFieldWidget(
-                                              controller:
-                                                  cubit.passwordController2,
-                                              type: TextInputType.visiblePassword,
-                                              context: context,
-                                              suffixIcon: IconButton(
-                                                icon: Icon(
-                                                  cubit.isPassword
-                                                      ? Icons.visibility
-                                                      : Icons.visibility_off,
-                                                  color: Theme.of(context)
-                                                      .iconTheme
-                                                      .color,
-                                                ),
-                                                onPressed: () {
-                                                  cubit.passwordChange();
-                                                },
-                                                color: Colors.black,
-                                              ),
-                                              labelText: "Password",
-                                              obscureText: cubit.isPassword,
-                                              validate: (value) {
-                                                if (value!.isEmpty) {
-                                                  return "password is required";
-                                                }
-                                                return null;
-                                              },
-                                            ),
-                                            const SizedBox(
-                                              height: 8.0,
-                                            ),
-                                            TextFormFieldWidget(
-                                              controller:
-                                                  cubit.confirmPasswordController,
-                                              type: TextInputType.visiblePassword,
-                                              context: context,
-                                              suffixIcon: IconButton(
-                                                icon: Icon(
-                                                  cubit.isConfirmPassword
-                                                      ? Icons.visibility
-                                                      : Icons.visibility_off,
-                                                  color: Theme.of(context)
-                                                      .iconTheme
-                                                      .color,
-                                                ),
-                                                onPressed: () {
-                                                  cubit.confirmPasswordChange();
-                                                },
-                                                color: Colors.black,
-                                              ),
-                                              labelText: "Confirm Password",
-                                              obscureText: cubit.isPassword,
-                                              validate: (value) {
-                                                if (value!.isEmpty) {
-                                                  return "Confirm Password is required";
-                                                }
-                                                return null;
-                                              },
-                                            ),
-                                            const SizedBox(
-                                              height: 8.0,
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.symmetric(
-                                                  horizontal: 10),
-                                              child: Text(
-                                                "The email used to reset the password",
-                                                style: TextStyle(
-                                                  color: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyText1!
-                                                      .color!,
-                                                  fontSize: 18.0,
-                                                  fontWeight: FontWeight.w900,
-                                                ),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 10.0,
-                                            ),
-                                            TextFormFieldWidget(
-                                              controller: cubit.emailController,
-                                              type: TextInputType.emailAddress,
-                                              context: context,
-                                              labelText: "Email",
-                                              validate: (value) {
-                                                if (value!.isEmpty) {
-                                                  return "Email is required";
-                                                }
-                                                return null;
-                                              },
-                                            ),
-                                            const SizedBox(
-                                              height: 10.0,
-                                            ),
-                                            const SizedBox(
-                                              height: 10.0,
-                                            ),
-                                          ],
-                                        ),
-                                  //LogIn
-                                  cubit.isLoading
-                                      ? Center(
-                                          child: CircularProgressIndicator(),
-                                        )
-                                      : Container(
-                                          width: double.infinity,
-                                          clipBehavior:
-                                              Clip.antiAliasWithSaveLayer,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(25.0),
                                           ),
-                                          child: MaterialButton(
-                                            onPressed: () {
-                                              if (cubit.isLogin) {
-                                                if (cubit.formKey.currentState!
-                                                    .validate()) {
-                                                  cubit.formKey.currentState!
-                                                      .save();
-                                                  cubit.userLogin(
-                                                      context: context);
-                                                }
-                                              } else {
-                                                if (cubit.formKey.currentState!
-                                                    .validate()) {
-                                                  cubit.formKey.currentState!
-                                                      .save();
-                                                  cubit.userRegister(
-                                                      context: context);
-                                                }
+                                          const SizedBox(
+                                            height: 8.0,
+                                          ),
+                                          TextFormFieldWidget(
+                                            controller: cubit
+                                                .parentsPhoneNumberController,
+                                            type: TextInputType.phone,
+                                            context: context,
+                                            labelText: "Parent's phone number",
+                                            validate: (value) {
+                                              if (value!.isEmpty) {
+                                                return "Parent's phone number is required";
                                               }
+                                              return null;
                                             },
-                                            color: cubit.isLogin ? Color.fromRGBO(74, 93, 170, 1) : Color.fromRGBO(0, 168, 132, 1),
-                                            height: 50.0,
+                                          ),
+                                          const SizedBox(
+                                            height: 8.0,
+                                          ),
+                                          TextFormFieldWidget(
+                                            controller: cubit
+                                                .studentPhoneNumberController,
+                                            type: TextInputType.phone,
+                                            context: context,
+                                            labelText: "Student Phone Number",
+                                            validate: (value) {
+                                              if (value!.isEmpty) {
+                                                return "Student Phone Number is required";
+                                              }
+                                              return null;
+                                            },
+                                          ),
+                                          const SizedBox(
+                                            height: 8.0,
+                                          ),
+                                          TextFormFieldWidget(
+                                            controller:
+                                                cubit.passwordController2,
+                                            type: TextInputType.visiblePassword,
+                                            context: context,
+                                            suffixIcon: IconButton(
+                                              icon: Icon(
+                                                cubit.isPassword
+                                                    ? Icons.visibility
+                                                    : Icons.visibility_off,
+                                                color: Theme.of(context)
+                                                    .iconTheme
+                                                    .color,
+                                              ),
+                                              onPressed: () {
+                                                cubit.passwordChange();
+                                              },
+                                              color: Colors.black,
+                                            ),
+                                            labelText: "Password",
+                                            obscureText: cubit.isPassword,
+                                            validate: (value) {
+                                              if (value!.isEmpty) {
+                                                return "password is required";
+                                              }
+                                              return null;
+                                            },
+                                          ),
+                                          const SizedBox(
+                                            height: 8.0,
+                                          ),
+                                          TextFormFieldWidget(
+                                            controller:
+                                                cubit.confirmPasswordController,
+                                            type: TextInputType.visiblePassword,
+                                            context: context,
+                                            suffixIcon: IconButton(
+                                              icon: Icon(
+                                                cubit.isConfirmPassword
+                                                    ? Icons.visibility
+                                                    : Icons.visibility_off,
+                                                color: Theme.of(context)
+                                                    .iconTheme
+                                                    .color,
+                                              ),
+                                              onPressed: () {
+                                                cubit.confirmPasswordChange();
+                                              },
+                                              color: Colors.black,
+                                            ),
+                                            labelText: "Confirm Password",
+                                            obscureText: cubit.isPassword,
+                                            validate: (value) {
+                                              if (value!.isEmpty) {
+                                                return "Confirm Password is required";
+                                              }
+                                              return null;
+                                            },
+                                          ),
+                                          const SizedBox(
+                                            height: 8.0,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 10),
                                             child: Text(
-                                              cubit.isLogin
-                                                  ? 'Login'
-                                                  : 'Register',
-                                              style: const TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 20.0,
+                                              "The email used to reset the password",
+                                              style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyText1!
+                                                    .color!,
+                                                fontSize: 18.0,
+                                                fontWeight: FontWeight.w900,
                                               ),
                                             ),
                                           ),
+                                          const SizedBox(
+                                            height: 10.0,
+                                          ),
+                                          TextFormFieldWidget(
+                                            controller: cubit.emailController,
+                                            type: TextInputType.emailAddress,
+                                            context: context,
+                                            labelText: "Email",
+                                            validate: (value) {
+                                              if (value!.isEmpty) {
+                                                return "Email is required";
+                                              }
+                                              return null;
+                                            },
+                                          ),
+                                          const SizedBox(
+                                            height: 10.0,
+                                          ),
+                                          const SizedBox(
+                                            height: 10.0,
+                                          ),
+                                        ],
+                                      ),
+                                //LogIn
+                                cubit.isLoading
+                                    ? Center(
+                                        child: CircularProgressIndicator(),
+                                      )
+                                    : Container(
+                                        width: double.infinity,
+                                        clipBehavior:
+                                            Clip.antiAliasWithSaveLayer,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(25.0),
                                         ),
-                                  const SizedBox(
-                                    height: 10.0,
+                                        child: MaterialButton(
+                                          onPressed: () {
+                                            if (cubit.isLogin) {
+                                              if (cubit.formKey.currentState!
+                                                  .validate()) {
+                                                cubit.formKey.currentState!
+                                                    .save();
+                                                cubit.userLogin(
+                                                    context: context);
+                                              }
+                                            } else {
+                                              if (cubit.formKey.currentState!
+                                                  .validate()) {
+                                                cubit.formKey.currentState!
+                                                    .save();
+                                                cubit.userRegister(
+                                                    context: context);
+                                              }
+                                            }
+                                          },
+                                          color: cubit.isLogin
+                                              ? Color.fromRGBO(74, 93, 170, 1)
+                                              : Color.fromRGBO(0, 168, 132, 1),
+                                          height: 50.0,
+                                          child: Text(
+                                            cubit.isLogin
+                                                ? 'Login'
+                                                : 'Register',
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20.0,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                const SizedBox(
+                                  height: 10.0,
+                                ),
+                                Center(
+                                  child: Text(
+                                    "OR",
+                                    style: TextStyle(
+                                      color: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1!
+                                          .color!,
+                                      fontSize: 18.0,
+                                    ),
                                   ),
-                                  Center(
+                                ),
+                                const SizedBox(
+                                  height: 10.0,
+                                ),
+                                Container(
+                                  width: double.infinity,
+                                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(25.0),
+                                  ),
+                                  child: MaterialButton(
+                                    onPressed: () {
+                                      /*Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => RegisterScreen()),
+                                      );*/
+                                      cubit.loginChange();
+                                    },
+                                    color: cubit.isLogin
+                                        ? Color.fromRGBO(0, 168, 132, 1)
+                                        : Color.fromRGBO(74, 93, 170, 1),
+                                    height: 50.0,
                                     child: Text(
-                                      "OR",
-                                      style: TextStyle(
-                                        color: Theme.of(context)
-                                            .textTheme
-                                            .bodyText1!
-                                            .color!,
-                                        fontSize: 18.0,
+                                      cubit.isLogin ? 'Register' : 'Login',
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20.0,
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(
-                                    height: 10.0,
-                                  ),
-                                  Container(
-                                    width: double.infinity,
-                                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(25.0),
-                                    ),
-                                    child: MaterialButton(
-                                      onPressed: () {
-                                        /*Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => RegisterScreen()),
-                                        );*/
-                                        cubit.loginChange();
-                                      },
-                                      color: cubit.isLogin ? Color.fromRGBO(0, 168, 132, 1) : Color.fromRGBO(74, 93, 170, 1),
-                                      height: 50.0,
-                                      child: Text(
-                                        cubit.isLogin ? 'Register' : 'Login',
-                                        style: const TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20.0,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                  Stack(
-                    children: [
-                      ClipPath(
-                        clipper: ClippingClass3(),
-                        child: Container(
-                          color: color3,
-                          height: size.height * 0.4,
-                          width: size.width,
-                        ),
-                      ),
-                      ClipPath(
-                        clipper: ClippingClass2(),
-                        child: Container(
-                          color: color2,
-                          height: size.height * 0.38,
-                          width: size.width,
-                        ),
-                      ),
-                      ClipPath(
-                        clipper: ClippingClass(),
-                        child: Container(
-                          color: color1,
-                          height: size.height * 0.25,
-                          width: size.width,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+                ),
               ),
             ),
           );

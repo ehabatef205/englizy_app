@@ -29,26 +29,15 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             return Scaffold(
               appBar: AppBar(
                 centerTitle: true,
-                title: AnimatedTextKit(
-                  animatedTexts: [
-                    ColorizeAnimatedText(
-                      'Change password',
-                      textStyle: colorizeTextStyle,
-                      colors: colorizeColors,
-                    ),
-                  ],
-                  isRepeatingAnimation: true,
-                  repeatForever: true,
-                  displayFullTextOnTap: true,
-                ),
-                /*Text(
+                title: Text(
                   'Change password',
                   style: TextStyle(
-                    color: Theme.of(context).textTheme.bodyText1!.color,
-                    fontSize: 20.0,
+                    color: Color.fromRGBO(102, 144, 206, 1),
+                    fontSize: 25.0,
                     fontWeight: FontWeight.w700,
+                    fontStyle: FontStyle.italic,
                   ),
-                ),*/
+                ),
               ),
               body: Container(
                 constraints: BoxConstraints.expand(),

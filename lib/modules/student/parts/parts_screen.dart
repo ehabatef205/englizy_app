@@ -26,17 +26,14 @@ class PartsScreen extends StatelessWidget {
             StudentViewPartsCubit cubit = StudentViewPartsCubit.get(context);
             return Scaffold(
               appBar: AppBar(
-                title: AnimatedTextKit(
-                  animatedTexts: [
-                    ColorizeAnimatedText(
-                      dataOfUnit["name"],
-                      textStyle: colorizeTextStyle,
-                      colors: colorizeColors,
-                    ),
-                  ],
-                  isRepeatingAnimation: true,
-                  repeatForever: true,
-                  displayFullTextOnTap: true,
+                title: Text(
+                  dataOfUnit["name"],
+                  style: TextStyle(
+                    color: Color.fromRGBO(102, 144, 206, 1),
+                    fontSize: 25.0,
+                    fontWeight: FontWeight.w700,
+                    fontStyle: FontStyle.italic,
+                  ),
                 ),
                 actions: [
                   TextButton(

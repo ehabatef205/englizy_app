@@ -10,6 +10,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class DemoUnitScreen extends StatelessWidget {
   final QueryDocumentSnapshot<Object?> unit;
+
   const DemoUnitScreen({super.key, required this.unit});
 
   @override
@@ -24,17 +25,14 @@ class DemoUnitScreen extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               centerTitle: true,
-              title: AnimatedTextKit(
-                animatedTexts: [
-                  ColorizeAnimatedText(
-                    unit["name"],
-                    textStyle: colorizeTextStyle,
-                    colors: colorizeColors,
-                  ),
-                ],
-                isRepeatingAnimation: true,
-                repeatForever: true,
-                displayFullTextOnTap: true,
+              title: Text(
+                unit["name"],
+                style: TextStyle(
+                  color: Color.fromRGBO(102, 144, 206, 1),
+                  fontSize: 25.0,
+                  fontWeight: FontWeight.w700,
+                  fontStyle: FontStyle.italic,
+                ),
               ),
             ),
             body: Container(
@@ -113,7 +111,7 @@ class DemoUnitScreen extends StatelessWidget {
                               ),
                               child: MaterialButton(
                                 onPressed: () async =>
-                                    await launch("https://wa.me/+201129257330"),
+                                    await launch("https://wa.me/+201551739034"),
                                 color: Colors.indigo,
                                 child: const Padding(
                                   padding: EdgeInsets.all(10),
@@ -129,16 +127,18 @@ class DemoUnitScreen extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(
-                              height: 10,
+                              height: 30.0,
                             ),
-                            Text(
-                              "Unit content",
-                              style: TextStyle(
-                                color: Theme.of(context)
-                                    .textTheme
-                                    .bodyText1!
-                                    .color,
-                                fontSize: 20.0,
+                            Center(
+                              child: Text(
+                                "Unit content",
+                                style: TextStyle(
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1!
+                                        .color,
+                                    fontSize: 23.0,
+                                    fontWeight: FontWeight.w700),
                               ),
                             ),
                             const SizedBox(
@@ -159,15 +159,41 @@ class DemoUnitScreen extends StatelessWidget {
                                             const NeverScrollableScrollPhysics(),
                                         itemCount: data.length,
                                         itemBuilder: (context, index) {
-                                          return ListTile(
-                                            title: Text(
-                                              "Part ${index + 1}",
-                                              style: TextStyle(
-                                                  color: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyText1!
-                                                      .color),
-                                            ),
+                                          return Column(
+                                            children: [
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.black26,
+                                                  borderRadius: BorderRadius.circular(25),
+                                                ),
+                                                child: ListTile(
+                                                  onTap: (){
+                                                    print("Hello");
+                                                  },
+                                                  leading: Icon(
+                                                    Icons.arrow_forward,
+                                                    weight: 25,
+                                                    size: 25,
+                                                    color: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyText1!
+                                                        .color,
+                                                  ),
+                                                  title: Text(
+                                                    "Part ${index + 1}",
+                                                    style: TextStyle(
+                                                      color: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyText1!
+                                                          .color,
+                                                      fontSize: 20.0,
+                                                      fontWeight: FontWeight.w500,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(height: 5.0,),
+                                            ],
                                           );
                                         });
                                   } else {
