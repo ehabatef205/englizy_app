@@ -1,4 +1,3 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:englizy_app/modules/student/demo_unit/demo_unit_screen.dart';
 import 'package:englizy_app/modules/student/parts/parts_screen.dart';
@@ -7,7 +6,6 @@ import 'package:englizy_app/modules/student/student_home/cubit/states.dart';
 import 'package:englizy_app/shared/constant.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class StudentHomeScreen extends StatelessWidget {
@@ -26,7 +24,7 @@ class StudentHomeScreen extends StatelessWidget {
             appBar: AppBar(
               centerTitle: true,
               leading: const SizedBox(),
-              title: Text(
+              title: const Text(
                 'Units',
                 style: TextStyle(
                   color: Color.fromRGBO(102, 144, 206, 1),
@@ -37,14 +35,17 @@ class StudentHomeScreen extends StatelessWidget {
               ),
             ),
             body: Container(
-              constraints: BoxConstraints.expand(),
-              decoration: BoxDecoration(
+              height: size.height,
+              width: size.width,
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage("assets/englizy.jpg"),
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                 ),
               ),
               child: Container(
+                height: size.height,
+                width: size.width,
                 color:
                     Theme.of(context).scaffoldBackgroundColor.withOpacity(0.35),
                 child: Center(
@@ -108,7 +109,7 @@ class StudentHomeScreen extends StatelessWidget {
                           }
                         }),
                     FirebaseAuth.instance.currentUser == null
-                        ? Center(child: SizedBox())
+                        ? const Center(child: SizedBox())
                         : Expanded(
                             child: StreamBuilder<QuerySnapshot>(
                               stream: cubit.getUnits(),

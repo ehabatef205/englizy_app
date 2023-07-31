@@ -4,7 +4,6 @@ import 'package:englizy_app/modules/admin/admin_update_post/admin_update_post_sc
 import 'package:englizy_app/modules/admin/admin_view_posts/cubit/cubit.dart';
 import 'package:englizy_app/modules/admin/admin_view_posts/cubit/states.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -37,9 +36,9 @@ class AdminViewPostsScreen extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => AdminAddPostScreen()));
+                              builder: (context) => const AdminAddPostScreen()));
                     },
-                    icon: Icon(Icons.add))
+                    icon: const Icon(Icons.add))
               ],
             ),
             body: StreamBuilder<QuerySnapshot>(
@@ -49,7 +48,6 @@ class AdminViewPostsScreen extends StatelessWidget {
                   var data = snapshot.data!.docs;
                   return ListView.builder(
                       shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
                       itemCount: data.length,
                       itemBuilder: (context, index) {
                         return Padding(
@@ -90,7 +88,7 @@ class AdminViewPostsScreen extends StatelessWidget {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
-                                                Text("Admin"),
+                                                const Text("Admin"),
                                                 Text(DateTime
                                                         .fromMillisecondsSinceEpoch(
                                                             int.parse(data[index]
@@ -133,7 +131,7 @@ class AdminViewPostsScreen extends StatelessWidget {
                                                   value: 1,
                                                   child: Row(
                                                     children: [
-                                                      Icon(
+                                                      const Icon(
                                                         Icons.update,
                                                       ),
                                                       const SizedBox(
@@ -155,7 +153,7 @@ class AdminViewPostsScreen extends StatelessWidget {
                                                   value: 2,
                                                   child: Row(
                                                     children: [
-                                                      Icon(
+                                                      const Icon(
                                                         Icons.delete_outline,
                                                       ),
                                                       const SizedBox(
@@ -200,7 +198,7 @@ class AdminViewPostsScreen extends StatelessWidget {
                                           },
                                           child: Text(
                                             data[index]["link"],
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 color: Colors.blue,
                                                 fontSize: 25),
                                           )),

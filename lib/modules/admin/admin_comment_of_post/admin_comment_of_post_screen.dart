@@ -43,6 +43,7 @@ class AdminCommentOfPostScreen extends StatelessWidget {
                         if (snapshot4.hasData) {
                           var dataOfComment = snapshot4.data!.docs;
                           return ListView.builder(
+                              shrinkWrap: true,
                               itemCount: dataOfComment.length,
                               itemBuilder: (context, index) {
                                 return StreamBuilder<DocumentSnapshot>(
@@ -163,7 +164,7 @@ class AdminCommentOfPostScreen extends StatelessWidget {
                               }
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           Container(
@@ -178,7 +179,7 @@ class AdminCommentOfPostScreen extends StatelessWidget {
                                 },
                                 icon: Icon(
                                   Icons.send,
-                                  color: Colors.white,
+                                  color: Theme.of(context).iconTheme.color,
                                 ),
                               ),
                             ),

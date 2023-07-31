@@ -26,32 +26,32 @@ class AppCubit extends Cubit<AppStates> {
   int bottomNavIndex = 2;
 
   List<Widget> widgetAdmin = <Widget>[
-    AdminCommunityScreen(),
-    AdminPDFSScreen(),
-    AdminHomeScreen(),
-    AdminViewPostsScreen(),
-    SettingsAdminScreen()
+    const AdminCommunityScreen(),
+    const AdminPDFSScreen(),
+    const AdminHomeScreen(),
+    const AdminViewPostsScreen(),
+    const SettingsAdminScreen()
   ];
 
   List<Widget> widgetStudent = <Widget>[
-    PostsScreen(),
-    PDFSScreen(),
-    StudentHomeScreen(),
-    PostsOfAdminScreen(),
-    SettingsStudentScreen(),
+    const PostsScreen(),
+    const PDFSScreen(),
+    const StudentHomeScreen(),
+    const PostsOfAdminScreen(),
+    const SettingsStudentScreen(),
   ];
 
   List<TabItem> icons() {
     return [
-      TabItem(
+      const TabItem(
         icon: Icon(Icons.date_range_sharp),
         title: 'Questions',
       ),
-      TabItem(
+      const TabItem(
         icon: Icon(Icons.ac_unit),
         title: 'PDF',
       ),
-      TabItem(
+      const TabItem(
         icon: IconTheme(
           data: IconThemeData.fallback(),
           child: CircleAvatar(
@@ -62,11 +62,11 @@ class AppCubit extends Cubit<AppStates> {
         ),
         title: 'HOME PAGE',
       ),
-      TabItem(
+      const TabItem(
         icon: Icon(Icons.data_exploration),
         title: 'Posts',
       ),
-      TabItem(
+      const TabItem(
         icon: Icon(Icons.settings),
         title: 'Settings',
       ),

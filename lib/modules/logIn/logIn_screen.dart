@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:englizy_app/modules/forgot_password/forgot_password_screen.dart';
 import 'package:englizy_app/modules/logIn/cubit/cubit.dart';
 import 'package:englizy_app/modules/logIn/cubit/states.dart';
 import 'package:englizy_app/shared/components.dart';
@@ -35,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage("assets/englizy.jpg"),
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fill,
                   ),
                 ),
                 child: Container(
@@ -126,7 +127,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 MainAxisAlignment.end,
                                             children: [
                                               InkWell(
-                                                onTap: () {},
+                                                onTap: () {
+                                                  Navigator.push(context, MaterialPageRoute(builder: (context) => const ForgotPasswordScreen()));
+                                                },
                                                 child: Text(
                                                   "Forgot your password?",
                                                   style: TextStyle(
@@ -419,6 +422,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                             validate: (value) {
                                               if (value!.isEmpty) {
                                                 return "Confirm Password is required";
+                                              }else if(cubit.passwordController2.text != value){
+                                                return "Password is not match";
                                               }
                                               return null;
                                             },
@@ -466,7 +471,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       ),
                                 //LogIn
                                 cubit.isLoading
-                                    ? Center(
+                                    ? const Center(
                                         child: CircularProgressIndicator(),
                                       )
                                     : Container(
@@ -498,8 +503,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                             }
                                           },
                                           color: cubit.isLogin
-                                              ? Color.fromRGBO(74, 93, 170, 1)
-                                              : Color.fromRGBO(0, 168, 132, 1),
+                                              ? const Color.fromRGBO(74, 93, 170, 1)
+                                              : const Color.fromRGBO(0, 168, 132, 1),
                                           height: 50.0,
                                           child: Text(
                                             cubit.isLogin
@@ -547,8 +552,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                       cubit.loginChange();
                                     },
                                     color: cubit.isLogin
-                                        ? Color.fromRGBO(0, 168, 132, 1)
-                                        : Color.fromRGBO(74, 93, 170, 1),
+                                        ? const Color.fromRGBO(0, 168, 132, 1)
+                                        : const Color.fromRGBO(74, 93, 170, 1),
                                     height: 50.0,
                                     child: Text(
                                       cubit.isLogin ? 'Register' : 'Login',

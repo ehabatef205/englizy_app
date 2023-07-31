@@ -58,7 +58,7 @@ class LoginCubit extends Cubit<LoginStates> {
             AppCubit.get(context).changeLevelText().whenComplete(() async{
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => AppScreen()),
+                MaterialPageRoute(builder: (context) => const AppScreen()),
               );
             });
           });
@@ -134,30 +134,35 @@ class LoginCubit extends Cubit<LoginStates> {
     emit(RegisterChangeState());
   }
 
-  void userRegister({required BuildContext context}) {
+  void userRegister({required BuildContext context}) async{
+    isLoading = true;
     emit(RegisterLoadingState());
     FirebaseAuth.instance
         .createUserWithEmailAndPassword(
       email: emailController.text,
       password: passwordController2.text,
     )
-        .then((value) {
-      userCreate(
+        .then((value) async{
+      await userCreate(
         context: context,
         uid: value.user!.uid,
         email: emailController.text,
         parentPhone: parentsPhoneNumberController.text,
         studentName: quadrupleNameController.text,
         studentPhone: studentPhoneNumberController.text,
-      );
+      ).whenComplete((){
+        AppCubit.get(context).changeLevelText().whenComplete(() async{
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => const AppScreen()));
+        });
+      });
       emit(RegisterSuccessState());
     }).catchError((error) {
-      print(error.toString());
       emit(RegisterErrorState());
     });
   }
 
-  void userCreate({
+  Future<void> userCreate({
     required BuildContext context,
     required studentName,
     required parentPhone,
@@ -165,7 +170,7 @@ class LoginCubit extends Cubit<LoginStates> {
     required email,
     required uid,
   }) async{
-    UserModel model = UserModel(
+    userModel = UserModel(
         level: levelId!,
         uid: uid,
         email: email,
@@ -180,13 +185,8 @@ class LoginCubit extends Cubit<LoginStates> {
     await FirebaseFirestore.instance
         .collection("users")
         .doc(uid)
-        .set(model.toMap())
-        .then((value) async{
-      AppCubit.get(context).changeLevelText().whenComplete(() async{
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => AppScreen()));
-      });
-    }).catchError((error) {
+        .set(userModel!.toMap())
+        .catchError((error) {
       emit(CreateUserErrorState());
     });
   }

@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:englizy_app/modules/admin/admin_view_students_in_homework/cubit/states.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AdminViewStudentsInHomeworkCubit extends Cubit<AdminViewStudentsInHomeworkStates> {
@@ -13,7 +12,6 @@ class AdminViewStudentsInHomeworkCubit extends Cubit<AdminViewStudentsInHomework
 
   void onChanged(String newValue) {
     uid = newValue;
-    print(uid);
     emit(ChangeIdState());
   }
 

@@ -1,4 +1,3 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:englizy_app/modules/student/lectures/lectures_screen.dart';
 import 'package:englizy_app/modules/student/parts/cubit/cubit.dart';
@@ -8,7 +7,6 @@ import 'package:englizy_app/modules/student/parts/view_pdf_link_homework.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class PartsScreen extends StatelessWidget {
   final QueryDocumentSnapshot<Object?> dataOfUnit;
@@ -28,7 +26,7 @@ class PartsScreen extends StatelessWidget {
               appBar: AppBar(
                 title: Text(
                   dataOfUnit["name"],
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Color.fromRGBO(102, 144, 206, 1),
                     fontSize: 25.0,
                     fontWeight: FontWeight.w700,
@@ -49,14 +47,17 @@ class PartsScreen extends StatelessWidget {
                 ],
               ),
               body: Container(
-                constraints: BoxConstraints.expand(),
-                decoration: BoxDecoration(
+                height: size.height,
+                width: size.width,
+                decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage("assets/englizy.jpg"),
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fill,
                   ),
                 ),
                 child: Container(
+                  height: size.height,
+                  width: size.width,
                   color: Theme.of(context)
                       .scaffoldBackgroundColor
                       .withOpacity(0.4),
@@ -115,7 +116,7 @@ class PartsScreen extends StatelessWidget {
                                               },
                                               child: Center(
                                                 child: Text(
-                                                  'Part ${index + 1}',
+                                                  data[index]["name"],
                                                   style: Theme.of(context)
                                                       .textTheme
                                                       .bodyText1!

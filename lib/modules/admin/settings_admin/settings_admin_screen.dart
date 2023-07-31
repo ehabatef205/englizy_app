@@ -65,7 +65,7 @@ class SettingsAdminScreen extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => AdminViewStudentsScreen()));
+                              builder: (context) => const AdminViewStudentsScreen()));
                     },
                   ),
                   ListTile(
@@ -84,7 +84,7 @@ class SettingsAdminScreen extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => AdminLevelScreen()));
+                              builder: (context) => const AdminLevelScreen()));
                     },
                   ),
                   ListTile(
@@ -104,7 +104,7 @@ class SettingsAdminScreen extends StatelessWidget {
                       FirebaseAuth.instance.signOut();
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => LoginScreen()),
+                        MaterialPageRoute(builder: (context) => const LoginScreen()),
                       );
                     },
                   ),

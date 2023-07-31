@@ -27,12 +27,11 @@ class _SplashScreenState extends State<SplashScreen> {
             .get()
             .then((value) {
           userModel = UserModel.fromjson(value.data()!);
-          print(userModel!.level);
         }).whenComplete(() {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => AppScreen()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => const AppScreen()));
         });
       }else{
-        Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginScreen()));
       }
     });
   }
@@ -46,15 +45,15 @@ class _SplashScreenState extends State<SplashScreen> {
           Container(
             height: size.height,
             width: size.width,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage("assets/englizy.jpg"),
                     fit: BoxFit.fill
                 )
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 10.0),
+          const Padding(
+            padding: EdgeInsets.only(bottom: 10.0),
             child: SizedBox(
               child: Text(
                 "powered by Custom mind",

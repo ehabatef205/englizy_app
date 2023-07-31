@@ -32,7 +32,6 @@ class LecturesCubit extends Cubit<LecturesStates> {
         userModel!.uid).get();
 
     exist = doc.exists;
-    print("Hello ${doc.exists}");
     emit(ExistState());
   }
 

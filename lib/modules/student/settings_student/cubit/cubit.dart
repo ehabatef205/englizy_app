@@ -44,7 +44,7 @@ class SettingsStudentCubit extends Cubit<SettingsStudentStates> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => LoginScreen()),
+          builder: (context) => const LoginScreen()),
     );
     FirebaseFirestore.instance
         .collection("users")

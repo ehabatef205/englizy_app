@@ -45,7 +45,6 @@ class ChangePasswordCubit extends Cubit<ChangePasswordStates> {
         user.updatePassword(newPasswordController.text).then((value2) {
           Navigator.pop(context);
         }).catchError((error) {
-          print(error);
         });
       }).catchError((error) {
         Fluttertoast.showToast(

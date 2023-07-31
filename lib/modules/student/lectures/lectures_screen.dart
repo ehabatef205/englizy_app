@@ -1,4 +1,3 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:englizy_app/modules/student/lectures/video_screen.dart';
 import 'package:englizy_app/modules/student/lectures/cubit/cubit.dart';
@@ -29,7 +28,7 @@ class LecturesScreen extends StatelessWidget {
             appBar: AppBar(
               centerTitle: true,
               title: cubit.index == 0
-                  ? Text(
+                  ? const Text(
                 'Video',
                 style: TextStyle(
                   color: Color.fromRGBO(102, 144, 206, 1),
@@ -39,7 +38,7 @@ class LecturesScreen extends StatelessWidget {
                 ),
               )
                   : cubit.index == 1
-                  ? Text(
+                  ? const Text(
                 'Reading',
                 style: TextStyle(
                   color: Color.fromRGBO(102, 144, 206, 1),
@@ -49,7 +48,7 @@ class LecturesScreen extends StatelessWidget {
                 ),
               )
                   : cubit.index == 2
-                  ? Text(
+                  ? const Text(
                 'Exams',
                 style: TextStyle(
                   color: Color.fromRGBO(102, 144, 206, 1),
@@ -58,7 +57,7 @@ class LecturesScreen extends StatelessWidget {
                   fontStyle: FontStyle.italic,
                 ),
               )
-                  : Text(
+                  : const Text(
                 'Lectures',
                 style: TextStyle(
                   color: Color.fromRGBO(102, 144, 206, 1),
@@ -69,14 +68,17 @@ class LecturesScreen extends StatelessWidget {
               ),
             ),
             body: Container(
-              constraints: BoxConstraints.expand(),
-              decoration: BoxDecoration(
+              height: size.height,
+              width: size.width,
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage("assets/englizy.jpg"),
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                 ),
               ),
               child: Container(
+                height: size.height,
+                width: size.width,
                 color:
                 Theme
                     .of(context)

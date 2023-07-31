@@ -1,9 +1,7 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:englizy_app/modules/student/demo_unit/cubit/cubit.dart';
 import 'package:englizy_app/modules/student/demo_unit/cubit/states.dart';
 import 'package:englizy_app/modules/student/demo_unit/video_demo_screen.dart';
-import 'package:englizy_app/shared/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -27,7 +25,7 @@ class DemoUnitScreen extends StatelessWidget {
               centerTitle: true,
               title: Text(
                 unit["name"],
-                style: TextStyle(
+                style: const TextStyle(
                   color: Color.fromRGBO(102, 144, 206, 1),
                   fontSize: 25.0,
                   fontWeight: FontWeight.w700,
@@ -36,14 +34,17 @@ class DemoUnitScreen extends StatelessWidget {
               ),
             ),
             body: Container(
-              constraints: const BoxConstraints.expand(),
+              height: size.height,
+              width: size.width,
               decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage("assets/englizy.jpg"),
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                 ),
               ),
               child: Container(
+                height: size.height,
+                width: size.width,
                 color:
                     Theme.of(context).scaffoldBackgroundColor.withOpacity(0.4),
                 child: SingleChildScrollView(
@@ -167,9 +168,6 @@ class DemoUnitScreen extends StatelessWidget {
                                                   borderRadius: BorderRadius.circular(25),
                                                 ),
                                                 child: ListTile(
-                                                  onTap: (){
-                                                    print("Hello");
-                                                  },
                                                   leading: Icon(
                                                     Icons.arrow_forward,
                                                     weight: 25,
@@ -180,7 +178,7 @@ class DemoUnitScreen extends StatelessWidget {
                                                         .color,
                                                   ),
                                                   title: Text(
-                                                    "Part ${index + 1}",
+                                                    data[index]["name"],
                                                     style: TextStyle(
                                                       color: Theme.of(context)
                                                           .textTheme
@@ -192,7 +190,7 @@ class DemoUnitScreen extends StatelessWidget {
                                                   ),
                                                 ),
                                               ),
-                                              SizedBox(height: 5.0,),
+                                              const SizedBox(height: 5.0,),
                                             ],
                                           );
                                         });

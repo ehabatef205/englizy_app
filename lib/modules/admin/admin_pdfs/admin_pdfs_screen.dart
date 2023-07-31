@@ -4,9 +4,7 @@ import 'package:englizy_app/modules/admin/admin_pdfs/cubit/cubit.dart';
 import 'package:englizy_app/modules/admin/admin_pdfs/cubit/states.dart';
 import 'package:englizy_app/modules/admin/admin_pdfs/view_pdf_link_admin.dart';
 import 'package:englizy_app/shared/constant.dart';
-import 'package:englizy_app/shared/view_pdf_link.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AdminPDFSScreen extends StatelessWidget {
@@ -38,9 +36,9 @@ class AdminPDFSScreen extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => AdminAddPDFScreen()));
+                              builder: (context) => const AdminAddPDFScreen()));
                     },
-                    icon: Icon(Icons.add))
+                    icon: const Icon(Icons.add))
               ],
             ),
             body: Center(
@@ -95,61 +93,63 @@ class AdminPDFSScreen extends StatelessWidget {
                         }
                       }),
                 ),
-                cubit.level == null
-                    ? const SizedBox()
-                    : StreamBuilder<QuerySnapshot>(
-                        stream: cubit.getPdfs(),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            var data = snapshot.data!.docs;
-                            return ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: data.length,
-                              itemBuilder: (context, index) {
-                                return ListTile(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => ViewPdfLinkAdmin(
-                                                data: data[index],)));
-                                  },
-                                  title: Text(
-                                    data[index]["name"],
-                                    style: TextStyle(
-                                        color: Theme.of(context)
-                                            .textTheme
-                                            .bodyText1!
-                                            .color),
-                                  ),
-                                  trailing: Theme(
-                                    data: ThemeData(
-                                        unselectedWidgetColor:
-                                            Theme.of(context).iconTheme.color),
-                                    child: Checkbox(
-                                      activeColor:
-                                          Theme.of(context).iconTheme.color,
-                                      checkColor: Theme.of(context)
-                                          .scaffoldBackgroundColor,
-                                      value: data[index]["view"],
-                                      onChanged: (value) {
-                                        FirebaseFirestore.instance
-                                            .collection("pdfs")
-                                            .doc(data[index].id)
-                                            .update({"view": value});
-                                      },
+                Expanded(
+                  child: cubit.level == null
+                      ? const SizedBox()
+                      : StreamBuilder<QuerySnapshot>(
+                          stream: cubit.getPdfs(),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              var data = snapshot.data!.docs;
+                              return ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: data.length,
+                                itemBuilder: (context, index) {
+                                  return ListTile(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => ViewPdfLinkAdmin(
+                                                  data: data[index],)));
+                                    },
+                                    title: Text(
+                                      data[index]["name"],
+                                      style: TextStyle(
+                                          color: Theme.of(context)
+                                              .textTheme
+                                              .bodyText1!
+                                              .color),
                                     ),
-                                  ),
-                                );
-                              },
-                            );
-                          } else {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-                        },
-                      ),
+                                    trailing: Theme(
+                                      data: ThemeData(
+                                          unselectedWidgetColor:
+                                              Theme.of(context).iconTheme.color),
+                                      child: Checkbox(
+                                        activeColor:
+                                            Theme.of(context).iconTheme.color,
+                                        checkColor: Theme.of(context)
+                                            .scaffoldBackgroundColor,
+                                        value: data[index]["view"],
+                                        onChanged: (value) {
+                                          FirebaseFirestore.instance
+                                              .collection("pdfs")
+                                              .doc(data[index].id)
+                                              .update({"view": value});
+                                        },
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            } else {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                          },
+                        ),
+                ),
               ],
             )),
           );

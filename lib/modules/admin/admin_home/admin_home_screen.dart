@@ -5,7 +5,6 @@ import 'package:englizy_app/modules/admin/admin_home/cubit/states.dart';
 import 'package:englizy_app/modules/admin/admin_view_parts/admin_view_parts_screen.dart';
 import 'package:englizy_app/shared/constant.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AdminHomeScreen extends StatelessWidget {
@@ -36,9 +35,9 @@ class AdminHomeScreen extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => AdminAddUnitScreen()));
+                              builder: (context) => const AdminAddUnitScreen()));
                     },
-                    icon: Icon(Icons.add))
+                    icon: const Icon(Icons.add))
               ],
             ),
             body: Center(
@@ -90,96 +89,77 @@ class AdminHomeScreen extends StatelessWidget {
                         );
                       }
                     }),
-                cubit.level == null
-                    ? const SizedBox()
-                    : StreamBuilder<QuerySnapshot>(
-                        stream: cubit.getDemo(),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            var data = snapshot.data!.docs;
-                            return ListView.builder(
+                Expanded(
+                  child: cubit.level == null
+                      ? const SizedBox()
+                      : StreamBuilder<QuerySnapshot>(
+                          stream: cubit.getUnits(),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              var data = snapshot.data!.docs;
+                              return ListView.builder(
                                 shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
                                 itemCount: data.length,
                                 itemBuilder: (context, index) {
-                                  return SizedBox();
-                                });
-                          } else {
-                            return Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-                        },
-                      ),
-                cubit.level == null
-                    ? const SizedBox()
-                    : StreamBuilder<QuerySnapshot>(
-                        stream: cubit.getUnits(),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            var data = snapshot.data!.docs;
-                            return ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: data.length,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.all(5),
-                                  child: ListTile(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  AdminViewPartsScreen(
-                                                    dataOfUnit: data[index],
-                                                  )));
-                                    },
-                                    leading: Container(
-                                      height: 50,
-                                      width: 50,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        image: DecorationImage(
-                                          image: NetworkImage(data[index]["image"]),
-                                          fit: BoxFit.fill
-                                        )
+                                  return Padding(
+                                    padding: const EdgeInsets.all(5),
+                                    child: ListTile(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    AdminViewPartsScreen(
+                                                      dataOfUnit: data[index],
+                                                    )));
+                                      },
+                                      leading: Container(
+                                        height: 50,
+                                        width: 50,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: DecorationImage(
+                                            image: NetworkImage(data[index]["image"]),
+                                            fit: BoxFit.fill
+                                          )
+                                        ),
+                                      ),
+                                      title: Text(
+                                        data[index]["name"],
+                                        style: TextStyle(
+                                            color: Theme.of(context)
+                                                .textTheme
+                                                .bodyText1!
+                                                .color),
+                                      ),
+                                      trailing: Theme(
+                                        data: ThemeData(
+                                            unselectedWidgetColor: Theme.of(context).iconTheme.color
+                                        ),
+                                        child: Checkbox(
+                                          activeColor: Theme.of(context).iconTheme.color,
+                                          checkColor: Theme.of(context).scaffoldBackgroundColor,
+                                          value: data[index]["view"],
+                                          onChanged: (value) {
+                                            FirebaseFirestore.instance
+                                                .collection("units")
+                                                .doc(data[index].id)
+                                                .update({"view": value});
+                                          },
+                                        ),
                                       ),
                                     ),
-                                    title: Text(
-                                      data[index]["name"],
-                                      style: TextStyle(
-                                          color: Theme.of(context)
-                                              .textTheme
-                                              .bodyText1!
-                                              .color),
-                                    ),
-                                    trailing: Theme(
-                                      data: ThemeData(
-                                          unselectedWidgetColor: Theme.of(context).iconTheme.color
-                                      ),
-                                      child: Checkbox(
-                                        activeColor: Theme.of(context).iconTheme.color,
-                                        checkColor: Theme.of(context).scaffoldBackgroundColor,
-                                        value: data[index]["view"],
-                                        onChanged: (value) {
-                                          FirebaseFirestore.instance
-                                              .collection("units")
-                                              .doc(data[index].id)
-                                              .update({"view": value});
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              },
-                            );
-                          } else {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-                        },
-                      ),
+                                  );
+                                },
+                              );
+                            } else {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                          },
+                        ),
+                ),
               ],
             )),
           );

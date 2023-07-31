@@ -1,10 +1,7 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:englizy_app/modules/student/change_password/cubit/cubit.dart';
 import 'package:englizy_app/modules/student/change_password/cubit/states.dart';
-import 'package:englizy_app/modules/student/settings_student/settings_student_screen.dart';
 import 'package:englizy_app/shared/color.dart';
 import 'package:englizy_app/shared/components.dart';
-import 'package:englizy_app/shared/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -29,7 +26,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             return Scaffold(
               appBar: AppBar(
                 centerTitle: true,
-                title: Text(
+                title: const Text(
                   'Change password',
                   style: TextStyle(
                     color: Color.fromRGBO(102, 144, 206, 1),
@@ -40,14 +37,17 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 ),
               ),
               body: Container(
-                constraints: BoxConstraints.expand(),
-                decoration: BoxDecoration(
+                height: size.height,
+                width: size.width,
+                decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage("assets/englizy.jpg"),
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fill,
                   ),
                 ),
                 child: Container(
+                  height: size.height,
+                  width: size.width,
                   color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.4),
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),

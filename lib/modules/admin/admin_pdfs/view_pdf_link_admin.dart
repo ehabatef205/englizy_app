@@ -57,7 +57,7 @@ class _ViewPdfLinkAdminState extends State<ViewPdfLinkAdmin> {
                   Navigator.pop(context);
                 });
               },
-              icon: Icon(Icons.delete_outline)),
+              icon: const Icon(Icons.delete_outline)),
         ],
       ),
       body: PdfViewPinch(

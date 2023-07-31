@@ -7,7 +7,6 @@ import 'package:englizy_app/modules/student/settings_student/cubit/states.dart';
 import 'package:englizy_app/modules/student/update_profile_student/update_profile_screen.dart';
 import 'package:englizy_app/shared/constant.dart';
 import 'package:englizy_app/shared/theme.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,6 +17,7 @@ class SettingsStudentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return BlocProvider(
       create: (BuildContext context) => SettingsStudentCubit(),
       child: BlocConsumer<SettingsStudentCubit, SettingsStudentStates>(
@@ -30,7 +30,7 @@ class SettingsStudentScreen extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               leading: const SizedBox(),
-              title: Text(
+              title: const Text(
                 'Profile',
                 style: TextStyle(
                   color: Color.fromRGBO(102, 144, 206, 1),
@@ -42,14 +42,17 @@ class SettingsStudentScreen extends StatelessWidget {
             ),
             body: SafeArea(
               child: Container(
-                constraints: BoxConstraints.expand(),
-                decoration: BoxDecoration(
+                height: size.height,
+                width: size.width,
+                decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage("assets/englizy.jpg"),
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fill,
                   ),
                 ),
                 child: Container(
+                  height: size.height,
+                  width: size.width,
                   color: Theme.of(context)
                       .scaffoldBackgroundColor
                       .withOpacity(0.4),
@@ -113,7 +116,7 @@ class SettingsStudentScreen extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      ChangePasswordScreen()));
+                                  const ChangePasswordScreen()));
                         },
                       ),
                       ListTile(

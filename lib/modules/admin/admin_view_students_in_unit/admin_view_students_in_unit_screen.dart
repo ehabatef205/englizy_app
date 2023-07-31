@@ -2,8 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:englizy_app/modules/admin/admin_add_level/admin_add_level_screen.dart';
 import 'package:englizy_app/modules/admin/admin_view_students_in_unit/cubit/cubit.dart';
 import 'package:englizy_app/modules/admin/admin_view_students_in_unit/cubit/states.dart';
-import 'package:englizy_app/modules/admin/admin_update_level/admin_update_level_screen.dart';
-import 'package:englizy_app/shared/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -39,62 +37,61 @@ class AdminViewStudentsInUnitScreen extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => AdminAddLevelScreen()));
+                              builder: (context) => const AdminAddLevelScreen()));
                     },
-                    icon: Icon(Icons.add))
+                    icon: const Icon(Icons.add))
               ],
             ),
             body: Padding(
               padding: const EdgeInsets.all(10),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    TextField(
-                      style: TextStyle(
-                          color: Theme.of(context).textTheme.bodyText1!.color),
-                      cursorColor: Theme.of(context).textTheme.bodyText1!.color,
-                      decoration: InputDecoration(
-                        filled: true,
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25),
-                          borderSide: BorderSide(
-                            color:
-                                Theme.of(context).textTheme.bodyText1!.color!,
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25),
-                          borderSide: BorderSide(
-                            color:
-                                Theme.of(context).textTheme.bodyText1!.color!,
-                          ),
-                        ),
-                        prefixIcon: Icon(
-                          Icons.search,
-                          color: Theme.of(context).iconTheme.color,
-                        ),
-                        hintText: "Search...",
-                        hintStyle: TextStyle(
-                          color: Theme.of(context)
-                              .textTheme
-                              .bodyText1!
-                              .color!
-                              .withOpacity(0.5),
+              child: Column(
+                children: [
+                  TextField(
+                    style: TextStyle(
+                        color: Theme.of(context).textTheme.bodyText1!.color),
+                    cursorColor: Theme.of(context).textTheme.bodyText1!.color,
+                    decoration: InputDecoration(
+                      filled: true,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25),
+                        borderSide: BorderSide(
+                          color:
+                              Theme.of(context).textTheme.bodyText1!.color!,
                         ),
                       ),
-                      onChanged: (value) => cubit.onChanged(value),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25),
+                        borderSide: BorderSide(
+                          color:
+                              Theme.of(context).textTheme.bodyText1!.color!,
+                        ),
+                      ),
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: Theme.of(context).iconTheme.color,
+                      ),
+                      hintText: "Search...",
+                      hintStyle: TextStyle(
+                        color: Theme.of(context)
+                            .textTheme
+                            .bodyText1!
+                            .color!
+                            .withOpacity(0.5),
+                      ),
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    StreamBuilder<QuerySnapshot>(
+                    onChanged: (value) => cubit.onChanged(value),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Expanded(
+                    child: StreamBuilder<QuerySnapshot>(
                       stream: cubit.getStudents(),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           var data = snapshot.data!.docs;
                           return ListView.builder(
                               shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
                               itemCount: data.length,
                               itemBuilder: (context, index) {
                                 return cubit.uid!.isEmpty
@@ -249,7 +246,7 @@ class AdminViewStudentsInUnitScreen extends StatelessWidget {
                                               return const SizedBox();
                                             }
                                           },
-                                        )) : SizedBox();
+                                        )) : const SizedBox();
                               });
                         } else {
                           return const Center(
@@ -258,8 +255,8 @@ class AdminViewStudentsInUnitScreen extends StatelessWidget {
                         }
                       },
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           );

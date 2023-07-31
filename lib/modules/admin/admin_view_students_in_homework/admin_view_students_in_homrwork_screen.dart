@@ -1,10 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:englizy_app/modules/admin/admin_add_level/admin_add_level_screen.dart';
 import 'package:englizy_app/modules/admin/admin_view_students_in_homework/admin_view_pdf_link_homework.dart';
 import 'package:englizy_app/modules/admin/admin_view_students_in_homework/cubit/cubit.dart';
 import 'package:englizy_app/modules/admin/admin_view_students_in_homework/cubit/states.dart';
-import 'package:englizy_app/modules/admin/admin_update_level/admin_update_level_screen.dart';
-import 'package:englizy_app/shared/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -43,6 +40,7 @@ class AdminViewStudentsInHomeworkScreen extends StatelessWidget {
                   if (snapshot.hasData) {
                     var data = snapshot.data!.docs;
                     return ListView.builder(
+                      shrinkWrap: true,
                         itemCount: data.length,
                         itemBuilder: (context, index) {
                           return StreamBuilder<DocumentSnapshot>(

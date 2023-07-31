@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:englizy_app/modules/student/update_profile_student/cubit/cubit.dart';
 import 'package:englizy_app/modules/student/update_profile_student/cubit/states.dart';
@@ -26,7 +25,7 @@ class UpdateProfileStudentScreen extends StatelessWidget {
               UpdateProfileStudentCubit.get(context);
           return Scaffold(
             appBar: AppBar(
-              title: Text(
+              title: const Text(
                 'Update Profile',
                 style: TextStyle(
                   color: Color.fromRGBO(102, 144, 206, 1),
@@ -39,14 +38,17 @@ class UpdateProfileStudentScreen extends StatelessWidget {
             ),
             body: SafeArea(
               child: Container(
-                constraints: BoxConstraints.expand(),
-                decoration: BoxDecoration(
+                height: size.height,
+                width: size.width,
+                decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage("assets/englizy.jpg"),
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fill,
                   ),
                 ),
                 child: Container(
+                  height: size.height,
+                  width: size.width,
                   color: Theme.of(context)
                       .scaffoldBackgroundColor
                       .withOpacity(0.4),
@@ -81,7 +83,7 @@ class UpdateProfileStudentScreen extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              Divider(
+                              const Divider(
                                 thickness: 1.0,
                               ),
                               const SizedBox(

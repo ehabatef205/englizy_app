@@ -135,7 +135,6 @@ class AdminViewPartCubit extends Cubit<AdminViewPartStates> {
       uploadTask = reference.putData(await file.readAsBytes());
       await uploadTask!.whenComplete(() async {
         await reference.getDownloadURL().then((urlVideo) {
-          print(urlVideo);
           videosUrl.add((urlVideo));
           emit(AddVideoState());
         });

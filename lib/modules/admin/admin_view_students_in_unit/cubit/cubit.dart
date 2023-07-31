@@ -12,7 +12,6 @@ class AdminViewStudentsInUnitCubit extends Cubit<AdminViewStudentsInUnitStates> 
 
   void onChanged(String newValue) {
     uid = newValue;
-    print(uid);
     emit(ChangeIdState());
   }
 

@@ -4,7 +4,6 @@ import 'package:englizy_app/modules/admin/admin_level/cubit/cubit.dart';
 import 'package:englizy_app/modules/admin/admin_level/cubit/states.dart';
 import 'package:englizy_app/modules/admin/admin_update_level/admin_update_level_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AdminLevelScreen extends StatelessWidget {
@@ -35,9 +34,9 @@ class AdminLevelScreen extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => AdminAddLevelScreen()));
+                              builder: (context) => const AdminAddLevelScreen()));
                     },
-                    icon: Icon(Icons.add))
+                    icon: const Icon(Icons.add))
               ],
             ),
             body: StreamBuilder<QuerySnapshot>(
@@ -47,7 +46,6 @@ class AdminLevelScreen extends StatelessWidget {
                   var data = snapshot.data!.docs;
                   return ListView.builder(
                       shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
                       itemCount: data.length,
                       itemBuilder: (context, index) {
                         return ListTile(

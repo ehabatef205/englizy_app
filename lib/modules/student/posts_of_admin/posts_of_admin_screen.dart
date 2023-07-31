@@ -1,10 +1,7 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:englizy_app/modules/student/posts_of_admin/cubit/cubit.dart';
 import 'package:englizy_app/modules/student/posts_of_admin/cubit/states.dart';
-import 'package:englizy_app/shared/constant.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -24,7 +21,7 @@ class PostsOfAdminScreen extends StatelessWidget {
             appBar: AppBar(
               leading: const SizedBox(),
               centerTitle: true,
-              title: Text(
+              title: const Text(
                 'Posts of Teacher',
                 style: TextStyle(
                   color: Color.fromRGBO(102, 144, 206, 1),
@@ -35,14 +32,17 @@ class PostsOfAdminScreen extends StatelessWidget {
               ),
             ),
             body: Container(
-              constraints: BoxConstraints.expand(),
-              decoration: BoxDecoration(
+              height: size.height,
+              width: size.width,
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage("assets/englizy.jpg"),
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                 ),
               ),
               child: Container(
+                height: size.height,
+                width: size.width,
                 color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.4),
                 child: StreamBuilder<QuerySnapshot>(
                   stream: cubit.getPostsOfTeacher(),
@@ -51,7 +51,6 @@ class PostsOfAdminScreen extends StatelessWidget {
                       var data = snapshot.data!.docs;
                       return ListView.builder(
                           shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
                           itemCount: data.length,
                           itemBuilder: (context, index) {
                             return Card(

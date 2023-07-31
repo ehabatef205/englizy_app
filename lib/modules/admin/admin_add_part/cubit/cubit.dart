@@ -17,6 +17,7 @@ class AdminAddPartCubit extends Cubit<AdminAddPartStates> {
 
   TextEditingController descriptionUnitController = TextEditingController();
   TextEditingController numberOfQuestionsController = TextEditingController();
+  TextEditingController namePartController = TextEditingController();
   List<TextEditingController> controllers = [];
   List<Map<String, dynamic>> questions = [];
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -30,8 +31,8 @@ class AdminAddPartCubit extends Cubit<AdminAddPartStates> {
   List<bool> isDone = [];
 
   void createChewieController(PlatformFile video) {
-    VideoPlayerController controller = VideoPlayerController.file(File(video.path!))
-      ..initialize();
+    VideoPlayerController controller =
+        VideoPlayerController.file(File(video.path!))..initialize();
     chewieController = ChewieController(
       videoPlayerController: controller,
       autoPlay: false,
@@ -45,7 +46,7 @@ class AdminAddPartCubit extends Cubit<AdminAddPartStates> {
   void chooseNumberOfQuestions() async {
     questions.clear();
     numberOfQuestions = int.parse(numberOfQuestionsController.text);
-    for(int i = 0; i < numberOfQuestions; i++){
+    for (int i = 0; i < numberOfQuestions; i++) {
       controllers.add(TextEditingController());
       questions.add({
         "question${i + 1}": "",
@@ -59,52 +60,49 @@ class AdminAddPartCubit extends Cubit<AdminAddPartStates> {
     emit(ChooseNumberOfQuestionsState());
   }
 
-  void changeQuestion(String question, int index){
+  void changeQuestion(String question, int index) {
     questions[index]["question${index + 1}"] = question;
     emit(QuestionState());
   }
 
-  void changeAnswer1(String answer1, int index){
+  void changeAnswer1(String answer1, int index) {
     questions[index]["answer1"] = answer1;
     emit(Answer1State());
   }
 
-  void changeAnswer2(String answer2, int index){
+  void changeAnswer2(String answer2, int index) {
     questions[index]["answer2"] = answer2;
     emit(Answer2State());
   }
 
-  void changeAnswer3(String answer3, int index){
+  void changeAnswer3(String answer3, int index) {
     questions[index]["answer3"] = answer3;
     emit(Answer3State());
-
   }
 
-  void changeAnswer4(String answer4, int index){
+  void changeAnswer4(String answer4, int index) {
     questions[index]["answer4"] = answer4;
     emit(Answer4State());
   }
 
-  void changeCorrect(String correct, int index){
+  void changeCorrect(String correct, int index) {
     questions[index]["correct"] = correct;
     emit(CorrectState());
   }
 
   void chooseVideo() async {
-    result = await FilePicker.platform.pickFiles(
-        type: FileType.video,
-        allowMultiple: true);
-    for(int i = 0; i < result!.files.length; i++){
+    result = await FilePicker.platform
+        .pickFiles(type: FileType.video, allowMultiple: true);
+    for (int i = 0; i < result!.files.length; i++) {
       isDone.add(false);
     }
     emit(ChangeVideoState());
   }
 
   void chooseVideo2() async {
-    FilePickerResult? result1 = await FilePicker.platform.pickFiles(
-        type: FileType.video,
-        allowMultiple: true);
-    for(int i = 0; i < result1!.files.length; i++){
+    FilePickerResult? result1 = await FilePicker.platform
+        .pickFiles(type: FileType.video, allowMultiple: true);
+    for (int i = 0; i < result1!.files.length; i++) {
       result!.files.add(result1.files[i]);
       isDone.add(false);
     }
@@ -114,34 +112,37 @@ class AdminAddPartCubit extends Cubit<AdminAddPartStates> {
   Future uploadVideos(BuildContext context, String name, String id) async {
     isLoading = true;
     emit(LoadingState());
-    for(int i = 0; i < result!.files.length; i++){
+    for (int i = 0; i < result!.files.length; i++) {
       final file = File(result!.files[i].path!);
       isDone[i] = true;
       Reference reference = FirebaseStorage.instance
           .ref()
           .child("units")
           .child(name)
-          .child(
-          "${DateTime.now().millisecondsSinceEpoch}.${getName(file)}");
+          .child("${DateTime.now().millisecondsSinceEpoch}.${getName(file)}");
 
       uploadTask = reference.putData(await file.readAsBytes());
       await uploadTask!.whenComplete(() async {
         await reference.getDownloadURL().then((urlVideo) {
-          print(urlVideo);
           videosUrl.add((urlVideo));
           emit(AddVideoState());
         });
       });
     }
 
-    await FirebaseFirestore.instance.collection("units").doc(id).collection("parts").add({
+    await FirebaseFirestore.instance
+        .collection("units")
+        .doc(id)
+        .collection("parts")
+        .add({
+      "name": namePartController.text,
       "videos": videosUrl,
       "description": descriptionUnitController.text,
       "questions": questions,
       "time": DateTime.now(),
       "view": false,
       "viewGrade": false,
-    }).whenComplete(() async{
+    }).whenComplete(() async {
       isLoading = false;
       emit(LoadingState());
       Navigator.pop(context);

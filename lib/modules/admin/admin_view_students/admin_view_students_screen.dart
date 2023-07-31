@@ -37,7 +37,6 @@ class AdminViewStudentsScreen extends StatelessWidget {
                     var data = snapshot.data!.docs;
                     return ListView.builder(
                         shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
                         itemCount: data.length,
                         itemBuilder: (context, index) {
                           return ListTile(

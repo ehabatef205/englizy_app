@@ -6,7 +6,6 @@ import 'package:englizy_app/modules/admin/admin_view_parts/cubit/states.dart';
 import 'package:englizy_app/modules/admin/admin_view_students_in_homework/admin_view_students_in_homrwork_screen.dart';
 import 'package:englizy_app/modules/admin/admin_view_students_in_unit/admin_view_students_in_unit_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AdminViewPartsScreen extends StatelessWidget {
@@ -41,7 +40,7 @@ class AdminViewPartsScreen extends StatelessWidget {
                               builder: (context) =>
                                   AdminAddPartScreen(data: dataOfUnit)));
                     },
-                    icon: Icon(Icons.add)),
+                    icon: const Icon(Icons.add)),
                 IconButton(
                     onPressed: () async {
                       await FirebaseFirestore.instance
@@ -104,58 +103,57 @@ class AdminViewPartsScreen extends StatelessWidget {
                         });
                       });
                     },
-                    icon: Icon(Icons.delete_outline))
+                    icon: const Icon(Icons.delete_outline))
               ],
             ),
             body: Padding(
               padding: const EdgeInsets.all(10),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    ListTile(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => AdminViewStudentsInUnitScreen(
-                              unitId: dataOfUnit.id,
-                            ),
+              child: Column(
+                children: [
+                  ListTile(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AdminViewStudentsInUnitScreen(
+                            unitId: dataOfUnit.id,
                           ),
-                        );
-                      },
-                      title: Text(
-                        "Students",
-                        style: TextStyle(
-                          color: Theme.of(context).textTheme.bodyText1!.color,
                         ),
+                      );
+                    },
+                    title: Text(
+                      "Students",
+                      style: TextStyle(
+                        color: Theme.of(context).textTheme.bodyText1!.color,
                       ),
                     ),
-                    ListTile(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => AdminViewStudentsInHomeworkScreen(
-                              unit: dataOfUnit,
-                            ),
+                  ),
+                  ListTile(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AdminViewStudentsInHomeworkScreen(
+                            unit: dataOfUnit,
                           ),
-                        );
-                      },
-                      title: Text(
-                        "Homework",
-                        style: TextStyle(
-                          color: Theme.of(context).textTheme.bodyText1!.color,
                         ),
+                      );
+                    },
+                    title: Text(
+                      "Homework",
+                      style: TextStyle(
+                        color: Theme.of(context).textTheme.bodyText1!.color,
                       ),
                     ),
-                    StreamBuilder<QuerySnapshot>(
+                  ),
+                  Expanded(
+                    child: StreamBuilder<QuerySnapshot>(
                       stream: cubit.getParts(dataOfUnit.id),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           var data = snapshot.data!.docs;
                           return ListView.builder(
                               shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
                               itemCount: data.length,
                               itemBuilder: (context, index) {
                                 return ListTile(
@@ -165,13 +163,13 @@ class AdminViewPartsScreen extends StatelessWidget {
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 AdminViewPartScreen(
-                                                  name: "Part ${index + 1}",
+                                                  name: data[index]["name"],
                                                   unitId: dataOfUnit.id,
                                                   data: data[index],
                                                 )));
                                   },
                                   title: Text(
-                                    "Part ${index + 1}",
+                                    data[index]["name"],
                                     style: TextStyle(
                                         color: Theme.of(context)
                                             .textTheme
@@ -207,8 +205,8 @@ class AdminViewPartsScreen extends StatelessWidget {
                         }
                       },
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           );

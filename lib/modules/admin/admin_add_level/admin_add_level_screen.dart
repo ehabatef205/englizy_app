@@ -2,7 +2,6 @@ import 'package:englizy_app/modules/admin/admin_add_level/cubit/cubit.dart';
 import 'package:englizy_app/modules/admin/admin_add_level/cubit/states.dart';
 import 'package:englizy_app/shared/components.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AdminAddLevelScreen extends StatelessWidget {
@@ -20,7 +19,7 @@ class AdminAddLevelScreen extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               centerTitle: true,
-              title: Text("Add Level"),
+              title: const Text("Add Level"),
             ),
             body: Center(
               child: Padding(

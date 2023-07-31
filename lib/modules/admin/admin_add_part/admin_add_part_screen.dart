@@ -2,13 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:englizy_app/modules/admin/admin_add_part/cubit/cubit.dart';
 import 'package:englizy_app/modules/admin/admin_add_part/cubit/states.dart';
 import 'package:englizy_app/modules/admin/admin_add_part/video_screen.dart';
-import 'package:englizy_app/modules/admin/admin_view_part/admin_view_part_screen.dart';
 import 'package:englizy_app/shared/components.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:video_player/video_player.dart';
-
 class AdminAddPartScreen extends StatelessWidget {
   final QueryDocumentSnapshot<Object?> data;
 
@@ -64,9 +60,6 @@ class AdminAddPartScreen extends StatelessWidget {
                       const SizedBox(
                         height: 20,
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
                       InkWell(
                         onTap: cubit.result == null
                             ? cubit.chooseVideo
@@ -79,6 +72,21 @@ class AdminAddPartScreen extends StatelessWidget {
                             size: 70,
                           ),
                         ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      TextFormFieldWidget(
+                        controller: cubit.namePartController,
+                        type: TextInputType.text,
+                        context: context,
+                        labelText: "Name of part",
+                        validate: (value) {
+                          if (value!.isEmpty) {
+                            return "Name of part is required";
+                          }
+                          return null;
+                        },
                       ),
                       const SizedBox(
                         height: 20,
@@ -254,7 +262,7 @@ class AdminAddPartScreen extends StatelessWidget {
                             );
                           }),
                       cubit.isLoading
-                          ? Center(
+                          ? const Center(
                         child: CircularProgressIndicator(),
                       ) :
                       Container(

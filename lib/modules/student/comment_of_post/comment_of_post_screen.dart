@@ -1,4 +1,3 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:englizy_app/modules/student/comment_of_post/cubit/cubit.dart';
 import 'package:englizy_app/modules/student/comment_of_post/cubit/states.dart';
@@ -23,7 +22,7 @@ class CommentOfPostScreen extends StatelessWidget {
           CommentOfPostCubit cubit = CommentOfPostCubit.get(context);
           return Scaffold(
             appBar: AppBar(
-              title: Text(
+              title: const Text(
                 'Comments',
                 style: TextStyle(
                   color: Color.fromRGBO(102, 144, 206, 1),
@@ -35,15 +34,19 @@ class CommentOfPostScreen extends StatelessWidget {
               centerTitle: true,
             ),
             body: Container(
-              constraints: BoxConstraints.expand(),
-              decoration: BoxDecoration(
+              height: size.height,
+              width: size.width,
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage("assets/englizy.jpg"),
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                 ),
               ),
               child: Container(
-                color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.4),
+                height: size.height,
+                width: size.width,
+                color:
+                    Theme.of(context).scaffoldBackgroundColor.withOpacity(0.4),
                 child: Padding(
                   padding: const EdgeInsets.only(left: 10),
                   child: Column(
@@ -55,6 +58,7 @@ class CommentOfPostScreen extends StatelessWidget {
                             if (snapshot4.hasData) {
                               var dataOfComment = snapshot4.data!.docs;
                               return ListView.builder(
+                                  shrinkWrap: true,
                                   itemCount: dataOfComment.length,
                                   itemBuilder: (context, index) {
                                     return StreamBuilder<DocumentSnapshot>(
@@ -74,21 +78,24 @@ class CommentOfPostScreen extends StatelessWidget {
                                                 Expanded(
                                                   child: Padding(
                                                     padding:
-                                                        const EdgeInsets.all(10),
+                                                        const EdgeInsets.all(
+                                                            10),
                                                     child: Container(
                                                       decoration: BoxDecoration(
                                                           borderRadius:
-                                                              BorderRadius.circular(
-                                                                  10),
-                                                          color: Theme.of(context)
-                                                              .textTheme
-                                                              .bodyText1!
-                                                              .color!
-                                                              .withOpacity(0.5)),
+                                                              BorderRadius
+                                                                  .circular(10),
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyText1!
+                                                                  .color!
+                                                                  .withOpacity(
+                                                                      0.5)),
                                                       child: Padding(
                                                         padding:
-                                                            const EdgeInsets.all(
-                                                                10),
+                                                            const EdgeInsets
+                                                                .all(10),
                                                         child: Column(
                                                           crossAxisAlignment:
                                                               CrossAxisAlignment
@@ -103,7 +110,8 @@ class CommentOfPostScreen extends StatelessWidget {
                                                                       color: Theme.of(
                                                                               context)
                                                                           .scaffoldBackgroundColor,
-                                                                      fontSize: 16),
+                                                                      fontSize:
+                                                                          16),
                                                                 ),
                                                               ],
                                                             ),
@@ -120,7 +128,8 @@ class CommentOfPostScreen extends StatelessWidget {
                                                                 .toString())*/
 
                                                             Text(
-                                                              dataOfComment[index]
+                                                              dataOfComment[
+                                                                      index]
                                                                   ["text"],
                                                               style: TextStyle(
                                                                   color: Theme.of(
@@ -163,19 +172,18 @@ class CommentOfPostScreen extends StatelessWidget {
                             children: [
                               Flexible(
                                 child: TextFormFieldWidget(
-                                  controller: cubit.commentController,
-                                  type: TextInputType.text,
-                                  context: context,
-                                  hint: "Write comment...",
-                                  validate: (value){
-                                    if(value!.isEmpty){
-                                      return "Comment is required";
-                                    }
-                                    return null;
-                                  }
-                                ),
+                                    controller: cubit.commentController,
+                                    type: TextInputType.text,
+                                    context: context,
+                                    hint: "Write comment...",
+                                    validate: (value) {
+                                      if (value!.isEmpty) {
+                                        return "Comment is required";
+                                      }
+                                      return null;
+                                    }),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ),
                               Container(
@@ -186,11 +194,11 @@ class CommentOfPostScreen extends StatelessWidget {
                                 child: Center(
                                   child: IconButton(
                                     onPressed: () {
-                                        cubit.sendComment(id: id);
+                                      cubit.sendComment(id: id);
                                     },
                                     icon: Icon(
                                       Icons.send,
-                                      color: Colors.white,
+                                      color: Theme.of(context).iconTheme.color,
                                     ),
                                   ),
                                 ),

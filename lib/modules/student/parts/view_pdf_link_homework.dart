@@ -137,7 +137,7 @@ class _ViewPdfLinkHomeworkState extends State<ViewPdfLinkHomework> {
                   }
                 }
               },
-              icon: Icon(Icons.add))
+              icon: const Icon(Icons.add))
         ],
       ),
       body: pdf == null
@@ -170,7 +170,7 @@ class _ViewPdfLinkHomeworkState extends State<ViewPdfLinkHomework> {
                   controller: _pdfControllerPinch2,
                   padding: 10,
                 ),
-                isLoading? SizedBox() : Padding(
+                isLoading? const SizedBox() : Padding(
                   padding: const EdgeInsets.all(10),
                   child: Container(
                     decoration: const BoxDecoration(

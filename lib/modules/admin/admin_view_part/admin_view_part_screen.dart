@@ -4,7 +4,6 @@ import 'package:englizy_app/modules/admin/admin_view_part/cubit/cubit.dart';
 import 'package:englizy_app/modules/admin/admin_view_part/cubit/states.dart';
 import 'package:englizy_app/modules/admin/admin_view_part/video_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AdminViewPartScreen extends StatelessWidget {
@@ -45,7 +44,7 @@ class AdminViewPartScreen extends StatelessWidget {
                               builder: (context) => AdminViewGradesScreen(
                                   unitId: unitId, partId: data.id)));
                     },
-                    icon: Icon(Icons.view_agenda_outlined)),
+                    icon: const Icon(Icons.view_agenda_outlined)),
                 IconButton(
                     onPressed: () async {
                       await FirebaseFirestore.instance
@@ -78,7 +77,7 @@ class AdminViewPartScreen extends StatelessWidget {
                         });
                       });
                     },
-                    icon: Icon(Icons.delete_outline))
+                    icon: const Icon(Icons.delete_outline))
               ],
             ),
             body: Padding(
