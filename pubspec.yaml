@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.0.5 <4.0.0'
+  sdk: '>=3.0.0 <4.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -55,7 +55,8 @@ dependencies:
   animated_text_kit: ^4.2.2
   internet_file: ^1.2.0
   flutter_windowmanager: ^0.2.0
-  mac_address: ^1.0.0
+  mac_address:
+    path: ./packages/mac_address
 
 dev_dependencies:
   flutter_test:
