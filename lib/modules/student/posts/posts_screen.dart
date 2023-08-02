@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:englizy_app/modules/student/comment_of_post/comment_of_post_screen.dart';
 import 'package:englizy_app/modules/student/create_post/create_post_screen.dart';
 import 'package:englizy_app/modules/student/posts/cubit/cubit.dart';
 import 'package:englizy_app/modules/student/posts/cubit/states.dart';
 import 'package:englizy_app/shared/constant.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PostsScreen extends StatelessWidget {
   const PostsScreen({super.key});

@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
 import 'package:englizy_app/modules/student/pdfs/cubit/cubit.dart';
 import 'package:englizy_app/modules/student/pdfs/cubit/states.dart';
 import 'package:englizy_app/shared/constant.dart';
 import 'package:englizy_app/shared/view_pdf_link.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class PDFSScreen extends StatelessWidget {
   const PDFSScreen({super.key});
@@ -113,45 +113,80 @@ class PDFSScreen extends StatelessWidget {
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
                             var data = snapshot.data!.docs;
+                            if (data.isEmpty) {
+                              return Center(
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 15,
+                                    vertical: 20,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: const Text(
+                                    "There is no PDF files "
+                                    "uploaded yet",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }
                             return ListView.builder(
                               shrinkWrap: true,
                               itemCount: data.length,
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20),
                               itemBuilder: (context, index) {
-                                return ListTile(
-                                  onTap: () {
-                                    FirebaseFirestore.instance
-                                        .collection("units")
-                                        .doc(data[index]["unit"])
-                                        .get()
-                                        .then((value) {
-                                      if (value["students"]
-                                          .contains(userModel!.uid)) {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) => ViewPdfLink(
-                                                    link: data[index]["pdf"],
-                                                    name: data[index]["name"])));
-                                      } else {
-                                        Fluttertoast.showToast(
-                                          msg: "Please buy ${value["name"]}",
-                                          toastLength: Toast.LENGTH_SHORT,
-                                          gravity: ToastGravity.BOTTOM,
-                                          timeInSecForIosWeb: 1,
-                                          backgroundColor: Colors.red,
-                                          textColor: Colors.white,
-                                          fontSize: 16.0,
-                                        );
-                                      }
-                                    });
-                                  },
-                                  title: Text(
-                                    data[index]["name"],
-                                    style: TextStyle(
+                                return Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1!
+                                          .color!
+                                          .withOpacity(
+                                            0.5,
+                                          )),
+                                  child: ListTile(
+                                    onTap: () {
+                                      FirebaseFirestore.instance
+                                          .collection("units")
+                                          .doc(data[index]["unit"])
+                                          .get()
+                                          .then((value) {
+                                        if (value["students"]
+                                            .contains(userModel!.uid)) {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ViewPdfLink(
+                                                          link: data[index]
+                                                              ["pdf"],
+                                                          name: data[index]
+                                                              ["name"])));
+                                        } else {
+                                          Fluttertoast.showToast(
+                                            msg: "Please buy ${value["name"]}",
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.BOTTOM,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor: Colors.red,
+                                            textColor: Colors.white,
+                                            fontSize: 16.0,
+                                          );
+                                        }
+                                      });
+                                    },
+                                    title: Text(data[index]["name"]),
+                                    titleTextStyle: TextStyle(
                                         color: Theme.of(context)
-                                            .textTheme
-                                            .bodyText1!
-                                            .color),
+                                            .scaffoldBackgroundColor,
+                                        fontSize: 16),
                                   ),
                                 );
                               },
