@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:englizy_app/modules/admin/admin_home/admin_home_screen.dart';
 import 'package:englizy_app/modules/admin/admin_view_grades/admin_view_grades_screen.dart';
 import 'package:englizy_app/modules/admin/admin_view_part/cubit/cubit.dart';
 import 'package:englizy_app/modules/admin/admin_view_part/cubit/states.dart';
 import 'package:englizy_app/modules/admin/admin_view_part/video_screen.dart';
+import 'package:englizy_app/modules/admin/admin_view_parts/admin_view_parts_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -46,37 +48,52 @@ class AdminViewPartScreen extends StatelessWidget {
                     },
                     icon: const Icon(Icons.view_agenda_outlined)),
                 IconButton(
-                    onPressed: () async {
-                      await FirebaseFirestore.instance
-                          .collection("units")
-                          .doc(unitId)
-                          .collection("parts")
-                          .doc(data.id)
-                          .collection("answers")
-                          .get()
-                          .then((value) async {
-                        for (int i = 0; i < value.docs.length; i++) {
-                          await FirebaseFirestore.instance
-                              .collection("units")
-                              .doc(unitId)
-                              .collection("parts")
-                              .doc(data.id)
-                              .collection("answers")
-                              .doc(value.docs[i].id)
-                              .delete();
-                        }
-                      }).whenComplete(() async {
-                        FirebaseFirestore.instance
-                            .collection("units")
-                            .doc(unitId)
-                            .collection("parts")
-                            .doc(data.id)
-                            .delete()
-                            .whenComplete(() {
-                          Navigator.pop(context);
-                        });
-                      });
-                    },
+                    onPressed: () => showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                        content: const Text('Do you want to delete this?'),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text('No'),
+                          ),
+                          TextButton(
+                            onPressed: () async{
+                              await FirebaseFirestore.instance
+                                  .collection("units")
+                                  .doc(unitId)
+                                  .collection("parts")
+                                  .doc(data.id)
+                                  .collection("answers")
+                                  .get()
+                                  .then((value) async {
+                                for (int i = 0; i < value.docs.length; i++) {
+                                  await FirebaseFirestore.instance
+                                      .collection("units")
+                                      .doc(unitId)
+                                      .collection("parts")
+                                      .doc(data.id)
+                                      .collection("answers")
+                                      .doc(value.docs[i].id)
+                                      .delete();
+                                }
+                              }).whenComplete(() async {
+                                FirebaseFirestore.instance
+                                    .collection("units")
+                                    .doc(unitId)
+                                    .collection("parts")
+                                    .doc(data.id)
+                                    .delete()
+                                    .whenComplete(() {
+                                  Navigator.pop(context);
+                                });
+                              });
+                            },
+                            child: const Text('Yes'),
+                          ),
+                        ],
+                      ),
+                    ),
                     icon: const Icon(Icons.delete_outline))
               ],
             ),

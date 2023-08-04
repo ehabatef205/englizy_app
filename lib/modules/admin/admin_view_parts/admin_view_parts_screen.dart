@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:englizy_app/modules/admin/admin_add_part/admin_add_part_screen.dart';
+import 'package:englizy_app/modules/admin/admin_home/admin_home_screen.dart';
 import 'package:englizy_app/modules/admin/admin_view_part/admin_view_part_screen.dart';
 import 'package:englizy_app/modules/admin/admin_view_parts/cubit/cubit.dart';
 import 'package:englizy_app/modules/admin/admin_view_parts/cubit/states.dart';
@@ -42,67 +43,82 @@ class AdminViewPartsScreen extends StatelessWidget {
                     },
                     icon: const Icon(Icons.add)),
                 IconButton(
-                    onPressed: () async {
-                      await FirebaseFirestore.instance
-                          .collection("units")
-                          .doc(dataOfUnit.id)
-                          .collection("parts")
-                          .get()
-                          .then((value) async {
-                        for (int i = 0; i < value.docs.length; i++) {
-                          await FirebaseFirestore.instance
-                              .collection("units")
-                              .doc(dataOfUnit.id)
-                              .collection("parts")
-                              .doc(value.docs[i].id)
-                              .collection("answers")
-                              .get()
-                              .then((value2) async {
-                            for (int j = 0; j < value2.docs.length; j++) {
+                    onPressed: () => showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                        content: const Text('Do you want to delete this?'),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text('No'),
+                          ),
+                          TextButton(
+                            onPressed: () async{
                               await FirebaseFirestore.instance
                                   .collection("units")
                                   .doc(dataOfUnit.id)
                                   .collection("parts")
-                                  .doc(value.docs[i].id)
-                                  .collection("answers")
-                                  .doc(value2.docs[j].id)
-                                  .delete();
-                            }
+                                  .get()
+                                  .then((value) async {
+                                for (int i = 0; i < value.docs.length; i++) {
+                                  await FirebaseFirestore.instance
+                                      .collection("units")
+                                      .doc(dataOfUnit.id)
+                                      .collection("parts")
+                                      .doc(value.docs[i].id)
+                                      .collection("answers")
+                                      .get()
+                                      .then((value2) async {
+                                    for (int j = 0; j < value2.docs.length; j++) {
+                                      await FirebaseFirestore.instance
+                                          .collection("units")
+                                          .doc(dataOfUnit.id)
+                                          .collection("parts")
+                                          .doc(value.docs[i].id)
+                                          .collection("answers")
+                                          .doc(value2.docs[j].id)
+                                          .delete();
+                                    }
 
-                            await FirebaseFirestore.instance
-                                .collection("units")
-                                .doc(dataOfUnit.id)
-                                .collection("parts")
-                                .doc(value.docs[i].id)
-                                .delete();
-                          });
-                        }
-                      }).whenComplete(() async {
-                        await FirebaseFirestore.instance
-                            .collection("units")
-                            .doc(dataOfUnit.id)
-                            .collection("homework")
-                            .get()
-                            .then((value) async {
-                          for (int i = 0; i < value.docs.length; i++) {
-                            await FirebaseFirestore.instance
-                                .collection("units")
-                                .doc(dataOfUnit.id)
-                                .collection("homework")
-                                .doc(value.docs[i].id)
-                                .delete();
-                          }
-                        }).whenComplete(() async {
-                          FirebaseFirestore.instance
-                              .collection("units")
-                              .doc(dataOfUnit.id)
-                              .delete()
-                              .whenComplete(() {
-                            Navigator.pop(context);
-                          });
-                        });
-                      });
-                    },
+                                    await FirebaseFirestore.instance
+                                        .collection("units")
+                                        .doc(dataOfUnit.id)
+                                        .collection("parts")
+                                        .doc(value.docs[i].id)
+                                        .delete();
+                                  });
+                                }
+                              }).whenComplete(() async {
+                                await FirebaseFirestore.instance
+                                    .collection("units")
+                                    .doc(dataOfUnit.id)
+                                    .collection("homework")
+                                    .get()
+                                    .then((value) async {
+                                  for (int i = 0; i < value.docs.length; i++) {
+                                    await FirebaseFirestore.instance
+                                        .collection("units")
+                                        .doc(dataOfUnit.id)
+                                        .collection("homework")
+                                        .doc(value.docs[i].id)
+                                        .delete();
+                                  }
+                                }).whenComplete(() async {
+                                  FirebaseFirestore.instance
+                                      .collection("units")
+                                      .doc(dataOfUnit.id)
+                                      .delete()
+                                      .whenComplete(() {
+                                    Navigator.pop(context);
+                                  });
+                                });
+                              });
+                            },
+                            child: const Text('Yes'),
+                          ),
+                        ],
+                      ),
+                    ),
                     icon: const Icon(Icons.delete_outline))
               ],
             ),
