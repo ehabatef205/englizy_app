@@ -138,9 +138,9 @@ class AdminViewPostsScreen extends StatelessWidget {
                                                     ),
                                                     TextButton(
                                                       onPressed: () {
+                                                        Navigator.pop(context);
                                                         cubit.deletePost(
                                                             id: data[index].id);
-                                                        Navigator.pop(context);
                                                       },
                                                       child: const Text('Yes'),
                                                     ),

@@ -73,7 +73,7 @@ class AdminAddPostScreen extends StatelessWidget {
                             color: Colors.indigoAccent,
                             height: 50.0,
                             child: const Text(
-                              'Add unit',
+                              'Add post',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,

@@ -13,7 +13,6 @@ class UpdateProfileStudentCubit extends Cubit<UpdateProfileStudentStates> {
 
   static UpdateProfileStudentCubit get(context) => BlocProvider.of(context);
 
-  TextEditingController parentsPhoneNumberController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController levelController = TextEditingController();
@@ -42,7 +41,6 @@ class UpdateProfileStudentCubit extends Cubit<UpdateProfileStudentStates> {
   }
 
   void dataUser() {
-    parentsPhoneNumberController.text = userModel!.parentPhone;
     nameController.text = userModel!.studentName;
     phoneController.text = userModel!.studentPhone;
     FirebaseFirestore.instance
@@ -93,16 +91,14 @@ class UpdateProfileStudentCubit extends Cubit<UpdateProfileStudentStates> {
               .doc(userModel!.uid)
               .update({
             "image": urlImage,
-            "parentPhone": parentsPhoneNumberController.text,
             "studentName": nameController.text,
             "studentPhone": phoneController.text,
-            "level": levelId == null? userModel!.level : levelId,
+            "level": levelId == null ? userModel!.level : levelId,
           }).whenComplete(() async {
             userModel!.image = urlImage;
-            userModel!.parentPhone = parentsPhoneNumberController.text;
             userModel!.studentName = nameController.text;
             userModel!.studentPhone = phoneController.text;
-            userModel!.level = levelId == null? userModel!.level : levelId!;
+            userModel!.level = levelId == null ? userModel!.level : levelId!;
             emit(UpdateSuccessState());
             Navigator.pop(context);
           });
@@ -113,15 +109,13 @@ class UpdateProfileStudentCubit extends Cubit<UpdateProfileStudentStates> {
           .collection("users")
           .doc(userModel!.uid)
           .update({
-        "parentPhone": parentsPhoneNumberController.text,
         "studentName": nameController.text,
         "studentPhone": phoneController.text,
-        "level": levelId == null? userModel!.level : levelId,
+        "level": levelId == null ? userModel!.level : levelId,
       }).whenComplete(() async {
-        userModel!.parentPhone = parentsPhoneNumberController.text;
         userModel!.studentName = nameController.text;
         userModel!.studentPhone = phoneController.text;
-        userModel!.level = levelId == null? userModel!.level : levelId!;
+        userModel!.level = levelId == null ? userModel!.level : levelId!;
         emit(UpdateSuccessState());
         Navigator.pop(context);
       });

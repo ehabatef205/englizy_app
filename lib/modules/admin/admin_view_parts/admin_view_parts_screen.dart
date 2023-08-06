@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:englizy_app/modules/admin/admin_add_part/admin_add_part_screen.dart';
 import 'package:englizy_app/modules/admin/admin_home/admin_home_screen.dart';
+import 'package:englizy_app/modules/admin/admin_update_unit/admin_update_unit_screen.dart';
 import 'package:englizy_app/modules/admin/admin_view_part/admin_view_part_screen.dart';
 import 'package:englizy_app/modules/admin/admin_view_parts/cubit/cubit.dart';
 import 'package:englizy_app/modules/admin/admin_view_parts/cubit/states.dart';
@@ -26,12 +27,29 @@ class AdminViewPartsScreen extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               centerTitle: true,
-              title: Text(
-                dataOfUnit["name"],
-                style: TextStyle(
-                  color: Theme.of(context).textTheme.bodyText1!.color,
-                ),
-              ),
+              title: StreamBuilder<DocumentSnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection("units")
+                      .doc(dataOfUnit.id)
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      var data = snapshot.data!;
+                      return Text(
+                        data["name"],
+                        style: TextStyle(
+                          color: Theme.of(context).textTheme.bodyText1!.color,
+                        ),
+                      );
+                    } else {
+                      return Text(
+                        dataOfUnit["name"],
+                        style: TextStyle(
+                          color: Theme.of(context).textTheme.bodyText1!.color,
+                        ),
+                      );
+                    }
+                  }),
               actions: [
                 IconButton(
                     onPressed: () {
@@ -42,6 +60,27 @@ class AdminViewPartsScreen extends StatelessWidget {
                                   AdminAddPartScreen(data: dataOfUnit)));
                     },
                     icon: const Icon(Icons.add)),
+                StreamBuilder<DocumentSnapshot>(
+                    stream: FirebaseFirestore.instance
+                        .collection("units")
+                        .doc(dataOfUnit.id)
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        var data = snapshot.data!;
+                        return IconButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          AdminUpdateUnitScreen(data: data)));
+                            },
+                            icon: Icon(Icons.edit));
+                      } else {
+                        return const SizedBox();
+                      }
+                    }),
                 IconButton(
                     onPressed: () => showDialog<String>(
                       context: context,
@@ -54,6 +93,8 @@ class AdminViewPartsScreen extends StatelessWidget {
                           ),
                           TextButton(
                             onPressed: () async{
+                              Navigator.pop(context);
+                              Navigator.pop(context);
                               await FirebaseFirestore.instance
                                   .collection("units")
                                   .doc(dataOfUnit.id)

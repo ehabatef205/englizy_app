@@ -199,20 +199,18 @@ class CreatePostsScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        Expanded(
-                          child: TextFormField(
-                            maxLines: 15,
-                            controller: cubit.textController,
-                            style: TextStyle(
+                        TextFormField(
+                          maxLines: 15,
+                          controller: cubit.textController,
+                          style: TextStyle(
+                            color: Theme.of(context).textTheme.bodyText1!.color,
+                          ),
+                          decoration: InputDecoration(
+                            hintStyle: TextStyle(
                               color: Theme.of(context).textTheme.bodyText1!.color,
                             ),
-                            decoration: InputDecoration(
-                              hintStyle: TextStyle(
-                                color: Theme.of(context).textTheme.bodyText1!.color,
-                              ),
-                              hintText: 'what is on your mind ...',
-                              border: InputBorder.none,
-                            ),
+                            hintText: 'what is on your mind ...',
+                            border: InputBorder.none,
                           ),
                         ),
                       ],

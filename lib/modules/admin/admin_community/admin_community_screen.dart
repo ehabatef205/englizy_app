@@ -221,6 +221,7 @@ class AdminCommunityScreen extends StatelessWidget {
                                                                           ),
                                                                           TextButton(
                                                                             onPressed: () async{
+                                                                              Navigator.pop(context);
                                                                               await FirebaseFirestore
                                                                                   .instance
                                                                                   .collection(

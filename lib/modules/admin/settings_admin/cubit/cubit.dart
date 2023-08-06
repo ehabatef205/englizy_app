@@ -1,8 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:englizy_app/layout/cubit/cubit.dart';
 import 'package:englizy_app/modules/admin/settings_admin/cubit/states.dart';
+import 'package:englizy_app/modules/logIn/logIn_screen.dart';
 import 'package:englizy_app/shared/constant.dart';
 import 'package:englizy_app/shared/theme.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
@@ -41,5 +43,11 @@ class SettingsAdminCubit extends Cubit<SettingsAdminStates> {
     AppCubit.get(context).bottomNavIndex = 2;
     userModel = null;
     emit(LogoutState());
+  }
+
+  void deleteAccount(BuildContext context) async {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => LoginScreen()));
+    await FirebaseAuth.instance.currentUser!.delete();
   }
 }

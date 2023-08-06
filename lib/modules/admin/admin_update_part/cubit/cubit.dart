@@ -3,23 +3,23 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:chewie/chewie.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:englizy_app/modules/admin/admin_add_part/cubit/states.dart';
+import 'package:englizy_app/modules/admin/admin_update_part/cubit/states.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player/video_player.dart';
 
-class AdminAddPartCubit extends Cubit<AdminAddPartStates> {
-  AdminAddPartCubit() : super(AdminAddPartInitialState());
+class AdminUpdatePartCubit extends Cubit<AdminUpdatePartStates> {
+  AdminUpdatePartCubit() : super(AdminUpdatePartInitialState());
 
-  static AdminAddPartCubit get(context) => BlocProvider.of(context);
+  static AdminUpdatePartCubit get(context) => BlocProvider.of(context);
 
-  TextEditingController descriptionUnitController = TextEditingController();
+  TextEditingController descriptionPartController = TextEditingController();
   TextEditingController numberOfQuestionsController = TextEditingController();
   TextEditingController namePartController = TextEditingController();
   List<TextEditingController> controllers = [];
-  List<Map<String, dynamic>> questions = [];
+  List<dynamic> questions = [];
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   VideoPlayerController? controller;
   ChewieController? chewieController;
@@ -29,6 +29,15 @@ class AdminAddPartCubit extends Cubit<AdminAddPartStates> {
   UploadTask? uploadTask;
   List<String> videosUrl = [];
   List<bool> isDone = [];
+
+  void changeData({required DocumentSnapshot<Object?> data}) {
+    namePartController.text = data["name"];
+    descriptionPartController.text = data["description"];
+    numberOfQuestionsController.text = data["questions"].length.toString();
+    numberOfQuestions = data["questions"].length;
+    questions = data["questions"];
+    emit(ChangeDataState());
+  }
 
   void createChewieController(PlatformFile video) {
     VideoPlayerController controller =
@@ -43,11 +52,15 @@ class AdminAddPartCubit extends Cubit<AdminAddPartStates> {
     emit(VideoState());
   }
 
+  void removeItem(int index) {
+    questions.removeAt(index);
+    emit(RemoveState());
+  }
+
   void chooseNumberOfQuestions() async {
-    questions.clear();
     numberOfQuestions = int.parse(numberOfQuestionsController.text);
-    for (int i = 0; i < numberOfQuestions; i++) {
-      controllers.add(TextEditingController());
+    int number = numberOfQuestions - questions.length;
+    for (int i = 0; i < number; i++) {
       questions.add({
         "question": "",
         "answer1": "",
@@ -109,10 +122,10 @@ class AdminAddPartCubit extends Cubit<AdminAddPartStates> {
     emit(ChangeVideoState());
   }
 
-  Future uploadVideos(BuildContext context, String name, String id) async {
+  Future uploadVideos(BuildContext context, String name, String id, String partId) async {
     isLoading = true;
     emit(LoadingState());
-    for (int i = 0; i < result!.files.length; i++) {
+    /*for (int i = 0; i < result!.files.length; i++) {
       final file = File(result!.files[i].path!);
       isDone[i] = true;
       Reference reference = FirebaseStorage.instance
@@ -137,7 +150,7 @@ class AdminAddPartCubit extends Cubit<AdminAddPartStates> {
         .add({
       "name": namePartController.text,
       "videos": videosUrl,
-      "description": descriptionUnitController.text,
+      "description": descriptionPartController.text,
       "questions": questions,
       "time": DateTime.now(),
       "view": false,
@@ -146,6 +159,24 @@ class AdminAddPartCubit extends Cubit<AdminAddPartStates> {
       isLoading = false;
       emit(LoadingState());
       Navigator.pop(context);
+    }).catchError((error) {
+      isLoading = false;
+      emit(LoadingState());
+    });*/
+
+    await FirebaseFirestore.instance
+        .collection("units")
+        .doc(id)
+        .collection("parts")
+        .doc(partId)
+        .update({
+      "name": namePartController.text,
+      "description": descriptionPartController.text,
+      "questions": questions,
+    }).whenComplete(() async {
+      emit(LoadingState());
+      Navigator.pop(context);
+      isLoading = false;
     }).catchError((error) {
       isLoading = false;
       emit(LoadingState());

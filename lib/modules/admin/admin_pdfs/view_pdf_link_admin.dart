@@ -59,12 +59,14 @@ class _ViewPdfLinkAdminState extends State<ViewPdfLinkAdmin> {
                         ),
                         TextButton(
                           onPressed: () {
+                            Navigator.pop(context);
+                            Navigator.pop(context);
                             FirebaseFirestore.instance
                                 .collection("pdfs")
                                 .doc(widget.data.id)
                                 .delete()
                                 .whenComplete(() {
-                              Navigator.pop(context);
+
                             });
                           },
                           child: const Text('Yes'),

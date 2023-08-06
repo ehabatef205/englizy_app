@@ -192,7 +192,7 @@ class LecturesScreen extends StatelessWidget {
                                                       .start,
                                                   children: [
                                                     Text(
-                                                      "Question${index + 1}: ",
+                                                      "Question ${index + 1}: ",
                                                       style:
                                                       TextStyle(
                                                         fontSize:
@@ -211,7 +211,7 @@ class LecturesScreen extends StatelessWidget {
                                                     Text(
                                                       data["questions"][index]
                                                       [
-                                                      "question${index + 1}"],
+                                                      "question"],
                                                       style:
                                                       TextStyle(
                                                         fontSize:
@@ -479,7 +479,7 @@ class LecturesScreen extends StatelessWidget {
                                                       .start,
                                                   children: [
                                                     Text(
-                                                      "Question${index + 1}: ",
+                                                      "Question : ",
                                                       style:
                                                       TextStyle(
                                                         fontSize:
@@ -498,7 +498,7 @@ class LecturesScreen extends StatelessWidget {
                                                     Text(
                                                       data["questions"][index]
                                                       [
-                                                      "question${index + 1}"],
+                                                      "question"],
                                                       style:
                                                       TextStyle(
                                                         fontSize:
@@ -745,7 +745,7 @@ class LecturesScreen extends StatelessWidget {
                                                       .start,
                                                   children: [
                                                     Text(
-                                                      "Question${index + 1}: ",
+                                                      "Question: ",
                                                       style:
                                                       TextStyle(
                                                         fontSize:
@@ -766,7 +766,7 @@ class LecturesScreen extends StatelessWidget {
                                                       [
                                                       index]
                                                       [
-                                                      "question${index + 1}"],
+                                                      "question"],
                                                       style:
                                                       TextStyle(
                                                         fontSize:

@@ -119,20 +119,6 @@ class ViewStudentScreen extends StatelessWidget {
                         const SizedBox(
                           height: 15,
                         ),
-                        InkWell(
-                          onTap: () async{
-                            await launch("tel:${data["parentPhone"]}");
-                          },
-                          child: Text(
-                            'Parent Phone : ${data["parentPhone"]}',
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.bold,
-                              color:
-                              Theme.of(context).textTheme.bodyText1!.color,
-                            ),
-                          ),
-                        ),
                       ],
                     ),
                   ],

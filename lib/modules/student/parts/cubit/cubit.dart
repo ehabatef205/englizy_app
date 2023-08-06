@@ -17,12 +17,20 @@ class StudentViewPartsCubit extends Cubit<StudentViewPartsStates> {
   UploadTask? uploadTask;
 
   Stream<QuerySnapshot> getParts(String id) {
-    return FirebaseFirestore.instance.collection("units").doc(id).collection("parts").orderBy("time").snapshots();
+    return FirebaseFirestore.instance
+        .collection("units")
+        .doc(id)
+        .collection("parts")
+        .where("view", isEqualTo: true)
+        .orderBy("time")
+        .snapshots();
   }
 
   void choosePdf() async {
-    pdf = await FilePicker.platform
-        .pickFiles(type: FileType.custom, allowedExtensions: ["pdf"], allowMultiple: false);
+    pdf = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ["pdf"],
+        allowMultiple: false);
     emit(ChangePDFState());
   }
 
@@ -33,16 +41,23 @@ class StudentViewPartsCubit extends Cubit<StudentViewPartsStates> {
         .ref()
         .child("homework")
         .child(userModel!.uid)
-        .child("${DateTime.now().millisecondsSinceEpoch}.${getName(File(pdf!.files[0].path!))}");
+        .child(
+            "${DateTime.now().millisecondsSinceEpoch}.${getName(File(pdf!.files[0].path!))}");
 
-    uploadTask = reference.putData(await File(pdf!.files[0].path!).readAsBytes());
+    uploadTask =
+        reference.putData(await File(pdf!.files[0].path!).readAsBytes());
     await uploadTask!.whenComplete(() async {
       await reference.getDownloadURL().then((urlPdf) async {
-        await FirebaseFirestore.instance.collection("units").doc(id).collection("homework").doc(userModel!.uid).set({
+        await FirebaseFirestore.instance
+            .collection("units")
+            .doc(id)
+            .collection("homework")
+            .doc(userModel!.uid)
+            .set({
           "pdf": urlPdf,
           "uid": userModel!.uid,
           "time": DateTime.now(),
-        }).whenComplete(() async{
+        }).whenComplete(() async {
           Navigator.pop(context);
         });
         emit(AddVideoState());

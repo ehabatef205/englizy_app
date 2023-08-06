@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
-
 class SettingsStudentCubit extends Cubit<SettingsStudentStates> {
   SettingsStudentCubit() : super(InitialSettingsStudentState());
 
@@ -28,7 +27,7 @@ class SettingsStudentCubit extends Cubit<SettingsStudentStates> {
     });
   }
 
-  void changeMode(ThemeNotifier theme, BuildContext context){
+  void changeMode(ThemeNotifier theme, BuildContext context) {
     theme.readData().then((value) {
       if (value) {
         theme.setLightMode();
@@ -43,20 +42,22 @@ class SettingsStudentCubit extends Cubit<SettingsStudentStates> {
   void signOut({required BuildContext context}) {
     Navigator.push(
       context,
-      MaterialPageRoute(
-          builder: (context) => const LoginScreen()),
+      MaterialPageRoute(builder: (context) => const LoginScreen()),
     );
-    FirebaseFirestore.instance
-        .collection("users")
-        .doc(userModel!.uid)
-        .update({
+    FirebaseFirestore.instance.collection("users").doc(userModel!.uid).update({
       "open": false,
-    }).whenComplete(() async{
-      await FirebaseAuth.instance.signOut().whenComplete(() async{
+    }).whenComplete(() async {
+      await FirebaseAuth.instance.signOut().whenComplete(() async {
         AppCubit.get(context).bottomNavIndex = 2;
         userModel = null;
         emit(LogoutState());
       });
     });
+  }
+
+  void deleteAccount(BuildContext context) async {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => LoginScreen()));
+    await FirebaseAuth.instance.currentUser!.delete();
   }
 }

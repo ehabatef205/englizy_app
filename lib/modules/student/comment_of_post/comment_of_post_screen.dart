@@ -102,6 +102,7 @@ class CommentOfPostScreen extends StatelessWidget {
                                                                   .start,
                                                           children: [
                                                             Row(
+                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                               children: [
                                                                 Text(
                                                                   dataOfUser[
@@ -113,6 +114,55 @@ class CommentOfPostScreen extends StatelessWidget {
                                                                       fontSize:
                                                                           16),
                                                                 ),
+                                                                PopupMenuButton<int>(
+                                                                    color: Theme.of(
+                                                                        context)
+                                                                        .scaffoldBackgroundColor,
+                                                                    icon: Icon(
+                                                                      Icons
+                                                                          .more_vert_outlined,
+                                                                      color: Theme.of(
+                                                                          context)
+                                                                          .scaffoldBackgroundColor
+                                                                    ),
+                                                                    onSelected: (value) {
+                                                                      if (value == 1) {
+                                                                        FirebaseFirestore
+                                                                            .instance
+                                                                            .collection(
+                                                                            "posts")
+                                                                            .doc(id)
+                                                                            .collection("comments")
+                                                                            .doc(dataOfComment[index]
+                                                                            .id)
+                                                                            .update({
+                                                                          "view": false
+                                                                        });
+                                                                      }
+                                                                    },
+                                                                    itemBuilder:
+                                                                        (context) => [
+                                                                      PopupMenuItem(
+                                                                        value: 1,
+                                                                        child:
+                                                                        Row(
+                                                                          children: [
+                                                                            const Icon(
+                                                                              Icons.delete_outline,
+                                                                            ),
+                                                                            const SizedBox(
+                                                                              width:
+                                                                              10,
+                                                                            ),
+                                                                            Text(
+                                                                              "Delete post",
+                                                                              style:
+                                                                              TextStyle(color: Theme.of(context).textTheme.bodyText1!.color),
+                                                                            )
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                    ]),
                                                               ],
                                                             ),
                                                             const SizedBox(
