@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:englizy_app/modules/student/comment_of_post/cubit/cubit.dart';
 import 'package:englizy_app/modules/student/comment_of_post/cubit/states.dart';
 import 'package:englizy_app/shared/components.dart';
 import 'package:englizy_app/shared/constant.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CommentOfPostScreen extends StatelessWidget {
   final String id;
@@ -102,7 +103,9 @@ class CommentOfPostScreen extends StatelessWidget {
                                                                   .start,
                                                           children: [
                                                             Row(
-                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
                                                               children: [
                                                                 Text(
                                                                   dataOfUser[
@@ -114,55 +117,57 @@ class CommentOfPostScreen extends StatelessWidget {
                                                                       fontSize:
                                                                           16),
                                                                 ),
-                                                                PopupMenuButton<int>(
+                                                                PopupMenuButton<
+                                                                        int>(
                                                                     color: Theme.of(
-                                                                        context)
+                                                                            context)
                                                                         .scaffoldBackgroundColor,
                                                                     icon: Icon(
-                                                                      Icons
-                                                                          .more_vert_outlined,
-                                                                      color: Theme.of(
-                                                                          context)
-                                                                          .scaffoldBackgroundColor
-                                                                    ),
-                                                                    onSelected: (value) {
-                                                                      if (value == 1) {
+                                                                        Icons
+                                                                            .more_vert_outlined,
+                                                                        color: Theme.of(context)
+                                                                            .scaffoldBackgroundColor),
+                                                                    onSelected:
+                                                                        (value) {
+                                                                      if (value ==
+                                                                          1) {
                                                                         FirebaseFirestore
                                                                             .instance
                                                                             .collection(
-                                                                            "posts")
-                                                                            .doc(id)
-                                                                            .collection("comments")
+                                                                                "posts")
+                                                                            .doc(
+                                                                                id)
+                                                                            .collection(
+                                                                                "comments")
                                                                             .doc(dataOfComment[index]
-                                                                            .id)
+                                                                                .id)
                                                                             .update({
-                                                                          "view": false
+                                                                          "view":
+                                                                              false
                                                                         });
                                                                       }
                                                                     },
                                                                     itemBuilder:
-                                                                        (context) => [
-                                                                      PopupMenuItem(
-                                                                        value: 1,
-                                                                        child:
-                                                                        Row(
-                                                                          children: [
-                                                                            const Icon(
-                                                                              Icons.delete_outline,
-                                                                            ),
-                                                                            const SizedBox(
-                                                                              width:
-                                                                              10,
-                                                                            ),
-                                                                            Text(
-                                                                              "Delete post",
-                                                                              style:
-                                                                              TextStyle(color: Theme.of(context).textTheme.bodyText1!.color),
-                                                                            )
-                                                                          ],
-                                                                        ),
-                                                                      ),
-                                                                    ]),
+                                                                        (context) =>
+                                                                            [
+                                                                              PopupMenuItem(
+                                                                                value: 1,
+                                                                                child: Row(
+                                                                                  children: [
+                                                                                    const Icon(
+                                                                                      Icons.delete_outline,
+                                                                                    ),
+                                                                                    const SizedBox(
+                                                                                      width: 10,
+                                                                                    ),
+                                                                                    Text(
+                                                                                      "Delete post",
+                                                                                      style: TextStyle(color: Theme.of(context).textTheme.bodyText1!.color),
+                                                                                    )
+                                                                                  ],
+                                                                                ),
+                                                                              ),
+                                                                            ]),
                                                               ],
                                                             ),
                                                             const SizedBox(

@@ -43,12 +43,34 @@ class PostsOfAdminScreen extends StatelessWidget {
               child: Container(
                 height: size.height,
                 width: size.width,
-                color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.4),
+                color:
+                    Theme.of(context).scaffoldBackgroundColor.withOpacity(0.4),
                 child: StreamBuilder<QuerySnapshot>(
                   stream: cubit.getPostsOfTeacher(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       var data = snapshot.data!.docs;
+                      if (data.isEmpty) {
+                        return Center(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 15,
+                              vertical: 20,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.grey,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: const Text(
+                              "There is no posts for the teacher yet",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ),
+                        );
+                      }
                       return ListView.builder(
                           shrinkWrap: true,
                           itemCount: data.length,
@@ -104,14 +126,14 @@ class PostsOfAdminScreen extends StatelessWidget {
                                                 ),
                                               ],
                                             ),
-                                            Text(
-                                                DateTime.fromMillisecondsSinceEpoch(
+                                            Text(DateTime
+                                                    .fromMillisecondsSinceEpoch(
                                                         int.parse(data[index]
                                                                     ["time"]
                                                                 .seconds
                                                                 .toString()) *
                                                             1000)
-                                                    .toString())
+                                                .toString())
                                           ],
                                         ),
                                       ],
@@ -153,7 +175,8 @@ class PostsOfAdminScreen extends StatelessWidget {
                                             child: Text(
                                               data[index]["link"],
                                               style: const TextStyle(
-                                                  color: Colors.blue, fontSize: 25),
+                                                  color: Colors.blue,
+                                                  fontSize: 25),
                                             ),
                                           ),
                                   ],

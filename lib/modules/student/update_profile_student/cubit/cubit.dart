@@ -84,7 +84,7 @@ class UpdateProfileStudentCubit extends Cubit<UpdateProfileStudentStates> {
 
       UploadTask uploadTask =
           reference.putData(await File(image!.path).readAsBytes());
-      await uploadTask!.whenComplete(() async {
+      await uploadTask.whenComplete(() async {
         await reference.getDownloadURL().then((urlImage) async {
           await FirebaseFirestore.instance
               .collection("users")

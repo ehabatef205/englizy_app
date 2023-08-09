@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:englizy_app/modules/admin/admin_add_unit/cubit/states.dart';
 import 'package:file_picker/file_picker.dart';
@@ -95,7 +94,7 @@ class AdminAddUnitCubit extends Cubit<AdminAddUnitStates> {
 
     UploadTask uploadTask =
         reference.putData(await File(image!.path).readAsBytes());
-    await uploadTask!.whenComplete(() async {
+    await uploadTask.whenComplete(() async {
       await reference.getDownloadURL().then((urlImage) {
         imageUrl = urlImage;
         emit(ChooseImageState());
