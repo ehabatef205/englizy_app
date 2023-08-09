@@ -48,15 +48,32 @@ class _ViewPdfLinkAdminState extends State<ViewPdfLinkAdmin> {
         ),
         actions: [
           IconButton(
-              onPressed: () {
-                FirebaseFirestore.instance
-                    .collection("pdfs")
-                    .doc(widget.data.id)
-                    .delete()
-                    .whenComplete(() {
-                  Navigator.pop(context);
-                });
-              },
+              onPressed: () => showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                      content: const Text('Do you want to delete this?'),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: const Text('No'),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                            Navigator.pop(context);
+                            FirebaseFirestore.instance
+                                .collection("pdfs")
+                                .doc(widget.data.id)
+                                .delete()
+                                .whenComplete(() {
+
+                            });
+                          },
+                          child: const Text('Yes'),
+                        ),
+                      ],
+                    ),
+                  ),
               icon: const Icon(Icons.delete_outline)),
         ],
       ),
@@ -75,3 +92,32 @@ class _ViewPdfLinkAdminState extends State<ViewPdfLinkAdmin> {
     );
   }
 }
+
+/*
+await FirebaseFirestore
+                                                                        .instance
+                                                                        .collection(
+                                                                            "posts")
+                                                                        .doc(data[
+                                                                                index]
+                                                                            .id)
+                                                                        .collection(
+                                                                            "comments")
+                                                                        .doc(value
+                                                                            .docs[
+                                                                                i]
+                                                                            .id)
+                                                                        .delete();
+                                                                  }
+                                                                }).whenComplete(
+                                                                        () async {
+                                                                  await FirebaseFirestore
+                                                                      .instance
+                                                                      .collection(
+                                                                          "posts")
+                                                                      .doc(data[
+                                                                              index]
+                                                                          .id)
+                                                                      .delete();
+                                                                });
+ */

@@ -205,50 +205,75 @@ class AdminCommunityScreen extends StatelessWidget {
                                                             onSelected:
                                                                 (value) async {
                                                               if (value == 1) {
-                                                                await FirebaseFirestore
-                                                                    .instance
-                                                                    .collection(
-                                                                        "posts")
-                                                                    .doc(data[
-                                                                            index]
-                                                                        .id)
-                                                                    .collection(
-                                                                        "comments")
-                                                                    .get()
-                                                                    .then(
-                                                                        (value) async {
-                                                                  for (int i = 0;
-                                                                      i <
-                                                                          value
-                                                                              .docs
-                                                                              .length;
-                                                                      i++) {
-                                                                    await FirebaseFirestore
-                                                                        .instance
-                                                                        .collection(
-                                                                            "posts")
-                                                                        .doc(data[
-                                                                                index]
-                                                                            .id)
-                                                                        .collection(
-                                                                            "comments")
-                                                                        .doc(value
-                                                                            .docs[
-                                                                                i]
-                                                                            .id)
-                                                                        .delete();
-                                                                  }
-                                                                }).whenComplete(
-                                                                        () async {
-                                                                  await FirebaseFirestore
-                                                                      .instance
-                                                                      .collection(
-                                                                          "posts")
-                                                                      .doc(data[
+                                                                showDialog<String>(
+                                                                  context: context,
+                                                                  builder:
+                                                                      (BuildContext context) =>
+                                                                      AlertDialog(
+                                                                        content: const Text(
+                                                                            'Do you want to delete this?'),
+                                                                        actions: <Widget>[
+                                                                          TextButton(
+                                                                            onPressed: () =>
+                                                                                Navigator.pop(
+                                                                                    context),
+                                                                            child: const Text('No'),
+                                                                          ),
+                                                                          TextButton(
+                                                                            onPressed: () async{
+                                                                              Navigator.pop(context);
+                                                                              await FirebaseFirestore
+                                                                                  .instance
+                                                                                  .collection(
+                                                                                  "posts")
+                                                                                  .doc(data[
                                                                               index]
-                                                                          .id)
-                                                                      .delete();
-                                                                });
+                                                                                  .id)
+                                                                                  .collection(
+                                                                                  "comments")
+                                                                                  .get()
+                                                                                  .then(
+                                                                                      (value) async {
+                                                                                    for (int i = 0;
+                                                                                    i <
+                                                                                        value
+                                                                                            .docs
+                                                                                            .length;
+                                                                                    i++) {
+                                                                                      await FirebaseFirestore
+                                                                                          .instance
+                                                                                          .collection(
+                                                                                          "posts")
+                                                                                          .doc(data[
+                                                                                      index]
+                                                                                          .id)
+                                                                                          .collection(
+                                                                                          "comments")
+                                                                                          .doc(value
+                                                                                          .docs[
+                                                                                      i]
+                                                                                          .id)
+                                                                                          .delete();
+                                                                                    }
+                                                                                  }).whenComplete(
+                                                                                      () async {
+                                                                                    await FirebaseFirestore
+                                                                                        .instance
+                                                                                        .collection(
+                                                                                        "posts")
+                                                                                        .doc(data[
+                                                                                    index]
+                                                                                        .id)
+                                                                                        .delete();
+                                                                                  }).whenComplete(() {
+                                                                                    Navigator.pop(context);
+                                                                              });
+                                                                            },
+                                                                            child: const Text('Yes'),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                );
                                                               }
                                                             },
                                                             itemBuilder:

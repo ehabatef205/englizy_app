@@ -23,20 +23,20 @@ class AdminViewPostsScreen extends StatelessWidget {
             appBar: AppBar(
               leading: const SizedBox(),
               centerTitle: true,
-              title: Text("Posts of Teacher", style: TextStyle(
-                color: Theme
-                    .of(context)
-                    .textTheme
-                    .bodyText1!
-                    .color,
-              ),),
+              title: Text(
+                "Posts of Teacher",
+                style: TextStyle(
+                  color: Theme.of(context).textTheme.bodyText1!.color,
+                ),
+              ),
               actions: [
                 IconButton(
                     onPressed: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const AdminAddPostScreen()));
+                              builder: (context) =>
+                                  const AdminAddPostScreen()));
                     },
                     icon: const Icon(Icons.add))
               ],
@@ -122,8 +122,31 @@ class AdminViewPostsScreen extends StatelessWidget {
                                                                   index])));
                                             }
                                             if (value == 2) {
-                                              cubit.deletePost(
-                                                  id: data[index].id);
+                                              showDialog<String>(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) =>
+                                                        AlertDialog(
+                                                  content: const Text(
+                                                      'Do you want to delete this?'),
+                                                  actions: <Widget>[
+                                                    TextButton(
+                                                      onPressed: () =>
+                                                          Navigator.pop(
+                                                              context),
+                                                      child: const Text('No'),
+                                                    ),
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        Navigator.pop(context);
+                                                        cubit.deletePost(
+                                                            id: data[index].id);
+                                                      },
+                                                      child: const Text('Yes'),
+                                                    ),
+                                                  ],
+                                                ),
+                                              );
                                             }
                                           },
                                           itemBuilder: (context) => [

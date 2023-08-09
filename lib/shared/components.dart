@@ -90,10 +90,12 @@ Widget TextFormFieldWidgetExam({
   Widget? suffixIcon,
   bool enable = true,
   int? maxLines = 1,
+  String? initialValue
 }) =>
     TextFormField(
       onEditingComplete: onEditingComplete,
       onChanged: onChanged,
+      initialValue: initialValue,
       keyboardType: type,
       enabled: enable,
       maxLines: maxLines,

@@ -337,22 +337,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                           ),
                                           TextFormFieldWidget(
                                             controller: cubit
-                                                .parentsPhoneNumberController,
-                                            type: TextInputType.phone,
-                                            context: context,
-                                            labelText: "Parent's phone number",
-                                            validate: (value) {
-                                              if (value!.isEmpty) {
-                                                return "Parent's phone number is required";
-                                              }
-                                              return null;
-                                            },
-                                          ),
-                                          const SizedBox(
-                                            height: 8.0,
-                                          ),
-                                          TextFormFieldWidget(
-                                            controller: cubit
                                                 .studentPhoneNumberController,
                                             type: TextInputType.phone,
                                             context: context,

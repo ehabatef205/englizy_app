@@ -58,7 +58,7 @@ class AdminViewPartCubit extends Cubit<AdminViewPartStates> {
     for(int i = 0; i < numberOfQuestions; i++){
       controllers.add(TextEditingController());
       questions.add({
-        "question${i + 1}": "",
+        "question": "",
         "answer1": "",
         "answer2": "",
         "answer3": "",
@@ -70,7 +70,7 @@ class AdminViewPartCubit extends Cubit<AdminViewPartStates> {
   }
 
   void changeQuestion(String question, int index){
-    questions[index]["question${index + 1}"] = question;
+    questions[index]["question"] = question;
     emit(QuestionState());
   }
 

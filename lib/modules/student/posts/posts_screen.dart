@@ -310,6 +310,7 @@ class PostsScreen extends StatelessWidget {
                                                                         .id)
                                                                     .collection(
                                                                         "comments")
+                                                                    .where("view", isEqualTo: true)
                                                                     .snapshots(),
                                                             builder: (context,
                                                                 snapshot3) {

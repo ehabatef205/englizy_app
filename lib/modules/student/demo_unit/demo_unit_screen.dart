@@ -150,6 +150,8 @@ class DemoUnitScreen extends StatelessWidget {
                                     .collection("units")
                                     .doc(unit.id)
                                     .collection("parts")
+                                    .where("view", isEqualTo: true)
+                                    .orderBy("time")
                                     .snapshots(),
                                 builder: (context, snapshot) {
                                   if (snapshot.hasData) {
@@ -165,7 +167,8 @@ class DemoUnitScreen extends StatelessWidget {
                                               Container(
                                                 decoration: BoxDecoration(
                                                   color: Colors.black26,
-                                                  borderRadius: BorderRadius.circular(25),
+                                                  borderRadius:
+                                                      BorderRadius.circular(25),
                                                 ),
                                                 child: ListTile(
                                                   leading: Icon(
@@ -185,12 +188,15 @@ class DemoUnitScreen extends StatelessWidget {
                                                           .bodyText1!
                                                           .color,
                                                       fontSize: 20.0,
-                                                      fontWeight: FontWeight.w500,
+                                                      fontWeight:
+                                                          FontWeight.w500,
                                                     ),
                                                   ),
                                                 ),
                                               ),
-                                              const SizedBox(height: 5.0,),
+                                              const SizedBox(
+                                                height: 5.0,
+                                              ),
                                             ],
                                           );
                                         });

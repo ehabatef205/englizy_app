@@ -86,7 +86,6 @@ class LoginCubit extends Cubit<LoginStates> {
   // Registration
 
   TextEditingController quadrupleNameController = TextEditingController();
-  TextEditingController parentsPhoneNumberController = TextEditingController();
   TextEditingController studentPhoneNumberController = TextEditingController();
   TextEditingController passwordController2 = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
@@ -147,7 +146,6 @@ class LoginCubit extends Cubit<LoginStates> {
         context: context,
         uid: value.user!.uid,
         email: emailController.text,
-        parentPhone: parentsPhoneNumberController.text,
         studentName: quadrupleNameController.text,
         studentPhone: studentPhoneNumberController.text,
       ).whenComplete((){
@@ -165,7 +163,6 @@ class LoginCubit extends Cubit<LoginStates> {
   Future<void> userCreate({
     required BuildContext context,
     required studentName,
-    required parentPhone,
     required studentPhone,
     required email,
     required uid,
@@ -175,7 +172,6 @@ class LoginCubit extends Cubit<LoginStates> {
         uid: uid,
         email: email,
         studentName: studentName,
-        parentPhone: parentPhone,
         studentPhone: studentPhone,
         open: true,
         admin: false,

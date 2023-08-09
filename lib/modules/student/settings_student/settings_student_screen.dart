@@ -56,87 +56,163 @@ class SettingsStudentScreen extends StatelessWidget {
                   color: Theme.of(context)
                       .scaffoldBackgroundColor
                       .withOpacity(0.4),
-                  child: ListView(
-                    children: [
-                      ListTile(
-                        title: Text(
-                          "Dark Mode",
-                          style: TextStyle(
-                            color: Theme.of(context).textTheme.bodyText1!.color,
-                          ),
-                        ),
-                        trailing: Consumer<ThemeNotifier>(
-                            builder: (context, theme, _) {
-                          return CupertinoSwitch(
-                            value: cubit.isDark,
-                            onChanged: (value) {
-                              cubit.changeMode(theme, context);
-                            },
+                  child: StreamBuilder<DocumentSnapshot>(
+                      stream: FirebaseFirestore.instance
+                          .collection("app")
+                          .doc("t2FTNJm5pTGqCbfg8v1T")
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          var data = snapshot.data;
+                          return ListView(
+                            children: [
+                              ListTile(
+                                title: Text(
+                                  "Dark Mode",
+                                  style: TextStyle(
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1!
+                                        .color,
+                                  ),
+                                ),
+                                trailing: Consumer<ThemeNotifier>(
+                                    builder: (context, theme, _) {
+                                  return CupertinoSwitch(
+                                    value: cubit.isDark,
+                                    onChanged: (value) {
+                                      cubit.changeMode(theme, context);
+                                    },
+                                  );
+                                }),
+                                leading: Icon(
+                                  Icons.dark_mode,
+                                  color: Theme.of(context).iconTheme.color,
+                                ),
+                              ),
+                              ListTile(
+                                leading: Icon(
+                                  Icons.person,
+                                  color: Theme.of(context).iconTheme.color,
+                                ),
+                                title: Text(
+                                  "Update Profile",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1!
+                                        .color,
+                                  ),
+                                ),
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const UpdateProfileStudentScreen()));
+                                },
+                              ),
+                              ListTile(
+                                leading: Icon(
+                                  Icons.password,
+                                  color: Theme.of(context).iconTheme.color,
+                                ),
+                                title: Text(
+                                  'Change password',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1!
+                                        .color,
+                                  ),
+                                ),
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const ChangePasswordScreen()));
+                                },
+                              ),
+                              data!["delete_account"]
+                                  ? ListTile(
+                                      onTap: () {
+                                        showDialog<String>(
+                                          context: context,
+                                          builder:
+                                              (BuildContext context) =>
+                                              AlertDialog(
+                                                content: const Text(
+                                                    'Do you want to delete this?'),
+                                                actions: <Widget>[
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            context),
+                                                    child: const Text('No'),
+                                                  ),
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                      cubit.deleteAccount(context);
+                                                    },
+                                                    child: const Text('Yes'),
+                                                  ),
+                                                ],
+                                              ),
+                                        );
+                                      },
+                                      title: Text(
+                                        "Delete account",
+                                        style: TextStyle(
+                                          color: Theme.of(context)
+                                              .textTheme
+                                              .bodyText1!
+                                              .color,
+                                        ),
+                                      ),
+                                      leading: Icon(
+                                        Icons.delete_outline,
+                                        color:
+                                            Theme.of(context).iconTheme.color,
+                                      ),
+                                    )
+                                  : const SizedBox(),
+                              ListTile(
+                                leading: Icon(
+                                  Icons.logout_outlined,
+                                  color: Theme.of(context).iconTheme.color,
+                                ),
+                                title: Text(
+                                  'Logout',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1!
+                                        .color,
+                                  ),
+                                ),
+                                onTap: () {
+                                  cubit.signOut(context: context);
+                                },
+                              ),
+                            ],
                           );
-                        }),
-                        leading: Icon(
-                          Icons.dark_mode,
-                          color: Theme.of(context).iconTheme.color,
-                        ),
-                      ),
-                      ListTile(
-                        leading: Icon(
-                          Icons.person,
-                          color: Theme.of(context).iconTheme.color,
-                        ),
-                        title: Text(
-                          "Update Profile",
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Theme.of(context).textTheme.bodyText1!.color,
-                          ),
-                        ),
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const UpdateProfileStudentScreen()));
-                        },
-                      ),
-                      ListTile(
-                        leading: Icon(
-                          Icons.password,
-                          color: Theme.of(context).iconTheme.color,
-                        ),
-                        title: Text(
-                          'Change password',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Theme.of(context).textTheme.bodyText1!.color,
-                          ),
-                        ),
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                  const ChangePasswordScreen()));
-                        },
-                      ),
-                      ListTile(
-                        leading: Icon(
-                          Icons.logout_outlined,
-                          color: Theme.of(context).iconTheme.color,
-                        ),
-                        title: Text(
-                          'Logout',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Theme.of(context).textTheme.bodyText1!.color,
-                          ),
-                        ),
-                        onTap: () {
-                          cubit.signOut(context: context);
-                        },
-                      ),
-                    ],
-                  ),
+                        } else {
+                          return Center(
+                              child: Text(
+                            "Loading...",
+                            style: TextStyle(
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1!
+                                    .color),
+                          ));
+                        }
+                      }),
                 ),
               ),
             ),
