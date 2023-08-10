@@ -55,7 +55,7 @@ class LoginCubit extends Cubit<LoginStates> {
               .get()
               .then((value2) {
             userModel = UserModel.fromjson(value2.data()!);
-            AppCubit.get(context).changeLevelText().whenComplete(() async{
+            AppCubit.get(context).changeLevelText().whenComplete(() async {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const AppScreen()),
@@ -79,6 +79,7 @@ class LoginCubit extends Cubit<LoginStates> {
       emit(LoginSuccessState());
     }).catchError((error) {
       isLoading = false;
+      debugPrint(error.toString());
       emit(LoginErrorState());
     });
   }
@@ -133,7 +134,7 @@ class LoginCubit extends Cubit<LoginStates> {
     emit(RegisterChangeState());
   }
 
-  void userRegister({required BuildContext context}) async{
+  void userRegister({required BuildContext context}) async {
     isLoading = true;
     emit(RegisterLoadingState());
     FirebaseAuth.instance
@@ -141,17 +142,17 @@ class LoginCubit extends Cubit<LoginStates> {
       email: emailController.text,
       password: passwordController2.text,
     )
-        .then((value) async{
+        .then((value) async {
       await userCreate(
         context: context,
         uid: value.user!.uid,
         email: emailController.text,
         studentName: quadrupleNameController.text,
         studentPhone: studentPhoneNumberController.text,
-      ).whenComplete((){
-        AppCubit.get(context).changeLevelText().whenComplete(() async{
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => const AppScreen()));
+      ).whenComplete(() {
+        AppCubit.get(context).changeLevelText().whenComplete(() async {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const AppScreen()));
         });
       });
       emit(RegisterSuccessState());
@@ -166,7 +167,7 @@ class LoginCubit extends Cubit<LoginStates> {
     required studentPhone,
     required email,
     required uid,
-  }) async{
+  }) async {
     userModel = UserModel(
         level: levelId!,
         uid: uid,

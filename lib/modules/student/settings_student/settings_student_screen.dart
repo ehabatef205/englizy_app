@@ -145,7 +145,7 @@ class SettingsStudentScreen extends StatelessWidget {
                                               (BuildContext context) =>
                                               AlertDialog(
                                                 content: const Text(
-                                                    'Do you want to delete this?'),
+                                                    'Are you sure you want to delete your account?'),
                                                 actions: <Widget>[
                                                   TextButton(
                                                     onPressed: () =>
